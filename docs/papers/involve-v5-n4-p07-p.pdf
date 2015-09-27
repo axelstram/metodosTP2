@@ -1,0 +1,444 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="citation_title" content="An application of Google’s PageRank to NFL rankings"/>
+<meta name="citation_author" content="Zack, Laurie"/>
+<meta name="citation_author_institution" content="High Point University, 833 Montlieu Avenue, High Point, NC 27262, United States"/>
+<meta name="citation_author" content="Lamb, Ron"/>
+<meta name="citation_author_institution" content="High Point University, 833 Montlieu Avenue, High Point, NC 27262, United States"/>
+<meta name="citation_author" content="Ball, Sarah"/>
+<meta name="citation_author_institution" content="High Point University, 833 Montlieu Avenue, High Point, NC 27262, United States"/>
+<meta name="citation_publisher" content="Mathematical Sciences Publishers"/>
+<meta name="citation_journal_title" content="Involve, a Journal of Mathematics"/>
+<meta name="citation_volume" content="5"/>
+<meta name="citation_issue" content="4"/>
+<meta name="citation_firstpage" content="463"/>
+<meta name="citation_lastpage" content="471"/>
+<meta name="citation_publication_date" content="2013/06/14"/>
+<meta name="citation_pdf_url" content="http://msp.org/involve/2012/5-4/involve-v5-n4-p07-s.pdf"/>
+<meta name="citation_doi" content="10.2140/involve.2012.5.463"/>
+<meta name="citation_issn" content="1944-4184"/>
+<title>Involve, a Journal of Mathematics Vol. 5, No. 4, 2012</title>
+<link href="/involve/etc/journal.css" type="text/css" rel="stylesheet"/>
+<link href="/involve/etc/abstract.css" type="text/css" rel="stylesheet"/>
+<link rel="shortcut icon" href="/involve/etc/favicon.ico"/>
+<script type="text/javascript" src="/involve/etc/cover.js">
+</script>
+<script type="text/javascript" src="/involve/etc/journal.js">
+</script>
+<script type="text/javascript" src="/involve/etc/archive.js">
+</script>
+</head>
+<body onload="javascript:void(0);">
+<table cellspacing="0" cellpadding="0" class="masthead" id="masthead-area">
+<tr>
+<td class="volume-h" onclick="javascript:window.location='index.xhtml';">
+<h4>Vol. 5, No. 4, 2012</h4>
+</td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="main" id="main-area">
+<tr>
+<td class="activity-column" id="activity-area">
+<table cellspacing="0" cellpadding="0" class="action">
+<tr>
+<td align="left">
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td colspan="2" class="action-title-area">
+<div class="action-title">
+Download this article
+</div>
+</td>
+</tr>
+<tr>
+<td rowspan="2" class="download-icon-area"><a href="/involve/2012/5-4/involve-v5-n4-p07-s.pdf"><img class="download-icon" src="/involve/etc/icon-pdf-lg.gif" alt="Download this article "/></a></td>
+<td class="download-caption-area"><a class="download-caption" href="/involve/2012/5-4/involve-v5-n4-p07-s.pdf">For
+screen</a></td>
+</tr>
+<tr>
+<td class="download-caption-area"><a class="download-caption" href="/involve/2012/5-4/involve-v5-n4-p07-p.pdf">For
+printing</a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="pause">
+<tr>
+<td class="action-end"><img src="/involve/etc/z.gif" alt=""/></td>  
+</tr>
+<tr>
+<td class="pause"><img src="/involve/etc/z.gif" alt=""/></td>  
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="action">
+<tr>
+<td>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="action-title-area"><div class="action-title">Recent Issues</div></td>
+</tr>
+<tr><td class="issues-area"> <p class="p-about-dropdown" id="volume-short-8" style="display:none;">
+<a class="about" onclick="showIssues('8');">Volume 8, 4 issues</a>
+</p>
+<p class="p-about-dropdown" id="volume-all-8">
+<a class="about" onclick="collapseIssues('8');">Volume 8</a>
+<br/><a class="about" href="/involve/2015/8-4/index.xhtml">Issue 4, 541&#8211;719</a>
+<br/><a class="about" href="/involve/2015/8-3/index.xhtml">Issue 3, 361&#8211;540</a>
+<br/><a class="about" href="/involve/2015/8-2/index.xhtml">Issue 2, 181&#8211;359</a>
+<br/><a class="about" href="/involve/2015/8-1/index.xhtml">Issue 1, 1&#8211;179</a>
+</p>
+<p class="p-about-dropdown" id="volume-short-7">
+<a class="about" onclick="showIssues('7');">Volume 7, 6 issues</a>
+</p>
+<p class="p-about-dropdown" id="volume-all-7" style="display:none;">
+<a class="about" onclick="collapseIssues('7');">Volume 7</a>
+<br/><a class="about" href="/involve/2014/7-6/index.xhtml">Issue 6, 713&#8211;822</a>
+<br/><a class="about" href="/involve/2014/7-5/index.xhtml">Issue 5, 585&#8211;712</a>
+<br/><a class="about" href="/involve/2014/7-4/index.xhtml">Issue 4, 431&#8211;583</a>
+<br/><a class="about" href="/involve/2014/7-3/index.xhtml">Issue 3, 245&#8211;430</a>
+<br/><a class="about" href="/involve/2014/7-2/index.xhtml">Issue 2, 125&#8211;244</a>
+<br/><a class="about" href="/involve/2014/7-1/index.xhtml">Issue 1, 1&#8211;124</a>
+</p>
+<p class="p-about-dropdown" id="volume-short-6">
+<a class="about" onclick="showIssues('6');">Volume 6, 4 issues</a>
+</p>
+<p class="p-about-dropdown" id="volume-all-6" style="display:none;">
+<a class="about" onclick="collapseIssues('6');">Volume 6</a>
+<br/><a class="about" href="/involve/2013/6-4/index.xhtml">Issue 4, 383&#8211;510</a>
+<br/><a class="about" href="/involve/2013/6-3/index.xhtml">Issue 3, 261&#8211;381</a>
+<br/><a class="about" href="/involve/2013/6-2/index.xhtml">Issue 2, 127&#8211;260</a>
+<br/><a class="about" href="/involve/2013/6-1/index.xhtml">Issue 1, 1&#8211;126</a>
+</p>
+<p class="p-about-dropdown" id="volume-short-5">
+<a class="about" onclick="showIssues('5');">Volume 5, 4 issues</a>
+</p>
+<p class="p-about-dropdown" id="volume-all-5" style="display:none;">
+<a class="about" onclick="collapseIssues('5');">Volume 5</a>
+<br/><a class="about" href="/involve/2012/5-4/index.xhtml">Issue 4, 379&#8211;504</a>
+<br/><a class="about" href="/involve/2012/5-3/index.xhtml">Issue 3, 237&#8211;378</a>
+<br/><a class="about" href="/involve/2012/5-2/index.xhtml">Issue 2, 115&#8211;236</a>
+<br/><a class="about" href="/involve/2012/5-1/index.xhtml">Issue 1, 1&#8211;113</a>
+</p>
+<p class="p-about-dropdown" id="volume-short-4">
+<a class="about" onclick="showIssues('4');">Volume 4, 4 issues</a>
+</p>
+<p class="p-about-dropdown" id="volume-all-4" style="display:none;">
+<a class="about" onclick="collapseIssues('4');">Volume 4</a>
+<br/><a class="about" href="/involve/2011/4-4/index.xhtml">Issue 4, 307&#8211;416</a>
+<br/><a class="about" href="/involve/2011/4-3/index.xhtml">Issue 3, 203&#8211;305</a>
+<br/><a class="about" href="/involve/2011/4-2/index.xhtml">Issue 2, 103&#8211;202</a>
+<br/><a class="about" href="/involve/2011/4-1/index.xhtml">Issue 1, 1&#8211;102</a>
+</p>
+<p class="p-about-dropdown" id="volume-short-3">
+<a class="about" onclick="showIssues('3');">Volume 3, 4 issues</a>
+</p>
+<p class="p-about-dropdown" id="volume-all-3" style="display:none;">
+<a class="about" onclick="collapseIssues('3');">Volume 3</a>
+<br/><a class="about" href="/involve/2010/3-4/index.xhtml">Issue 4, 349&#8211;474</a>
+<br/><a class="about" href="/involve/2010/3-3/index.xhtml">Issue 3, 241&#8211;347</a>
+<br/><a class="about" href="/involve/2010/3-2/index.xhtml">Issue 2, 129&#8211;240</a>
+<br/><a class="about" href="/involve/2010/3-1/index.xhtml">Issue 1, 1&#8211;127</a>
+</p>
+<p class="p-about-dropdown" id="volume-short-2">
+<a class="about" onclick="showIssues('2');">Volume 2, 5 issues</a>
+</p>
+<p class="p-about-dropdown" id="volume-all-2" style="display:none;">
+<a class="about" onclick="collapseIssues('2');">Volume 2</a>
+<br/><a class="about" href="/involve/2009/2-5/index.xhtml">Issue 5, 495&#8211;628</a>
+<br/><a class="about" href="/involve/2009/2-4/index.xhtml">Issue 4, 371&#8211;494</a>
+<br/><a class="about" href="/involve/2009/2-3/index.xhtml">Issue 3, 249&#8211;370</a>
+<br/><a class="about" href="/involve/2009/2-2/index.xhtml">Issue 2, 121&#8211;247</a>
+<br/><a class="about" href="/involve/2009/2-1/index.xhtml">Issue 1, 1&#8211;120</a>
+</p>
+<p class="p-about-dropdown" id="volume-short-1">
+<a class="about" onclick="showIssues('1');">Volume 1, 2 issues</a>
+</p>
+<p class="p-about-dropdown" id="volume-all-1" style="display:none;">
+<a class="about" onclick="collapseIssues('1');">Volume 1</a>
+<br/><a class="about" href="/involve/2008/1-2/index.xhtml">Issue 2, 123&#8211;233</a>
+<br/><a class="about" href="/involve/2008/1-1/index.xhtml">Issue 1, 1&#8211;121</a>
+</p>
+</td></tr> </table>
+</td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="pause">
+<tr>
+<td class="action-end"><img src="/involve/etc/z.gif" alt=""/></td>  
+</tr>
+<tr>
+<td class="pause"><img src="/involve/etc/z.gif" alt=""/></td>  
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="action">
+<tr>
+<td>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="action-title-area"><div class="action-title">The Journal</div></td>
+</tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/cover/cover.html">Cover Page</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/journal/editorial.html">Editorial Board</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/journal/addresses.html">Editors&#39; Addresses</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/journal/areas.html">Editors&#39; Interests</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/journal/about.html">About the Journal</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/journal/sciadv.html">Scientific Advantages</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/journal/submissions.html">Submission Guidelines</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="http://msp.berkeley.edu/ef/submit_new.php?jpath=involve">Submission Form</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/journal/ethics.html">Ethics Statement</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="http://msp.org/publications/journals/#involve">Subscriptions</a></td></tr>
+ 
+<tr><td class="about-area">
+<a class="about" href="http://msp.berkeley.edu/ef/">Editorial Login</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/scripts/ai.php?jpath=involve">Author Index</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/scripts/coming.php?jpath=involve">Coming Soon</a></td></tr>
+<tr><td class="about-area">
+<a class="about" href="/involve/about/journal/contact.html">Contacts</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td class="about-area" style="font-size:11px">
+ISSN: 1944-4184 (e-only)
+</td></tr>
+<tr><td class="about-area" style="font-size:11px">
+ISSN: 1944-4176 (print)
+</td></tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+<td class="content-column" id="content-area"><div style="background-color: #F6EBDC;
+	padding: 5px 15px; margin-bottom:5px;
+	border-radius: 10px;
+	font-size:1.25em;
+	border:2px solid #a00;">
+This article is available for purchase or by subscription. See below.
+</div>
+<table>
+<tr>
+<td>
+<a class="title" href="/involve/2012/5-4/involve-v5-n4-p07-s.pdf">An application of
+Google's PageRank to NFL rankings</a>
+<h3>Laurie Zack, Ron Lamb and Sarah Ball</h3>
+<div class="page-numbers">
+Vol. 5 (2012), No. 4, 463–471
+</div>
+<div class="paper-doi">
+DOI: <a href="http://dx.doi.org/10.2140/involve.2012.5.463">10.2140/involve.2012.5.463</a>
+</div>
+</td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="article">
+<tr>
+<td class="article-area">
+<h5>Abstract</h5>
+</td>
+</tr>
+<tr>
+<td class="article-area">
+<p class="noindent">We explain the PageRank algorithm and its application to the ranking of football
+teams via the GEM method. We then modify and extend the GEM method with the
+addition of more football statistics to look at the possibility of using this
+method to more accurately rank teams. Lastly, we compare both methods by
+aggregating each statistical ranking using the cross-entropy Monte Carlo
+algorithm.
+</p>
+</td>
+</tr>
+</table>
+<div style="background-color: #F6EBDC;
+        padding: 10px 25px; margin-bottom:10px; margin-top:5px;
+        border-radius: 10px;
+        border:2px solid #a00;
+        font-size: 1.25em; line-height:1.4;">
+<h2>PDF Access Denied</h2>
+<p>
+<b>Warning:</b>&nbsp;
+We have not been able to recognize your IP address <b>157.92.4.4</b>
+as that of a subscriber to this journal.
+Online access to the content of recent issues is by
+subscription, or purchase of single articles.
+</p><p>
+Please contact your institution's librarian suggesting a subscription, for example by using our <a href="http://msp.org/forms/recommend/">journal-recommendation form</a>.
+</p>
+<p>
+Or, visit our
+<a href="http://msp.org/publications/journals/">subscription page</a>
+for instructions on purchasing a subscription.
+You may also contact us at
+<a href="/cdn-cgi/l/email-protection#d6b5b9b8a2b7b5a296bba5a6f8b9a4b1"><span class="__cf_email__" data-cfemail="7a1915140e1b190e3a17090a5415081d">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
+/* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></a> or by using our <a href="http://msp.org/forms/contact/">contact form</a>.
+</p><p> Or, you may purchase this single article for USD 9.95:
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target='_blank'>
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="BPT4UT77XMXGN">
+<input type="hidden" name="on1" value="paper_id">
+<input type="hidden" name="os1" value="20801">
+<input type="hidden" name="on0" value="title">
+<input type="hidden" name="os0" value="An application of Google's PageRank to {NFL} rankings">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" onclick='xmlHttp = new XMLHttpRequest();xmlHttp.open("GET","/newmsp/buy_ping.php", true );xmlHttp.send( null ); return true;' border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+</p>
+</div><table cellspacing="0" cellpadding="0" class="article">
+<tr>
+<td class="article-area">
+<h5>Keywords</h5>
+<div class="keywords">
+PageRank algorithm, linear algebra, ranking football teams
+</div>
+</td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="article">
+<tr>
+<td class="article-area">
+<h5>Mathematical Subject Classification 2010</h5>
+<div class="keywords">
+Primary: 15A18, 15A99, 68M01
+</div>
+</td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="article">
+<tr>
+<td class="article-area">
+<h5>Milestones</h5>
+<div class="keywords">
+Received: 10 January 2012
+</div>
+<div class="keywords">
+Accepted: 16 June 2012
+</div>
+<div class="keywords">
+Published: 14 June 2013
+</div><br/>
+<div class="keywords">
+Communicated by Charles R. Johnson
+</div>
+</td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="article">
+<tr>
+<td class="article-area">
+<h5>Authors</h5>
+</td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" class="author-contact">
+<tr>
+<td class="author-name" colspan="2"><a href="#email" class="author-name" onclick="javascript: if(confirm('Would you like to see this person\'s email?')){ var a = Array(37615,56538,14763,56924,37592,7144,17946,32917,17604,61094); var p = 65539; var b = Array(2 * a.length); for(var i = 0; i &lt; a.length; i++){ var t = 1; for(var j = 0; j &lt;65536; j++){ if (t == a[i]){ b[2*i] = String.fromCharCode(j &amp; 255); b[2*i + 1] = String.fromCharCode((j &gt;&gt;&gt; 8) &amp; 255); j = 65536; }; t = (2 * t) % p ; }; } alert(b.join('')); } ;return false;">
+Laurie Zack</a></td>
+</tr>
+<tr>
+<td class="author-address">High Point University<br/>
+833 Montlieu Avenue<br/>
+High Point, NC 27262<br/>
+United States</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td class="author-name" colspan="2"><a href="#email" class="author-name" onclick="javascript: if(confirm('Would you like to see this person\'s email?')){ var a = Array(35216,43182,25502,56924,37592,7144,17946,32917,17604,61094); var p = 65539; var b = Array(2 * a.length); for(var i = 0; i &lt; a.length; i++){ var t = 1; for(var j = 0; j &lt;65536; j++){ if (t == a[i]){ b[2*i] = String.fromCharCode(j &amp; 255); b[2*i + 1] = String.fromCharCode((j &gt;&gt;&gt; 8) &amp; 255); j = 65536; }; t = (2 * t) % p ; }; } alert(b.join('')); } ;return false;">
+Ron Lamb</a></td>
+</tr>
+<tr>
+<td class="author-address">High Point University<br/>
+833 Montlieu Avenue<br/>
+High Point, NC 27262<br/>
+United States</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td class="author-name" colspan="2"><a href="#email" class="author-name" onclick="javascript: if(confirm('Would you like to see this person\'s email?')){ var a = Array(24234,16935,44035,29684,57934,26307,58777,1364,39162,51442,47849,18209,26694,16123,383); var p = 65539; var b = Array(2 * a.length); for(var i = 0; i &lt; a.length; i++){ var t = 1; for(var j = 0; j &lt;65536; j++){ if (t == a[i]){ b[2*i] = String.fromCharCode(j &amp; 255); b[2*i + 1] = String.fromCharCode((j &gt;&gt;&gt; 8) &amp; 255); j = 65536; }; t = (2 * t) % p ; }; } alert(b.join('')); } ;return false;">
+Sarah Ball</a></td>
+</tr>
+<tr>
+<td class="author-address">High Point University<br/>
+833 Montlieu Avenue<br/>
+High Point, NC 27262<br/>
+United States</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table cellspacing="0" cellpadding="0" class="pause">
+<tr>
+<td class="action-end"><img src="/involve/etc/z.gif" alt=""/></td>
+</tr>
+</table>
+</td>
+<td id="content-area-end"></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" id="footer-area">
+<tr>
+<td class="box-footer" onclick="javascript:window.location='http://msp.org/';">
+<img src="/mod/images/msp-logo.png" alt="Mathematical Sciences Publishers"/>
+<p class="copyright">© Copyright 2012 Mathematical Sciences
+Publishers. All rights reserved.</p>
+</td>
+</tr>
+</table><script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          processEscapes: true,
+        },
+        "HTML-CSS": {
+          availableFonts: ["TeX"],
+          mtextFontInherit: true,
+          scale: 90
+        },
+        TeX: {
+          extensions: [
+            "autoload-all.js"
+          ],
+          TagSide: "right",
+          equationNumbers: { autoNumber: "AMS" },
+          Macros: {
+            epsilon: '\\varepsilon',
+            phi: '\\varphi'
+          }
+        },
+        showMathMenu: "false",
+        showMathMenuMSIE: "false",
+      });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js">
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
+/* ]]> */
+</script>
+</body>
+</html>

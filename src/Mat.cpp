@@ -23,7 +23,15 @@ double Mat::operator()(size_t i, size_t j) const
 
 Mat& Mat::operator+(const Mat& anotherMat)
 {
+	Mat& thisMat = *this;
 
+	for (int i = 0; i < rows_; i++) {
+		for (int j = 0; j < cols_; j++) {
+			thisMat(i, j) += anotherMat(i, j);
+		}
+	}
+
+	return thisMat;
 }
 
 
@@ -40,6 +48,39 @@ Mat& Mat::operator*(const Mat& anotherMat)
 	//assert(this->cols_ == anotherMat.rows_ && "Cols and Rows don't match");
 }
 
+
+
+Mat& Mat::operator*(double scalar)
+{
+	Mat& thisMat = *this;
+
+	for (int i = 0; i < rows_; i++) {
+		for (int j = 0; j < cols_; j++) {
+			thisMat(i, j) *= scalar;
+		}
+	}
+
+	return thisMat;
+}
+
+
+vector<double> Mat::operator*(const vector<double>& x)
+{
+	vector<double> res(x.size());
+	Mat& thisMat = *this;
+	
+	assert(x.size() == cols_&& "Error al multiplicar matriz y vector de diferentes dimensiones");
+
+	for (int i = 0; i < rows_; i++) {
+		double mult = 0;
+		for(int j = 0; j < cols_; j++) {
+			mult += thisMat(i,j) * x[j];
+		}
+		res[i] = mult;
+	}
+
+	return res;
+}
 
 
 size_t Mat::rows() const

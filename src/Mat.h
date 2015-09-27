@@ -20,10 +20,11 @@ class Mat {
 	    Mat& operator+(const Mat& anotherMat);
 	    Mat& operator-(const Mat& anotherMat);
 	    Mat& operator*(const Mat& anotherMat);
+	    Mat& operator*(double scalar);
+	    vector<double> operator*(const vector<double>& x);
 	    size_t rows() const;
 	    size_t cols() const;
 	    Mat clone() const;
-
 		void Show();
 		void ShowOctave();
 		void checkBandMat();

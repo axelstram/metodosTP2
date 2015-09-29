@@ -1,22 +1,30 @@
 #include "csr.h"
 
 
-CompressedSparseRow::CompressedSparseRow(size_t n, size_t m) : rows_(n), cols_(m) {}
+CompressedSparseRow::CompressedSparseRow(size_t n, size_t m) : rows_(n), cols_(m) {
+
+	for(int i = 0; i<n; i++) row_ptr_.push_back(-1);
+}
 
 
-CompressedSparseRow::~CompressedSparseRow() {}
+CompressedSparseRow::~CompressedSparseRow(){}
 
 
 //usado para leer un elemento
-double CompressedSparseRow::operator()(size_t i, size_t j)
+double CompressedSparseRow::operator()(size_t i, size_t j) const
 {
 	int k = row_ptr_[i];
 	int condicion;
-	if(i == rows_ -1){
-		//soy la ultima fila, row_ptr_[i+1] se indefine 
-		condicion = value_.size()-1;
-	}else{
+	if(i < row_ptr_.size() -1){
 		condicion = row_ptr_[i+1]-1;
+	}else{
+		if(i == row_ptr_.size()){
+			//soy la ultima fila definida, row_ptr_[i+1] se indefine 
+			condicion = value_.size()-1;
+		}else{
+			//caso en que tengo menos filas definidas que rows_(las filas posta)
+			condicion = rows_;
+		}
 	}
 
 	do{
@@ -28,77 +36,105 @@ double CompressedSparseRow::operator()(size_t i, size_t j)
 }
 
 
-//para agregar un elemento
-void CompressedSparseRow::operator()(size_t i, size_t j, double value)
+//para agregar un elemento, devuelve referencia
+double& CompressedSparseRow::operator()(size_t i, size_t j)
 {
-	//matriz vacia
-	if(value_.empty()){
-		//si no es la primer fila
-		if(i != 0){
-			//filas vacias
-			for(int k = 0; k < i; k++){
-				value_.push_back(-1.0);
-				col_ind_.push_back(-1);
-				row_ptr_.push_back(k);
+	//
+	//cout << "HOLA " << i << " " << j;
+	//cout.flush();
+	if(row_ptr_[i] == -1){
+		//caso soy fila vacia, busco mi siguiente no vacio
+		int next_row;
+		for(next_row = i+1; next_row < rows_; next_row++){
+			if(row_ptr_[next_row] != -1){
+				break;
 			}
-			row_ptr_.push_back(i);
-		}else{
-			row_ptr_.push_back(0);
 		}
-		//termino de agregar el resto de la info
-		value_.push_back(value);
-		col_ind_.push_back(j);
-	}else{
-
-		if(i == row_ptr_.size()-1){
-			//sigo agregando elementos a fila i
+		if(next_row == rows_){
+			//no habia ningun siguiente, soy el ultimo
+			row_ptr_[i] = value_.size();
 			col_ind_.push_back(j);
-			value_.push_back(value);
+			value_.push_back(0);
+			return value_.back();
 		}else{
-			if(i == row_ptr_.size()){
-				//fila nueva
-				col_ind_.push_back(j);
-				value_.push_back(value);
-				row_ptr_.push_back(value_.size()-1);
+			//encontre la fila siguiente a mi
+			int p = row_ptr_[next_row];
+			value_.emplace(value_.begin() + p, 0);
+			col_ind_.emplace(col_ind_.begin() + p, j);
+			row_ptr_[i] = p;
+			//corrijo el indice de mis siguientes validos
+			for(int h = i+1; h < rows_; h++){
+				if(row_ptr_[h] != -1) row_ptr_[h]++;
 			}
-			if(i > row_ptr_.size()){
-				//agrego filas de ceros y luego la nueva fila
-				for(int k = 0; k < i - row_ptr_.size(); k++){//agrego las filas ceros
-					col_ind_.push_back(-1.0);
-					value_.push_back(-1.0);
-					row_ptr_.push_back(value_.size()-1);
+
+			return value_.at(p);
+		}
+	}else{
+		//cout << "HOLA 1212";
+		//cout.flush();
+		//caso no soy vacia, me agrego en mi zona
+		//me fijo si mi posicion es anterior al row_pointer
+		if(j < col_ind_[row_ptr_[i]]){
+			int p = row_ptr_[i];
+			value_.emplace(value_.begin() + p, 0);
+			col_ind_.emplace(col_ind_.begin() + p, j);
+
+			//corrijo el indice de mis siguientes validos
+			for(int h = i+1; h < rows_; h++){
+				if(row_ptr_[h] != -1) row_ptr_[h]++;
+			}
+
+			return value_.at(p);
+		}else{
+			// busco de donde hasta donde son los values de mi row
+			//cout << "HOLA 123";
+			//cout.flush();
+			int from = row_ptr_[i];
+			int next_row_ptr = value_.size(); 
+			for (int h = i+1; h < row_ptr_.size(); ++h)
+			{
+				if(row_ptr_[h] != -1){
+					next_row_ptr = row_ptr_[h];
+					break;
 				}
-				//y agrego la nueva fila
-				col_ind_.push_back(j);
-				value_.push_back(value);
-				row_ptr_.push_back(value_.size()-1);
+			}
+
+			// from = indice del primer elem de la row en value
+			// next_row_ptr = indice del primer elem de la sigueinte row no nula, a lo sumo es el final 
+			//cout << "HOLA 345  " << from << " " << next_row_ptr;
+			//cout.flush();
+			for ( ; from <= next_row_ptr; ++from)
+			{
+				// for (int k = 0; k < value_.size(); ++k)
+				// {
+				// 	cout << value_[k] << " "; 					
+				// }
+				//cout << "to: " << next_row_ptr << " " << value_[next_row_ptr] << endl;
+				//cout << "from: " << from << " " << value_[from] << endl;
+				//cout << "if: " << j << "== "<< col_ind_[from] << endl;
+				if(j == col_ind_[from]){
+					return value_.at(from);
+				}else{
+					//cout << "DANGER" << endl;
+					//cout.flush();
+					//cout << j << "<" << col_ind_[from] << endl;
+					if(j < col_ind_[from] || from == next_row_ptr){
+						// agrego antes de value_[from]
+						value_.emplace(value_.begin() + from, 0);
+						col_ind_.emplace(col_ind_.begin() + from , j);
+						//corrijo el indice de mis siguientes validos
+						for(int h = i+1; h < rows_; h++){
+							if(row_ptr_[h] != -1) row_ptr_[h]++;
+						}
+						return value_.at(from);
+					}
+				}
+					
 			}
 		}
 	}
-} 
-
-
-/*
-CompressedSparseRow& CompressedSparseRow::operator+(const CompressedSparseRow& anotherCompressedSparseRow)
-{
-
 }
 
-
-
-CompressedSparseRow& CompressedSparseRow::operator-(const CompressedSparseRow& anotherCompressedSparseRow)
-{
-
-}
-
-
-
-CompressedSparseRow& CompressedSparseRow::operator*(const CompressedSparseRow& anotherCompressedSparseRow)
-{
-	//assert(this->cols_ == anotherCompressedSparseRow.rows_ && "Cols and Rows don't CompressedSparseRowch");
-}
-
-*/
 
 size_t CompressedSparseRow::rows() const
 {
@@ -111,41 +147,6 @@ size_t CompressedSparseRow::cols() const
 {
 	return cols_;
 }
-
-
-/*
-CompressedSparseRow CompressedSparseRow::clone() const
-{
-	CompressedSparseRow res(rows_, cols_);
-	const CompressedSparseRow& thisCompressedSparseRow = *this;
-
-	for (int i = 0; i < rows_; i++) {
-		for (int j = 0; j < cols_; j++) {
-			res(i, j) = thisCompressedSparseRow(i, j);
-		}
-	}
-
-	return res;
-}
-
-
-*/
-
-// void CompressedSparseRow::ShowOctave()
-// {
-// 	CompressedSparseRow& thisCompressedSparseRow = *this;
-// 	cout << "[";
-// 	for (int j = 0; j < rows_; j++) {
-// 		for (int k = 0; k < cols_; k++) {
-// 			if (thisCompressedSparseRow(j,k) == 1 || thisCompressedSparseRow(j,k) == 0)
-// 				cout << thisCompressedSparseRow(j,k) << ".000000000 ";
-// 			else
-// 				cout << thisCompressedSparseRow(j,k) << " ";
-// 		}
-// 		cout << "; ";
-// 	}
-// 	cout << "]";
-// }
 
 
 void CompressedSparseRow::show_vectors(){
@@ -181,15 +182,3 @@ void CompressedSparseRow::Show()
 		}
 	}
 }
-
-
-
-/*
-void CompressedSparseRow::GetKeys(){
-std::vector<char> v;
-	for(pair<int,int>,double>::iterator it = data_.begin(); it != data_.end(); ++it) {
-		v.push_back(it->first);
-		cout << it->first << "\n";
-	}
-}
-*/

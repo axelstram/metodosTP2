@@ -10,11 +10,20 @@ CompressedSparseRow::~CompressedSparseRow() {}
 //usado para leer un elemento
 double CompressedSparseRow::operator()(size_t i, size_t j)
 {
-	int idx_init_row = row_ptr_[i];
-	//busco la posicion de la columna j en el area de la fila i
-	for(int k = idx_init_row; k < row_ptr_[i+1]-1; k++){
-		if(j == col_ind_[k]) return value_[k];
+	int k = row_ptr_[i];
+	int condicion;
+	if(i == rows_ -1){
+		//soy la ultima fila, row_ptr_[i+1] se indefine 
+		condicion = value_.size()-1;
+	}else{
+		condicion = row_ptr_[i+1]-1;
 	}
+
+	do{
+		if(j == col_ind_[k]) return value_[k];
+		k++;
+	}while(k <= condicion);
+	//no me encontre, soy cero
 	return 0;
 }
 
@@ -22,19 +31,50 @@ double CompressedSparseRow::operator()(size_t i, size_t j)
 //para agregar un elemento
 void CompressedSparseRow::operator()(size_t i, size_t j, double value)
 {
-	//caso en que hay una o varias filas de ceros
-	if(col_ind_.size()-1 < i){
-		for(int k = 0; k < i-col_ind_.size(); k++){
-			col_ind_.push_back(-1);
-			value_.push_back(-1.0);
-			row_ptr_.push_back(value_.size());
+	//matriz vacia
+	if(value_.empty()){
+		//si no es la primer fila
+		if(i != 0){
+			//filas vacias
+			for(int k = 0; k < i; k++){
+				value_.push_back(-1.0);
+				col_ind_.push_back(-1);
+				row_ptr_.push_back(k);
+			}
+			row_ptr_.push_back(i);
+		}else{
+			row_ptr_.push_back(0);
 		}
-	}    
-	//add add value an its column at the end (for initialization only)
-	col_ind_.push_back(j);
-	value_.push_back(value);
-	row_ptr_.push_back(value_.size()-1);
+		//termino de agregar el resto de la info
+		value_.push_back(value);
+		col_ind_.push_back(j);
+	}else{
 
+		if(i == row_ptr_.size()-1){
+			//sigo agregando elementos a fila i
+			col_ind_.push_back(j);
+			value_.push_back(value);
+		}else{
+			if(i == row_ptr_.size()){
+				//fila nueva
+				col_ind_.push_back(j);
+				value_.push_back(value);
+				row_ptr_.push_back(value_.size()-1);
+			}
+			if(i > row_ptr_.size()){
+				//agrego filas de ceros y luego la nueva fila
+				for(int k = 0; k < i - row_ptr_.size(); k++){//agrego las filas ceros
+					col_ind_.push_back(-1.0);
+					value_.push_back(-1.0);
+					row_ptr_.push_back(value_.size()-1);
+				}
+				//y agrego la nueva fila
+				col_ind_.push_back(j);
+				value_.push_back(value);
+				row_ptr_.push_back(value_.size()-1);
+			}
+		}
+	}
 } 
 
 
@@ -129,26 +169,14 @@ void CompressedSparseRow::show_vectors(){
 
 void CompressedSparseRow::Show()
 {
-	//CompressedSparseRow& thisCSR = *this;
+	CompressedSparseRow& thisCSR = *this;
 	if(value_.empty()){
 		cout << "Matriz vacia" << endl;
 	}else{
-		for (int j = 0; j < rows_; j++) {
-			if (row_ptr_[j] == -1){		//fila de ceros
-				for(int i = 0; i < cols_; i++){
-					cout << 0 << " ";
-				}
-			}else{
-				int it_aux = row_ptr_[j]; //aca empieza la i-esima fila
-				for(int i = 0; i < cols_; i++){
-					if(i == col_ind_[it_aux]){
-						cout << value_[it_aux] << " ";
-						it_aux++;
-					}else{
-						cout << 0 << " ";
-					}
-				}
-			}	
+		for (int i = 0; i < rows_; i++) {
+			for(int j = 0; j < cols_; j++){
+				cout << thisCSR(i, j) << " ";	
+			}
 			cout << endl;
 		}
 	}

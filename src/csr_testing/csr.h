@@ -12,8 +12,8 @@ class CompressedSparseRow
 	CompressedSparseRow(size_t n, size_t m);
 	~CompressedSparseRow();
 
-	double operator()(size_t i, size_t j);
-	void operator()(size_t i, size_t j, double value);
+	double operator()(size_t i, size_t j); //leeer
+	void operator()(size_t i, size_t j, double value); //agregar elemento 
 //	Mat& operator+(const Mat& anotherMat);
 //	Mat& operator-(const Mat& anotherMat);
 //	Mat& operator*(const Mat& anotherMat);

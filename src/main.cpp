@@ -107,6 +107,24 @@ Mat loadWebGraph(string graph_file)
 	return A;
 }
 
+
+void normalizarMatrizEquipos( Mat& A){
+
+	//para cada elemento i j....
+	for (int i = 0; i < A.rows(); ++i){
+		//sumo la columna i
+		double acum = 0;
+		for (int k = 0; k < A.cols(); ++k){
+			acum += A(k,i);
+		}
+		//divido cada elemento de la fila i por acum
+		for (int j = 0; j < A.cols(); ++j){
+			A(i,j) /= acum;
+		}
+	}
+}
+
+
 Mat loadSportGraph(string graph_file){
 	Mat A(nodes,nodes);
 
@@ -137,8 +155,19 @@ Mat loadSportGraph(string graph_file){
 		equipo1--;
 		equipo2--;
 
-		A(equipo1, equipo2) += 1;
+
+		if(goles_equipo2>goles_equipo1)
+			A(equipo1, equipo2) += goles_equipo2-goles_equipo1;
+
+		if(goles_equipo1>goles_equipo2)
+			A(equipo2, equipo1) += goles_equipo1-goles_equipo2;
+
 	}
+
+	///normalizar matriz..
+	normalizarMatrizEquipos(A);
+
+
 
 	return A;
 }
@@ -167,6 +196,7 @@ Mat load_test_in(string test_in_file){
 		return A;
 	}else{
 		if(instance_type == SPORT_RANK){
+			cout << "aca" << endl;
 			Mat A = loadSportGraph(graph_file);
 		}
 	}
@@ -240,7 +270,7 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 		double z = 0;
 		for(int i = 0;i<nodes;i++) z += c*x[i]*1./(double)nodes;
 
-		for(int i = 0;i<nodes;i++) x[i] = x[i]*(1.-c);
+		for(int i = 0;i<nodes;i++) x[i] = x[i]*(1.-c)+z;
 
 	
 	for (int i = 0; i < x.size(); i++) {
@@ -300,8 +330,10 @@ int main(int argc, char* argv[])
 
 	
 	//Mat A = LoadMatrixFromFile("/home/sebs/Desktop/metodosTP2/src/multPrueba.txt");	
+
 	Mat A = load_test_in(argv[1]);
-	Mat M = LinkMatrixModification(A, c);
+	A.Show();
+	/*Mat M = LinkMatrixModification(A, c);
 
 	vector<double> x = {1, 1, 1, 1};
 	int maxIter = 10000000;
@@ -311,24 +343,6 @@ int main(int argc, char* argv[])
 	bool encontroResultado2 = MetodoPotencia2(M, x, tolerance, maxIter, res2);
 
 	bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
-/*
-cout<<res.first<<endl;
-
-vector<double > v=res.second;
-		double z = 0;
-		
-		for(int i = 0;i<nodes;i++) {
-			z += c*v[i]*1./(double)nodes;
-			cout << z << endl;
-		}
-cout<<"z "<<z<<endl;
-cout << "c " << c <<endl;
-		for(int i = 0;i<nodes;i++) v[i] = v[i]*(1.-c)+z;
-
-show_vector(v);
-cout<<res2.first<<endl;
-show_vector(res2.second);
-*/
 
 
 
@@ -362,108 +376,8 @@ show_vector(res2.second);
 	} else {
 		cout << "no encontro resultado" << endl;
 	}
-	
+	*/
 }
-
-
-
-/*Power method , to find the largest eigen value and the corrosponding
-eigen vector. The Eigen values for a particular matrix are unique but
-the eigen vector may not, since they can be represented in the form
-of multiples. For eg if [x,y,z] is an eigen vector then [kx,ky,kz] is
-also an eigen vector where k is a constant*/
-
-/*
-
-double a[20][20],x0[20],x[20],tol;
-int iter,n;
-
-
-void power()
-{
-    int i,j,k,l,flag=0,parameter=0;
-    double sum,lamda=0,para;
-
-    for(i=0;i<iter;i++)
-    {
-        para=lamda;
-        for(j=0;j<n;j++)    //calculates the next x vector
-        {
-            sum=0;
-            for(k=0;k<n;k++)
-            {
-                sum=sum+a[j][k]*x0[k];
-            }
-            x[j]=sum;
-        }
-        lamda=x[n-1];  //stores the highest eigen value
-        for(l=0;l<n;l++)
-        {
-            x[l]=x[l]/lamda;
-        }
-
-        if(fabs(lamda-para)<tol)
-        {
-            flag=1;
-            parameter=1;
-            break;
-        }
-        for(l=0;l<n;l++)
-            x0[l]=x[l];
-    }
-    if(parameter==0)
-        printf("\nDidn't Converge in the allowed iterations.");
-
-    if(flag)
-    {
-        printf("\nLargest Eigen Value : %lf\n",lamda);
-        printf("\nCorrosponding Eigen Vector :\n\t");
-        for(l=0;l<n;l++)
-        {
-            printf("%lf\n\t",x[l]);
-        }
-        printf("\nNo. of iterations : %d",i+1);
-    }
-}
-
-int main()
-{
-    int i,j;
-
-    printf("\nEnter the order of the matrix : ");
-    scanf("%d",&n);
-
-    printf("\nEnter the coefficient matrix A : ");
-    for(i=0;i<n;i++)
-    {
-        for(j=0;j<n;j++)
-        {
-            printf("\nEnter element [%d][%d] : ",i+1,j+1);
-            scanf("%lf",&a[i][j]);
-        }
-    }
-
-    printf("\nEnter the prescribed tolerance : ");
-    scanf("%lf",&tol);
-
-    printf("\nEnter the no. of iterations to be performed : ");
-    scanf("%d",&iter);
-
-    for(i=0;i<n;i++)
-        x0[i]=1;
-
-    printf("\nConsidering initial approximation for the Eigen Vector : \n\t");
-    for(i=0;i<n;i++)
-        printf("%lf\n\t",x0[i]);
-    power();
-    return 0;
-}
-*/
-
-
-
-
-
 
 
 

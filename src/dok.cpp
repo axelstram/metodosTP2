@@ -1,29 +1,28 @@
-#include "DictionaryOfKeys.h"
+#include "dok.h"
 
-
-DictionaryOfKeys::DictionaryOfKeys(std::vector<pair< ,std::vector<int> v;> > v;)
+DictionaryOfKeys::DictionaryOfKeys(size_t n, size_t m) : rows_(n), cols_(m)
 {
-
-
-
 }
 
 
+DictionaryOfKeys::~DictionaryOfKeys()
+{
+}
 
 double& DictionaryOfKeys::operator()(size_t i, size_t j)
 {
-    return 0;
+	return data_[make_pair(i,j)]; // http://www.cplusplus.com/reference/map/map/operator%5B%5D/
 }
 
 
 
 double DictionaryOfKeys::operator()(size_t i, size_t j) const
 {
-    return 0;
+    return data_.count(make_pair(i,j)) == 1 ? data_.find(make_pair(i,j))->second : 0.0;
 } 
 
 
-
+/*
 DictionaryOfKeys& DictionaryOfKeys::operator+(const DictionaryOfKeys& anotherDictionaryOfKeys)
 {
 
@@ -43,7 +42,7 @@ DictionaryOfKeys& DictionaryOfKeys::operator*(const DictionaryOfKeys& anotherDic
 	//assert(this->cols_ == anotherDictionaryOfKeys.rows_ && "Cols and Rows don't DictionaryOfKeysch");
 }
 
-
+*/
 
 size_t DictionaryOfKeys::rows() const
 {
@@ -58,7 +57,7 @@ size_t DictionaryOfKeys::cols() const
 }
 
 
-
+/*
 DictionaryOfKeys DictionaryOfKeys::clone() const
 {
 	DictionaryOfKeys res(rows_, cols_);
@@ -74,6 +73,7 @@ DictionaryOfKeys DictionaryOfKeys::clone() const
 }
 
 
+*/
 
 void DictionaryOfKeys::ShowOctave()
 {
@@ -86,7 +86,7 @@ void DictionaryOfKeys::ShowOctave()
 			else
 				cout << thisDictionaryOfKeys(j,k) << " ";
 		}
-		cout << ";";
+		cout << "; ";
 	}
 	cout << "]";
 }
@@ -106,4 +106,12 @@ void DictionaryOfKeys::Show()
 		cout << endl;
 	}
 }
-// Redefinir operador <<
+/*
+void DictionaryOfKeys::GetKeys(){
+std::vector<char> v;
+	for(pair<int,int>,double>::iterator it = data_.begin(); it != data_.end(); ++it) {
+		v.push_back(it->first);
+		cout << it->first << "\n";
+	}
+}
+*/

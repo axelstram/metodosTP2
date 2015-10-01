@@ -6,10 +6,6 @@ CompressedSparseRow::CompressedSparseRow(size_t n, size_t m) : rows_(n), cols_(m
 	for(int i = 0; i<n; i++) row_ptr_.push_back(-1);
 }
 
-
-CompressedSparseRow::~CompressedSparseRow(){}
-
-
 //usado para leer un elemento
 double CompressedSparseRow::operator()(size_t i, size_t j) const
 {
@@ -36,12 +32,9 @@ double CompressedSparseRow::operator()(size_t i, size_t j) const
 }
 
 
-//para agregar un elemento, devuelve referencia
+//para agregar/modificar un elemento, devuelve referencia
 double& CompressedSparseRow::operator()(size_t i, size_t j)
 {
-	//
-	//cout << "HOLA " << i << " " << j;
-	//cout.flush();
 	if(row_ptr_[i] == -1){
 		//caso soy fila vacia, busco mi siguiente no vacio
 		int next_row;
@@ -70,9 +63,7 @@ double& CompressedSparseRow::operator()(size_t i, size_t j)
 			return value_.at(p);
 		}
 	}else{
-		//cout << "HOLA 1212";
-		//cout.flush();
-		//caso no soy vacia, me agrego en mi zona
+		//caso mi fila no es vacia, me agrego en mi zona
 		//me fijo si mi posicion es anterior al row_pointer
 		if(j < col_ind_[row_ptr_[i]]){
 			int p = row_ptr_[i];
@@ -87,8 +78,6 @@ double& CompressedSparseRow::operator()(size_t i, size_t j)
 			return value_.at(p);
 		}else{
 			// busco de donde hasta donde son los values de mi row
-			//cout << "HOLA 123";
-			//cout.flush();
 			int from = row_ptr_[i];
 			int next_row_ptr = value_.size(); 
 			for (int h = i+1; h < row_ptr_.size(); ++h)
@@ -98,26 +87,13 @@ double& CompressedSparseRow::operator()(size_t i, size_t j)
 					break;
 				}
 			}
-
 			// from = indice del primer elem de la row en value
 			// next_row_ptr = indice del primer elem de la sigueinte row no nula, a lo sumo es el final 
-			//cout << "HOLA 345  " << from << " " << next_row_ptr;
-			//cout.flush();
 			for ( ; from <= next_row_ptr; ++from)
 			{
-				// for (int k = 0; k < value_.size(); ++k)
-				// {
-				// 	cout << value_[k] << " "; 					
-				// }
-				//cout << "to: " << next_row_ptr << " " << value_[next_row_ptr] << endl;
-				//cout << "from: " << from << " " << value_[from] << endl;
-				//cout << "if: " << j << "== "<< col_ind_[from] << endl;
 				if(j == col_ind_[from]){
 					return value_.at(from);
 				}else{
-					//cout << "DANGER" << endl;
-					//cout.flush();
-					//cout << j << "<" << col_ind_[from] << endl;
 					if(j < col_ind_[from] || from == next_row_ptr){
 						// agrego antes de value_[from]
 						value_.emplace(value_.begin() + from, 0);
@@ -165,20 +141,4 @@ void CompressedSparseRow::show_vectors(){
 		cout << col_ind_[i] << " " ;
 	}
 	cout << endl;
-}
-
-
-void CompressedSparseRow::Show()
-{
-	CompressedSparseRow& thisCSR = *this;
-	if(value_.empty()){
-		cout << "Matriz vacia" << endl;
-	}else{
-		for (int i = 0; i < rows_; i++) {
-			for(int j = 0; j < cols_; j++){
-				cout << thisCSR(i, j) << " ";	
-			}
-			cout << endl;
-		}
-	}
 }

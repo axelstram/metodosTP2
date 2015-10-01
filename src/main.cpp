@@ -401,8 +401,8 @@ for(int i=0;i<rank.size();i++)cout<< "("<<rank[i].second<<","<<rank[i].first<<")
 
 
 bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pair<double, vector<double>>& res);
-vector<double> power_method_damian(Mat A,vector<double> v);
-void power_method_internet_v1(Mat A,vector<double> x);
+vector<double> power_method_d(Mat A,vector<double> v);
+void power_method_short(Mat A,vector<double> x);
 
 int main(int argc, char* argv[])
 {	
@@ -413,13 +413,12 @@ int main(int argc, char* argv[])
  	Mat A = load_test_in(argv[1]);
  	Mat M = LinkMatrixModification(A, c);
 
-cout<<"------------------"<<endl;
+	cout<<"------------------"<<endl;
 
+	IN_DEG(A);
 
-IN_DEG(A);
+	cout<<"------------------"<<endl;
 
-
-cout<<"------------------"<<endl;
  	A.Show();
  	cout<<endl;
  	M.Show();
@@ -427,10 +426,9 @@ cout<<"------------------"<<endl;
 
 
  	vector<double> x = {1, 1, 1, 1};
-power_method_internet_v1(A,x);
+	power_method_short(A,x);
 
 /*
-
 	//A.Show();
 	
 	Mat M = LinkMatrixModification(A, c);
@@ -444,14 +442,17 @@ power_method_internet_v1(A,x);
 
 	//bool encontroResultado2 = MetodoPotencia(A, x, c , tolerance, maxIter, res2);
 
-//res2.second = power_method_damian(A,x);
+	//res2.second = power_method_d(A,x);
 
 		if (encontroResultado) {
 
 		} else {
 	 		cout << "no encontro resultado" << endl;
 	    }
-	*/
+*/
+
+
+
 }
 
 
@@ -556,7 +557,7 @@ double norm_uno(vector<double> y){
 	return res;
 }
 
-vector<double> power_method_damian(Mat A,vector<double> v){
+vector<double> power_method_d(Mat A,vector<double> v){
 	double delta;
 	vector<double> x = v;
 	vector<double> y;
@@ -588,7 +589,7 @@ vector<double> power_method_damian(Mat A,vector<double> v){
 
 
 
-void power_method_internet_v1(Mat A,vector<double> x)
+void power_method_short(Mat A,vector<double> x)
 {
 double temp;
 int n = nodes;

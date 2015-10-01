@@ -22,6 +22,8 @@ class Mat {
 	    Mat& operator*(const Mat& anotherMat);
 	    Mat& operator*(double scalar);
 	    vector<double> operator*(const vector<double>& x);
+	    Mat& operator=(const Mat& anotherMat);
+	    Mat(const Mat& anotherMat);
 	    size_t rows() const;
 	    size_t cols() const;
 	    Mat clone() const;
@@ -30,8 +32,6 @@ class Mat {
 		void checkBandMat();
 
 	private:
-		bool is_band;
-		int band_ceros_count;
 
 	    size_t rows_;
 	    size_t cols_;

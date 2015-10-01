@@ -36,6 +36,25 @@ Mat& Mat::operator+(const Mat& anotherMat)
 
 
 
+Mat::Mat(const Mat& anotherMat)
+{
+	this->rows_ = anotherMat.rows_;
+	this->cols_ = anotherMat.cols_;
+	this->data_ = anotherMat.data_;
+}
+
+
+
+Mat& Mat::operator=(const Mat& anotherMat)
+{
+	this->rows_ = anotherMat.rows_;
+	this->cols_ = anotherMat.cols_;
+	this->data_ = anotherMat.data_;
+
+	return *this;
+}
+
+
 Mat& Mat::operator-(const Mat& anotherMat)
 {
 
@@ -133,15 +152,19 @@ void Mat::ShowOctave()
 
 void Mat::Show()
 {
+
+
 	Mat& thisMat = *this;
 	for (int j = 0; j < rows_; j++) {
 		for (int k = 0; k < cols_; k++) {
 			if (thisMat(j,k) == 1 || thisMat(j,k) == 0)
-				cout << thisMat(j,k) << ".000000000 ";
+				cout << thisMat(j,k) << ".0 ";
+				//cout << thisMat(j,k) << ".000000000 ";
 			else
 				cout << thisMat(j,k) << " ";
 		}
 		cout << endl;
 	}
+
 }
 // Redefinir operador <<

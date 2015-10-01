@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include <stdio.h>
+#include <algorithm>
 #include <stdlib.h>
 #include <math.h>
 #include "Mat.h"
@@ -111,22 +112,26 @@ Mat loadWebGraph(string graph_file)
 void normalizarMatrizEquipos( Mat& A){
 
 	//para cada elemento i j....
-	for (int i = 0; i < A.rows(); ++i){
+	for (int i = 0; i < A.cols(); ++i){
 		//sumo la columna i
 		double acum = 0;
-		for (int k = 0; k < A.cols(); ++k){
+		for (int k = 0; k < A.rows(); ++k){
 			acum += A(k,i);
 		}
+
 		//divido cada elemento de la fila i por acum
-		for (int j = 0; j < A.cols(); ++j){
-			A(i,j) /= acum;
+		for (int j = 0; j < A.rows(); ++j){
+			if (acum != 0)
+				A(j,i) /= acum;
+			else
+				A(j,i) = 1./A.rows();
 		}
 	}
 }
 
 
 Mat loadSportGraph(string graph_file){
-	Mat A(nodes,nodes);
+
 
 	ifstream f(graph_file);
 	string s;
@@ -136,6 +141,10 @@ Mat loadSportGraph(string graph_file){
 
 	f >> s;
 	edges = stoi(s);
+
+
+	Mat A(nodes,nodes);
+
 
 	for (int i = 0; i < edges; i++) {
 		int fecha;
@@ -155,19 +164,17 @@ Mat loadSportGraph(string graph_file){
 		equipo1--;
 		equipo2--;
 
-
 		if(goles_equipo2>goles_equipo1)
-			A(equipo1, equipo2) += goles_equipo2-goles_equipo1;
+			A(equipo2, equipo1) += (double)(goles_equipo2-goles_equipo1);
 
 		if(goles_equipo1>goles_equipo2)
-			A(equipo2, equipo1) += goles_equipo1-goles_equipo2;
+			A(equipo1, equipo2) += (double)(goles_equipo1-goles_equipo2);
 
 	}
-
+	A.Show();
+	cout<<endl<<endl;
 	///normalizar matriz..
 	normalizarMatrizEquipos(A);
-
-
 
 	return A;
 }
@@ -194,12 +201,12 @@ Mat load_test_in(string test_in_file){
 	if(instance_type == WEB_RANK){
 		Mat A = loadWebGraph(graph_file);
 		return A;
-	}else{
-		if(instance_type == SPORT_RANK){
-			cout << "aca" << endl;
-			Mat A = loadSportGraph(graph_file);
-		}
+
+	}else if(instance_type == SPORT_RANK) {
+		Mat A = loadSportGraph(graph_file);
+		return A;
 	}
+
 }
 
 
@@ -263,34 +270,34 @@ vector<double> vec_sub(vector<double>& x, vector<double>& y)
 bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxIter, pair<double, vector<double>>& res)
 {
 	int k = 1;
-	double infNormX = normaInfVec(x);
 	//double lambda = 0;
 	double anterior;
 
-		double z = 0;
-		for(int i = 0;i<nodes;i++) z += c*x[i]*1./(double)nodes;
-
-		for(int i = 0;i<nodes;i++) x[i] = x[i]*(1.-c)+z;
 
 	
+	double infNormX = normaInfVec(x);
+
 	for (int i = 0; i < x.size(); i++) {
 		x[i] /= infNormX;
 	}
 	
+	double z = 0;
+	for(int i = 0;i<nodes;i++) z += c*x[i]*1./(double)nodes;
+
+	for(int i = 0;i<nodes;i++) x[i] = x[i]*(1.-c);
+
+
+
 
 	while (k <= maxIter) {
 		anterior = infNormX;
 		
 		vector<double> y = A*x;
-		//vec_sum
+		for (int i = 0; i < y.size(); i++)
+			y[i] += z;
 
-		z=0;
-		for(int i = 0;i<nodes;i++) z += c*y[i]*1./(double)nodes;
 
-		for(int i = 0;i<nodes;i++) y[i] = y[i]*(1.-c) + z;
-
-		double infNormY = normaInfVec(y);		
-	
+		double infNormY = normaInfVec(y);			
 		
 		if (infNormY == 0) {
 			cout << "Vector inicial incorrecto" << endl;
@@ -301,14 +308,19 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 			y[i] /= infNormY;
 		}
 		
+
+
+		z = 0;
+		for(int i = 0;i<nodes;i++) z += c*y[i]*1./(double)nodes;
+
+		for(int i = 0;i<nodes;i++) y[i] = y[i]*(1.-c);
+
 		//show_vector(y);
 
 
 		
 		double error = normaInfVec(vec_sub(x, y));
-		
-		//double error = fabs(lambda - para);
-		
+				
 		if (error < tolerance) {
 			res = make_pair(infNormY, y);
 			return true;
@@ -322,60 +334,123 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 	return false;
 }
 
-bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pair<double, vector<double>>& res);
 
-int main(int argc, char* argv[])
+
+
+void ChequearAutovector(Mat& A, double autoval, vector<double>& x)
+{
+	
+		cout << "autovalor " << autoval << endl; 
+		cout << "autovector " << endl;
+		show_vector(x);
+		cout << endl;
+
+		vector<double> Ax = A*x;
+		vector<double> lambda_x(Ax.size());
+
+		for (int i = 0; i < lambda_x.size(); i++)
+			lambda_x[i] = autoval * x[i];
+
+		vector<double> Ax_menos_lambda_x = vec_sub(Ax, lambda_x);
+
+		for (int i = 0; i < Ax_menos_lambda_x.size(); i++) {
+			if (Ax_menos_lambda_x[i] > 0.001) {
+				cout << "Ax y lambda*x distintos" << endl;
+				cout << "Ax: ";
+				show_vector(Ax);
+				cout << "lambda*x: ";
+				show_vector(lambda_x);
+			
+				return;
+			}
+		}
+
+		cout << "Ax y lambda*x iguales" << endl;		
+	
+}
+
+bool comparePair(pair<int,int> p1,pair<int,int> p2){
+
+return p1.second > p2.second;
+}
+
+vector<pair<int,int> > IN_DEG(Mat A)
 {
 
+	vector<pair<int,int> > rank;
 
+	for(int i = 0;i<A.rows();i++){
+		int links_entrantes = 0;
+		for(int j = 0;j<A.cols();j++){
+			if(A(i,j)!=0)links_entrantes++;
+		}
+		rank.push_back(make_pair(i,links_entrantes));
+	}
+
+sort(rank.begin(), rank.end(), comparePair);
+
+for(int i=0;i<rank.size();i++)cout<< "("<<rank[i].second<<","<<rank[i].first<<") ";
+	cout<<endl;
+
+	return rank;
+
+}
+
+
+
+
+
+bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pair<double, vector<double>>& res);
+vector<double> power_method_damian(Mat A,vector<double> v);
+void power_method_internet_v1(Mat A,vector<double> x);
+
+int main(int argc, char* argv[])
+{	
+
+
+
+	//Mat A = LoadMatrixFromFile("/home/vivi/metodosTP2/src/matrizpiolaM.txt");	
+ 	Mat A = load_test_in(argv[1]);
+ 	Mat M = LinkMatrixModification(A, c);
+
+cout<<"------------------"<<endl;
+
+
+IN_DEG(A);
+
+
+cout<<"------------------"<<endl;
+ 	A.Show();
+ 	cout<<endl;
+ 	M.Show();
+
+
+
+ 	vector<double> x = {1, 1, 1, 1};
+power_method_internet_v1(A,x);
+
+/*
+
+	//A.Show();
 	
-	//Mat A = LoadMatrixFromFile("/home/sebs/Desktop/metodosTP2/src/multPrueba.txt");	
-
-	Mat A = load_test_in(argv[1]);
-	A.Show();
-	/*Mat M = LinkMatrixModification(A, c);
-
+	Mat M = LinkMatrixModification(A, c);
+	M.Show();
 	vector<double> x = {1, 1, 1, 1};
 	int maxIter = 10000000;
 	pair<double, vector<double>> res;
 	pair<double, vector<double>> res2;
 
-	bool encontroResultado2 = MetodoPotencia2(M, x, tolerance, maxIter, res2);
+	bool encontroResultado = MetodoPotencia2(M, x, tolerance, maxIter, res2);
 
-	bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
+	//bool encontroResultado2 = MetodoPotencia(A, x, c , tolerance, maxIter, res2);
 
+//res2.second = power_method_damian(A,x);
 
+		if (encontroResultado) {
 
-	if (encontroResultado) {
-		cout << "autovalor " << res.first << endl; 
-		cout << "autovector " << endl;
-		show_vector(res.second);
-		cout << endl;
-
-		vector<double> Mx = M*res.second;
-		vector<double> lambda_x(Mx.size());
-
-		for (int i = 0; i < lambda_x.size(); i++)
-			lambda_x[i] = res.first * res.second[i];
-
-		vector<double> Mx_menos_lambda_x = vec_sub(Mx, lambda_x);
-
-		for (int i = 0; i < Mx_menos_lambda_x.size(); i++) {
-			if (Mx_menos_lambda_x[i] > 0.001) {
-				cout << "Mx y lambda*x distintos" << endl;
-				cout << "Mx: ";
-				show_vector(Mx);
-				cout << "lambda*x: ";
-				show_vector(lambda_x);
-			
-				return 0;
-			}
-		}
-
-		cout << "Mx y lambda*x iguales" << endl;		
-	} else {
-		cout << "no encontro resultado" << endl;
-	}
+		} else {
+	 		cout << "no encontro resultado" << endl;
+	    }
 	*/
 }
 
@@ -394,7 +469,7 @@ bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pai
 
 	
 	for (int i = 0; i < x.size(); i++) {
-		x[i] /= infNormX;
+		//x[i] /= infNormX;
 	}
 	
 
@@ -433,4 +508,120 @@ bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pai
 	}
 
 	return false;
+}
+
+
+
+
+
+
+
+
+///////////////////////////////////////////
+
+///////////////////////////////////////////
+
+vector<double> restaVectores(vector<double>& y,vector<double>& x){
+	vector<double> res;
+	for(unsigned int i = 0; i < y.size(); i++){
+		res.push_back(y[i] - x[i]);
+	}
+	return res;
+}
+
+
+vector<double> vectorXescalar(vector<double>& v , double w){
+	vector<double> res;
+	for(unsigned int i = 0; i < v.size(); i++){
+		res.push_back(v[i] * w);
+	}
+	return res;	
+}
+
+
+vector<double> sumaVectores(vector<double>& x,vector<double> y){
+	vector<double> res;
+	for(unsigned int i = 0; i < y.size(); i++){
+		res.push_back(x[i] + y[i]);
+	}
+	return res;
+}
+
+
+double norm_uno(vector<double> y){
+	double res = 0;
+	for(unsigned int i = 0; i < y.size(); i++){
+		res = res + fabs(y[i]);
+	}
+	return res;
+}
+
+vector<double> power_method_damian(Mat A,vector<double> v){
+	double delta;
+	vector<double> x = v;
+	vector<double> y;
+	double w;
+
+	int i = 0;
+	do{
+		y = A*x;
+		w = norm_uno(x) - norm_uno(y);//norma inf
+		y = sumaVectores(y,vectorXescalar(v,w)); 
+		
+		delta = norm_uno(restaVectores(y,x));
+		x = y;
+		i++;
+	}while(!(delta < tolerance));
+	//~ cout << i << endl;
+	return x;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+void power_method_internet_v1(Mat A,vector<double> x)
+{
+double temp;
+int n = nodes;
+int d=0;
+vector<double> cv;
+do
+    {
+        cv = A*x;
+        for(int i=0;i<n;i++)
+            x[i]=cv[i];
+            
+        temp=d;
+        d=0;
+        
+        for(int i=0;i<n;i++)
+        {
+            if(fabs(x[i])>fabs(d))
+                d=x[i];
+        }
+
+        for(int i=0;i<n;i++)
+            x[i]/=d;
+            
+    }while(fabs(d-temp)>0.00001);
+
+
+cout << "autovalor "<<d<<endl;
+
+cout << "autovector "<<endl;
+  for(int i=0;i<n;i++)
+        cout<<" "<<x[i];
+
+    cout<<endl;
+
+    ChequearAutovector(A, d, x);
 }

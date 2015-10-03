@@ -1,0 +1,48 @@
+\section{Desarrollo}
+
+Implementamos PageRank de la siguiente manera
+
+bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxIter, pair<double, vector<double>>& res)
+{
+	int k = 1;
+	double NormX = normaUnoVec(x);
+
+	for (int i = 0; i < x.size(); i++) {
+		x[i] /= NormX;
+	}
+
+//double ms = c/(double)nodes;
+	vector<double> ms(A.rows());
+	for (int i = 0; i < ms.size(); i++)
+		ms[i] = c/(double)nodes;
+
+	while (k <= maxIter) {		; 
+	
+
+		vector<double> y = vec_sum((A*(1.0-c))*x, ms);
+
+		double normY = normaUnoVec(y);			
+		
+		if (normY == 0) {
+			cout << "Vector inicial incorrecto" << endl;
+			exit(1);
+		}
+
+		for (int i = 0; i < y.size(); i++) {
+			y[i] /= normY;
+		}
+		
+		double error = normaUnoVec(vec_sub(x, y));
+
+		if (error < tolerance) {
+			res = make_pair(normY, y);
+			return true;
+		}
+
+		x = y;
+
+		k++;
+	}
+
+	return false;
+}

@@ -1,0 +1,84 @@
+\section{Apéndice A: Enunciado}
+
+El objetivo del trabajo es experimentar en el contexto planteado utilizando el algoritmo PageRank con las variantes propuestas. A su vez, se busca
+comparar los resultados obtenidos cualitativa y cuantitativamente con los algoritmos tradicionales utilizados en cada uno de los contextos planteados. 
+Los m\'etodos a implementar (como m\'inimo) en ambos contexto planteados por el trabajo son los siguientes:
+
+\begin{enumerate}
+\item \emph{B\'usqueda de p\'aginas web:} PageRank e \textsc{In-deg}, \'este \'ultimo consiste en definir el ranking de las p\'aginas utilizando 
+solamente la cantidad de ejes entrantes a cada una de ellas, orden\'andolos en forma decreciente.
+\item \emph{Rankings en competencias deportivas:} GeM y al menos un m\'etodo est\'andar propuesto por el grupo (ordenar por victorias/derrotas,
+puntaje por ganado/empatado/perdido, etc.) en funci\'on del deporte(s) considerado(s).
+\end{enumerate}
+
+El contexto considerado en 1., en la b\'usqueda de p\'aginas web, representa un desaf\'io no s\'olo desde el modelado, si no tambi\'en desde el punto 
+de vista computacional considerando la dimensi\'on de la informaci\'on y los datos a procesar. Luego, dentro de nuestras posibilidades, consideramos
+un entorno que simule el contexto real de aplicaci\'on donde se abordan  instancias de gran escala (es decir, $n$, el n\'umero total de p\'aginas, es 
+grande). Para el desarrollo de PageRank, se pide entonces considerar el trabajo de Bryan y Leise \cite{Bryan2006} donde se explica la intuci\'on y algunos 
+detalles t\'ecnicos respecto a PageRank. Adem\'as, en Kamvar et al. \cite{Kamvar2003} se propone una mejora del mismo. Si bien esta mejora queda fuera de 
+los alcances del trabajo, en la Secci\'on 1 se presenta una buena formulaci\'on del algoritmo. En base a su definici\'on, $P_2$ no es una matriz esparsa. 
+Sin embargo, en Kamvar et al. \cite[Algoritmo 1]{Kamvar2003} se propone una forma alternativa para computar $x^{(k+1)} = P_2 x^{(k)}$. Este resultado debe 
+ser utilizado para mejorar el almacenamiento de los datos.
+
+En la pr\'actica, el grafo que representa la red de p\'aginas suele ser esparso, es decir, una p\'agina posee relativamente pocos links de salida comparada 
+con el n\'umero total de p\'aginas. A su vez, dado que $n$ tiende a ser un n\'umero muy grande, es importante tener en cuenta este hecho a la hora de definir 
+las estructuras de datos a utilizar. Luego, desde el punto de vista de implementaci\'on se pide utilizar alguna de las siguientes estructuras de datos para 
+la representaci\'on de las matrices esparsas: \emph{Dictionary of Keys} (dok), \emph{Compressed Sparse Row} (CSR) o \emph{Compressed Sparse Column} (CSC). 
+Se deber\'a incluir una justificaci\'on respecto a la elecci\'on que consdiere el contexto de aplicaci\'on. Adem\'as, para PageRank se debe implementar el 
+m\'etodo de la potencia para calcular el autovector principal. Esta implementaci\'on debe ser realizada \'integramente en \textsc{C++}.
+
+En funci\'on de la experimentaci\'on, se deber\'a realizar un estudio particular para cada algoritmo (tanto en t\'erminos de comportamiento
+del mismo, como una evaluaci\'on de los resultados obtenidos) y luego se proceder\'a a comparar cualitativamente los rankings generados.
+La experimentaci\'on deber\'a incluir como m\'inimo los siguientes experimentos:
+\begin{enumerate}
+\item Estudiar la convergencia de PageRank, analizando la evoluci\'on de la norma Manhattan (norma $L_1$) entre dos iteraciones sucesivas. Comparar los 
+resultados obtenidos para al menos dos instancias de tama\~no mediano-grande, variando el valor de $c$. 
+\item Estudiar el tiempo de c\'omputo requerido por PageRank. 
+\item Para cada algoritmo, proponer ejemplos de tama\~no peque\~no que ilustren el comportamiento esperado (puede ser utilizando las herramientas provistas
+por la c\'atedra o bien generadas por el grupo).
+\end{enumerate}
+
+Puntos opcionales:
+\begin{enumerate}
+\item Demostrar que los pasos del Algoritmo 1 propuesto en Kamvar et al. \cite{Kamvar2003} son correctos y computan $P_2 x$.
+\item Establecer una relaci\'on con la proporci\'on entre $\lambda_1 = 1$ y $|\lambda_2|$ para la convergencia de PageRank.
+\end{enumerate}
+
+El segundo contexto de aplicaci\'on no presenta mayores desaf\'ios desde la perspectiva computacional, ya que en el peor de los casos una liga no suele tener
+mas que unas pocas decenas de equipos. M\'as a\'un, es de esperar que en general la matriz que se obtiene no sea esparsa, ya que probablemente un equipo juegue
+contra un n\'umero significativo de contrincantes. Sin embargo, la popularidad y sensibilidad del problema planteado requieren de un estudio detallado y 
+pormenorizado de la calidad de los resultados obtenidos. El objetivo en este segundo caso de estudio es puramente experimental. 
+
+En funci\'on de la implementaci\'on, a\'un cuando no represente la mejor opci\'on, es posible reutilizar y adaptar el desarrollo realizado para p\'aginas web. 
+Tambi\'en es posible realizar una nueva implementaci\'on desde cero, simplificando la operatoria y las estructuras, en \textsc{C++}, \textsc{Matlab} o 
+\textsc{Python}.
+
+La experimentaci\'on debe ser realizada con cuidado, analizando (y, eventualmente, modificando) el modelo de GeM:
+\begin{enumerate}
+\item Considerar al menos un conjunto de datos reales, con los resultados de cada fecha para alguna liga de algu\'un deporte.
+\item Notar que el m\'etodo GeM asume que no se producen empates entre los equipos (o que si se producen, son poco frecuentes). En caso de considerar un 
+deporte donde el empate se da con cierta frecuencia no despreciable (por ejemplo, f\'utbol), es fundamental aclarar como se refleja esto en el modelo y 
+analizar su eventual impacto.
+\item Realizar experimentos variando el par\'ametro $c$, indicando como impacta en los resultados. Analizar la evoluci\'on del ranking de los equipos a 
+trav\'es del tiempo, evaluando tambi\'en la evoluci\'on de los rankings e identificar caracter\'isticas/hechos particulares que puedan ser determinantes 
+para el modelo, si es que existe alguno.
+\item Comparar los resultados obtenidos con los reales de la liga utilizando el sistema est\'andar para la misma.
+\end{enumerate}
+
+Puntos opcionales:
+\begin{enumerate}
+\item Proponer (al menos) dos formas alternativas de modelar el empate entre equipos en GeM.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Apéndice B}
+%En  el  apendice  B  se  incluiran  los codigos fuente de las funciones relevantes desde el punto de vista numerico.  Resultados que  valga  la  pena  mencionar  en  el  trabajo  pero  que  sean  demasiado  especificos  para aparecer en el cuerpo principal del trabajo podran mencionarse en sucesivos apendices rotulados con las letras mayusculas del alfabeto romano.  Por ejemplo:  la demostracion de una propiedad que aplican para optimizar el algoritmo que programaron para resolver un problema.
+
+\section{Referencias}
+
+\bengin{itemize}
+\item Bryan, Leise - 2006 - The Linear Algebra behind Google.
+\item  Govan, Meyer, Albright - 2008 - Generalizing Google’s PageRank to Rank National Football League Teams.
+\item Kamvar, Haveliwala - 2003 - Extrapolation methods…omputations.
+\end{itemize}

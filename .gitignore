@@ -31,3 +31,5 @@
 *.aux
 *.log
 *.toc
+
+*.pyc

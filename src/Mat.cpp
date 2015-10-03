@@ -25,13 +25,15 @@ Mat Mat::operator+(const Mat& anotherMat)
 {
 	Mat& thisMat = *this;
 
+	Mat res(rows_, cols_);
+
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < cols_; j++) {
-			thisMat(i, j) += anotherMat(i, j);
+			res(i, j) = thisMat(i, j) + anotherMat(i, j);
 		}
 	}
 
-	return thisMat;
+	return res;
 }
 
 
@@ -84,14 +86,15 @@ Mat Mat::operator*(const Mat& anotherMat)
 Mat Mat::operator*(double scalar)
 {
 	Mat& thisMat = *this;
+	Mat res(cols_, rows_);
 
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < cols_; j++) {
-			thisMat(i, j) *= scalar;
+			res(i, j) = thisMat(i, j) * scalar;
 		}
 	}
 
-	return thisMat;
+	return res;
 }
 
 

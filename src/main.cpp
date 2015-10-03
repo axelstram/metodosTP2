@@ -317,7 +317,7 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 		//es mas eficiente en cuanto a espacio que crear la matriz m*S explicitamente y sumarsela a A2.
 		Mat A2_mas_ms = A2 + ms;
 
-		vector<double> y = A2_mas_ms*x;
+		vector<double> y = A2_mas_ms*x;		
 
 		double normY = normaUnoVec(y);			
 		
@@ -333,7 +333,6 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 		double error = normaUnoVec(vec_sub(x, y));
 
 		if (error < tolerance) {
-
 			res = make_pair(normY, y);
 			return true;
 		}
@@ -351,40 +350,42 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 
 void ChequearAutovector(Mat& A, double autoval, vector<double>& x)
 {
-	
-		cout << "autovalor " << autoval << endl; 
-		cout << "autovector " << endl;
-		show_vector(x);
-		cout << endl;
+	cout << "autovalor " << autoval << endl; 
+	cout << "autovector " << endl;
+	show_vector(x);
+	cout << endl;
 
-		vector<double> Ax = A*x;
-		vector<double> lambda_x(Ax.size());
+	vector<double> Ax = A*x;
+	vector<double> lambda_x(Ax.size());
 
-		for (int i = 0; i < lambda_x.size(); i++)
-			lambda_x[i] = autoval * x[i];
+	for (int i = 0; i < lambda_x.size(); i++)
+		lambda_x[i] = autoval * x[i];
 
-		vector<double> Ax_menos_lambda_x = vec_sub(Ax, lambda_x);
+	vector<double> Ax_menos_lambda_x = vec_sub(Ax, lambda_x);
 
-		for (int i = 0; i < Ax_menos_lambda_x.size(); i++) {
-			if (Ax_menos_lambda_x[i] > 0.001) {
-				cout << "Ax y lambda*x distintos" << endl;
-				cout << "Ax: ";
-				show_vector(Ax);
-				cout << "lambda*x: ";
-				show_vector(lambda_x);
-			
-				return;
-			}
+	for (int i = 0; i < Ax_menos_lambda_x.size(); i++) {
+		if (Ax_menos_lambda_x[i] > 0.001) {
+			cout << "Ax y lambda*x distintos" << endl;
+			cout << "Ax: ";
+			show_vector(Ax);
+			cout << "lambda*x: ";
+			show_vector(lambda_x);
+		
+			return;
 		}
+	}
 
-		cout << "Ax y lambda*x iguales" << endl;		
-	
+	cout << "Ax y lambda*x iguales" << endl;
 }
 
-bool comparePair(pair<int,int> p1,pair<int,int> p2){
 
-return p1.second > p2.second;
+
+bool comparePair(pair<int,int> p1,pair<int,int> p2)
+{
+	return p1.second > p2.second;
 }
+
+
 
 vector<pair<int,int> > IN_DEG(Mat A)
 {
@@ -399,9 +400,10 @@ vector<pair<int,int> > IN_DEG(Mat A)
 		rank.push_back(make_pair(i,links_entrantes));
 	}
 
-sort(rank.begin(), rank.end(), comparePair);
+	sort(rank.begin(), rank.end(), comparePair);
 
-for(int i=0;i<rank.size();i++)cout<< "("<<rank[i].second<<","<<rank[i].first<<") ";
+	for(int i=0;i<rank.size();i++)
+		cout<< "("<<rank[i].second<<","<<rank[i].first<<") ";
 	cout<<endl;
 
 	return rank;
@@ -425,28 +427,12 @@ void power_method_short(Mat A,vector<double> x);
 
 int main(int argc, char* argv[])
 {	
-
-
-
 	//Mat A = LoadMatrixFromFile("/home/vivi/metodosTP2/src/matrizpiolaM.txt");	
  	Mat A = load_test_in(argv[1]);
  	Mat M = LinkMatrixModification(A, c);
 
 	//IN_DEG(A);
 
- 	//M.Show();
- 	//cout<<endl;
-
-
-
- 	//vector<double> x = {1, 1, 1, 1};
-	//power_method_short(M,x);
-
-
-	//A.Show();
-	
-//	Mat M = LinkMatrixModification(A, c);
-//	M.Show();
 	vector<double> x(A.cols());
 	for (int i = 0; i < x.size(); i++)
 		x[i] = 1;
@@ -455,20 +441,16 @@ int main(int argc, char* argv[])
 	pair<double, vector<double>> res;
 	pair<double, vector<double>> res2;
 
-	bool encontroResultado = MetodoPotencia2(M, x, tolerance, maxIter, res);
+	//bool encontroResultado = MetodoPotencia2(M, x, tolerance, maxIter, res);
 
-	//bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
+	bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
 
-	//res2.second = power_method_d(A,x);
-
-		if (encontroResultado) {
-				show_vector(res.second);
-				escribir_resultado(res.second, argv[2]);
-		} else {
-	 		cout << "no encontro resultado" << endl;
-	    }
-
-
+	if (encontroResultado) {
+		show_vector(res.second);
+		escribir_resultado(res.second, argv[2]);
+	} else {
+ 		cout << "no encontro resultado" << endl;
+    }
 }
 
 
@@ -492,7 +474,6 @@ bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pai
 
 		double NormY = normaUnoVec(y);		
 	
-		
 		if (NormY == 0) {
 			cout << "Vector inicial incorrecto" << endl;
 			exit(1);
@@ -500,15 +481,10 @@ bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pai
 		
 		for (int i = 0; i < y.size(); i++) {
 			y[i] /= NormY;
-		}
-		
-		//show_vector(y);
-
-
+		}	
 		
 		double error = normaUnoVec(vec_sub(x, y));
-		
-		
+			
 		if (error < tolerance) {
 			res = make_pair(NormY, y);
 			return true;

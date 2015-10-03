@@ -308,16 +308,23 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 		x[i] /= NormX;
 	}
 
-	double ms = c/(double)nodes;
+	//double ms = c/(double)nodes;
+	vector<double> ms(A.rows());
+	for (int i = 0; i < ms.size(); i++)
+		ms[i] = c/(double)nodes;
 
 	while (k <= maxIter) {		
 		//M = A*(1.0-m) + m*S; 
+		/*
 		Mat A2 = A*(1.0-c);
 		//sumo a todas las posiciones de A2 el escalar ms.
 		//es mas eficiente en cuanto a espacio que crear la matriz m*S explicitamente y sumarsela a A2.
 		Mat A2_mas_ms = A2 + ms;
 
 		vector<double> y = A2_mas_ms*x;		
+		*/
+
+		vector<double> y = vec_sum((A*(1.0-c))*x, ms);
 
 		double normY = normaUnoVec(y);			
 		

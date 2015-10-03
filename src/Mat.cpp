@@ -38,24 +38,6 @@ Mat Mat::operator+(const Mat& anotherMat)
 
 
 
-//suma el escalar a todas las posiciones de la matriz
-Mat Mat::operator+(const double scalar)
-{
-	Mat& thisMat = *this;
-
-	Mat res(rows_, cols_);
-
-	for (int i = 0; i < cols_; i++) {
-		for (int j = 0; j < rows_; j++) {
-			res(i,j) = thisMat(i,j) + scalar;
-		}
-	}
-
-	return res;
-}
-
-
-
 Mat::Mat(const Mat& anotherMat)
 {
 	this->rows_ = anotherMat.rows_;

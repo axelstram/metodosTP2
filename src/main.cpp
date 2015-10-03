@@ -41,7 +41,7 @@ void show_vector(vector<double> v){
 
 vector<double> vec_sum(const vector<double>& x, const vector<double> y){
 	vector<double> res;
-	for(unsigned int i = 0; i < y.size(); i++){
+	for(unsigned int i = 0; i < x.size(); i++){
 		res.push_back(x[i] + y[i]);
 	}
 	return res;
@@ -302,63 +302,35 @@ vector<double> vec_sub(vector<double>& x, vector<double>& y)
 bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxIter, pair<double, vector<double>>& res)
 {
 	int k = 1;
-	//double lambda = 0;
-	double anterior;
-
 	double NormX = normaUnoVec(x);
-
-//show_vector(x);
-//cout << NormX << endl;
-
 
 	for (int i = 0; i < x.size(); i++) {
 		x[i] /= NormX;
 	}
-// cout << "x/NormX: ";
-// show_vector(x);
 
-	//double ms = 0;
-	vector<double> ms(A.cols());
+	double ms = c/(double)nodes;
 
-	for (int i = 0; i < ms.size(); i++)
-	 	ms[i] = c/(double)nodes;
+	while (k <= maxIter) {		
+		//M = A*(1.0-m) + m*S; 
+		Mat A2 = A*(1.0-c);
+		//sumo a todas las posiciones de A2 el escalar ms.
+		//es mas eficiente en cuanto a espacio que crear la matriz m*S explicitamente y sumarsela a A2.
+		Mat A2_mas_ms = A2 + ms;
 
-//cout<< "c: " << c << endl;
-//cout<< "nodes: " << nodes << endl;
-//cout<<"ms: (c/nodes) " << ms << endl;
-	
-	//for(int i = 0;i<nodes;i++) x[i] = x[i]*(1.-c) + ms;
-
-	while (k <= maxIter) {
-		//anterior = NormX;
-		cout << "A" << endl;
-		A.Show();
-		cout<<endl;
-		Mat A2 = A*(1.-c);
-		cout << "(1 - c)" << endl;
-		cout << 1.-c << endl;
-		cout << "A2" << endl;
-		A2.Show();
-		cout<<endl;
-		vector<double> y = vec_sum((A*(1.-c))*x, ms);
-		//for (int i = 0; i < y.size(); i++)
-			//y[i] = y[i]*(1.-c) + ms;
-
+		vector<double> y = A2_mas_ms*x;
 
 		double normY = normaUnoVec(y);			
-		//show_vector(y);
+		
 		if (normY == 0) {
 			cout << "Vector inicial incorrecto" << endl;
 			exit(1);
 		}
-		
-			//show_vector(y);
+
 		for (int i = 0; i < y.size(); i++) {
 			y[i] /= normY;
 		}
 		
 		double error = normaUnoVec(vec_sub(x, y));
-		
 
 		if (error < tolerance) {
 
@@ -462,8 +434,8 @@ int main(int argc, char* argv[])
 
 	//IN_DEG(A);
 
- 	M.Show();
- 	cout<<endl;
+ 	//M.Show();
+ 	//cout<<endl;
 
 
 
@@ -483,9 +455,9 @@ int main(int argc, char* argv[])
 	pair<double, vector<double>> res;
 	pair<double, vector<double>> res2;
 
-	//bool encontroResultado = MetodoPotencia2(M, x, tolerance, maxIter, res);
+	bool encontroResultado = MetodoPotencia2(M, x, tolerance, maxIter, res);
 
-	bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
+	//bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
 
 	//res2.second = power_method_d(A,x);
 
@@ -509,9 +481,6 @@ bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pai
 {
 	int k = 1;
 	double NormX = normaUnoVec(x);
-	//double lambda = 0;
-	double anterior;
-
 	
 	for (int i = 0; i < x.size(); i++) {
 		x[i] /= NormX;
@@ -519,7 +488,6 @@ bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pai
 	
 
 	while (k <= maxIter) {
-		anterior = NormX;
 		vector<double> y = A*x;
 
 		double NormY = normaUnoVec(y);		
@@ -540,7 +508,6 @@ bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pai
 		
 		double error = normaUnoVec(vec_sub(x, y));
 		
-		//double error = fabs(lambda - para);
 		
 		if (error < tolerance) {
 			res = make_pair(NormY, y);

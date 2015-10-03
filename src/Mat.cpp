@@ -21,7 +21,7 @@ double Mat::operator()(size_t i, size_t j) const
 
 
 
-Mat& Mat::operator+(const Mat& anotherMat)
+Mat Mat::operator+(const Mat& anotherMat)
 {
 	Mat& thisMat = *this;
 
@@ -32,6 +32,24 @@ Mat& Mat::operator+(const Mat& anotherMat)
 	}
 
 	return thisMat;
+}
+
+
+
+//suma el escalar a todas las posiciones de la matriz
+Mat Mat::operator+(const double scalar)
+{
+	Mat& thisMat = *this;
+
+	Mat res(rows_, cols_);
+
+	for (int i = 0; i < cols_; i++) {
+		for (int j = 0; j < rows_; j++) {
+			res(i,j) = thisMat(i,j) + scalar;
+		}
+	}
+
+	return res;
 }
 
 
@@ -55,21 +73,15 @@ Mat& Mat::operator=(const Mat& anotherMat)
 }
 
 
-Mat& Mat::operator-(const Mat& anotherMat)
-{
 
-}
-
-
-
-Mat& Mat::operator*(const Mat& anotherMat)
+Mat Mat::operator*(const Mat& anotherMat)
 {
 	//assert(this->cols_ == anotherMat.rows_ && "Cols and Rows don't match");
 }
 
 
 
-Mat& Mat::operator*(double scalar)
+Mat Mat::operator*(double scalar)
 {
 	Mat& thisMat = *this;
 

@@ -38,6 +38,27 @@ void show_vector(vector<double> v){
 
 
 
+
+vector<double> vec_sum(const vector<double>& x, const vector<double> y){
+	vector<double> res;
+	for(unsigned int i = 0; i < y.size(); i++){
+		res.push_back(x[i] + y[i]);
+	}
+	return res;
+}
+
+
+
+vector<double> vec_mult_scalar(const vector<double>& x, const double scalar)
+{
+	vector<double> res;
+	for(unsigned int i = 0; i < x.size(); i++){
+		res.push_back(x[i] * scalar);
+	}
+	return res;	
+}
+
+
 Mat LinkMatrixModification(Mat A, double m)
 {
 	Mat S(A.cols(), A.rows());
@@ -190,6 +211,7 @@ Mat load_test_in(string test_in_file){
 	method = stoi(s);
 	f >> s;
 	c = stod(s);
+	c = 1-c; //lo doy vuelta para que sea CONSISTENTE CON EL PAPER.
 	f >> s;
 	instance_type = stoi(s);
 	f >> s;
@@ -252,6 +274,16 @@ double normaInfVec(vector<double> v){
 }
 
 
+double normaUnoVec(vector<double> v){
+	double res = 0;
+	
+	for (int i = 0; i < v.size(); i++) {
+			res += fabs(v[i]);
+	}
+
+	return res;
+}
+
 
 vector<double> vec_sub(vector<double>& x, vector<double>& y)
 {
@@ -273,56 +305,64 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 	//double lambda = 0;
 	double anterior;
 
+	double NormX = normaUnoVec(x);
 
-	
-	double infNormX = normaInfVec(x);
+//show_vector(x);
+//cout << NormX << endl;
+
 
 	for (int i = 0; i < x.size(); i++) {
-		x[i] /= infNormX;
+		x[i] /= NormX;
 	}
+// cout << "x/NormX: ";
+// show_vector(x);
+
+	//double ms = 0;
+	vector<double> ms(A.cols());
+
+	for (int i = 0; i < ms.size(); i++)
+	 	ms[i] = c/(double)nodes;
+
+//cout<< "c: " << c << endl;
+//cout<< "nodes: " << nodes << endl;
+//cout<<"ms: (c/nodes) " << ms << endl;
 	
-	double z = 0;
-	for(int i = 0;i<nodes;i++) z += c*x[i]*1./(double)nodes;
-
-	for(int i = 0;i<nodes;i++) x[i] = x[i]*(1.-c);
-
-
-
+	//for(int i = 0;i<nodes;i++) x[i] = x[i]*(1.-c) + ms;
 
 	while (k <= maxIter) {
-		anterior = infNormX;
-		
-		vector<double> y = A*x;
-		for (int i = 0; i < y.size(); i++)
-			y[i] += z;
+		//anterior = NormX;
+		cout << "A" << endl;
+		A.Show();
+		cout<<endl;
+		Mat A2 = A*(1.-c);
+		cout << "(1 - c)" << endl;
+		cout << 1.-c << endl;
+		cout << "A2" << endl;
+		A2.Show();
+		cout<<endl;
+		vector<double> y = vec_sum((A*(1.-c))*x, ms);
+		//for (int i = 0; i < y.size(); i++)
+			//y[i] = y[i]*(1.-c) + ms;
 
 
-		double infNormY = normaInfVec(y);			
-		
-		if (infNormY == 0) {
+		double normY = normaUnoVec(y);			
+		//show_vector(y);
+		if (normY == 0) {
 			cout << "Vector inicial incorrecto" << endl;
 			exit(1);
 		}
 		
+			//show_vector(y);
 		for (int i = 0; i < y.size(); i++) {
-			y[i] /= infNormY;
+			y[i] /= normY;
 		}
 		
-
-
-		z = 0;
-		for(int i = 0;i<nodes;i++) z += c*y[i]*1./(double)nodes;
-
-		for(int i = 0;i<nodes;i++) y[i] = y[i]*(1.-c);
-
-		//show_vector(y);
-
-
+		double error = normaUnoVec(vec_sub(x, y));
 		
-		double error = normaInfVec(vec_sub(x, y));
-				
+
 		if (error < tolerance) {
-			res = make_pair(infNormY, y);
+
+			res = make_pair(normY, y);
 			return true;
 		}
 
@@ -398,6 +438,13 @@ for(int i=0;i<rank.size();i++)cout<< "("<<rank[i].second<<","<<rank[i].first<<")
 
 
 
+void escribir_resultado(vector<double>& x, string output_path)
+{
+	ofstream outputFile(output_path);
+
+	for (int i = 0; i < x.size(); i++)
+		outputFile << x[i] << endl; 
+}
 
 
 bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pair<double, vector<double>>& res);
@@ -413,44 +460,41 @@ int main(int argc, char* argv[])
  	Mat A = load_test_in(argv[1]);
  	Mat M = LinkMatrixModification(A, c);
 
-	cout<<"------------------"<<endl;
+	//IN_DEG(A);
 
-	IN_DEG(A);
-
-	cout<<"------------------"<<endl;
-
- 	A.Show();
- 	cout<<endl;
  	M.Show();
+ 	cout<<endl;
 
 
 
- 	vector<double> x = {1, 1, 1, 1};
-	power_method_short(A,x);
+ 	//vector<double> x = {1, 1, 1, 1};
+	//power_method_short(M,x);
 
-/*
+
 	//A.Show();
 	
-	Mat M = LinkMatrixModification(A, c);
-	M.Show();
-	vector<double> x = {1, 1, 1, 1};
-	int maxIter = 10000000;
+//	Mat M = LinkMatrixModification(A, c);
+//	M.Show();
+	vector<double> x(A.cols());
+	for (int i = 0; i < x.size(); i++)
+		x[i] = 1;
+
+	int maxIter = 200000;
 	pair<double, vector<double>> res;
 	pair<double, vector<double>> res2;
 
-	bool encontroResultado = MetodoPotencia2(M, x, tolerance, maxIter, res2);
+	//bool encontroResultado = MetodoPotencia2(M, x, tolerance, maxIter, res);
 
-	//bool encontroResultado2 = MetodoPotencia(A, x, c , tolerance, maxIter, res2);
+	bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
 
 	//res2.second = power_method_d(A,x);
 
 		if (encontroResultado) {
-
+				show_vector(res.second);
+				escribir_resultado(res.second, argv[2]);
 		} else {
 	 		cout << "no encontro resultado" << endl;
 	    }
-*/
-
 
 
 }
@@ -464,42 +508,42 @@ int main(int argc, char* argv[])
 bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pair<double, vector<double>>& res)
 {
 	int k = 1;
-	double infNormX = normaInfVec(x);
+	double NormX = normaUnoVec(x);
 	//double lambda = 0;
 	double anterior;
 
 	
 	for (int i = 0; i < x.size(); i++) {
-		//x[i] /= infNormX;
+		x[i] /= NormX;
 	}
 	
 
 	while (k <= maxIter) {
-		anterior = infNormX;
+		anterior = NormX;
 		vector<double> y = A*x;
 
-		double infNormY = normaInfVec(y);		
+		double NormY = normaUnoVec(y);		
 	
 		
-		if (infNormY == 0) {
+		if (NormY == 0) {
 			cout << "Vector inicial incorrecto" << endl;
 			exit(1);
 		}
 		
 		for (int i = 0; i < y.size(); i++) {
-			y[i] /= infNormY;
+			y[i] /= NormY;
 		}
 		
 		//show_vector(y);
 
 
 		
-		double error = normaInfVec(vec_sub(x, y));
+		double error = normaUnoVec(vec_sub(x, y));
 		
 		//double error = fabs(lambda - para);
 		
 		if (error < tolerance) {
-			res = make_pair(infNormY, y);
+			res = make_pair(NormY, y);
 			return true;
 		}
 
@@ -540,15 +584,6 @@ vector<double> vectorXescalar(vector<double>& v , double w){
 }
 
 
-vector<double> sumaVectores(vector<double>& x,vector<double> y){
-	vector<double> res;
-	for(unsigned int i = 0; i < y.size(); i++){
-		res.push_back(x[i] + y[i]);
-	}
-	return res;
-}
-
-
 double norm_uno(vector<double> y){
 	double res = 0;
 	for(unsigned int i = 0; i < y.size(); i++){
@@ -567,7 +602,7 @@ vector<double> power_method_d(Mat A,vector<double> v){
 	do{
 		y = A*x;
 		w = norm_uno(x) - norm_uno(y);//norma inf
-		y = sumaVectores(y,vectorXescalar(v,w)); 
+		y = vec_sum(y,vec_mult_scalar(v,w)); 
 		
 		delta = norm_uno(restaVectores(y,x));
 		x = y;

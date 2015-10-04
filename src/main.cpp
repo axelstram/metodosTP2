@@ -9,7 +9,7 @@
 #include "Mat.h"
 #include "dok.h"
 #include "csr.h"
-
+#include "rand.h"
 
 #define PAGE_RANK_METHOD 0
 #define ALT_METHOD 1
@@ -36,7 +36,7 @@ double tolerance;
 ///from test.txt
 int nodes; /* 	 pages / teams	 	*/
 int edges; /*	 links / marches 	*/
-int matrix_type = CSR_MATRIX;
+int matrix_type = VECTOR_MATRIX;
 
 void show_vector(vector<double> v){
 	for(int i = 0; i < v.size(); i++){
@@ -146,7 +146,8 @@ Matrix& loadWebGraph(string graph_file)
 
 	for (int from = 0; from < A.rows(); from++) {
 		for (int to = 0; to < A.cols(); to++) {
-			A(to, from) = A(to, from)/(double)linksEntrantes[from];
+
+			if(linksEntrantes[from]!=0)A(to, from) = A(to, from)/(double)linksEntrantes[from];
 		}
 	}
 
@@ -232,6 +233,7 @@ Matrix& loadSportGraph(string graph_file){
 
 	}
 	A.Show();
+
 	cout<<endl<<endl;
 	///normalizar matriz..
 	normalizarMatrizEquipos(A);
@@ -395,6 +397,10 @@ bool MetodoPotencia(Matrix& A, vector<double> x,double c, float tolerance, int m
 		
 		double error = normaUnoVec(vec_sub(x, y));
 
+double errorent=error*10000.;
+cout<< (int) errorent<<endl;
+
+
 		if (error < tolerance) {
 			res = make_pair(normY, y);
 			return true;
@@ -493,8 +499,40 @@ int main(int argc, char* argv[])
 	//Matrix A = LoadMatrixFromFile("/home/vivi/metodosTP2/src/matrizpiolaM.txt");	
  	Matrix& A = load_test_in(argv[1]);
  	//Matrix M = LinkMatrixModification(A, c);
-
 	//IN_DEG(A);
+
+	//A.Show();
+
+
+//-----------test-------------
+
+
+/*
+
+	///generar c aleatorios
+	UniformDist udist(0,1);
+
+	vector<double> cs;
+	for(int i=0;i<100;i++){
+		double c =udist.Generate();
+
+		//truncar a 2 decimales
+		c *= 100.;
+		int ci = c;
+		c = (double)ci/100.;
+
+		cs.push_back(c);
+		cout<<c<<endl;
+	}
+
+*/
+
+
+//-----------------------
+
+
+
+
 
 	vector<double> x(A.cols());
 	for (int i = 0; i < x.size(); i++)
@@ -505,7 +543,7 @@ int main(int argc, char* argv[])
 	pair<double, vector<double>> res2;
 
 	//bool encontroResultado = MetodoPotencia2(M, x, tolerance, maxIter, res);
- 
+
 	bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
 
 	if (encontroResultado) {

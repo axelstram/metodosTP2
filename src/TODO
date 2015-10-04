@@ -1,0 +1,16 @@
+Experimentacion que falta
+---------------------------
+
+Elegir m al azar de distintas dist de prob
+
+Probar con grafos completos,todo desconexo, camino, arbol n-ario, ciclos
+
+Ver en que casos es mejor pagerank vs indeg
+
+Comparar gem contra el neustro
+
+Tiempo de ejecucion de pagerank con y sin estructuras para sparce
+(con matriz poco sparce y muy sparce)
+
+convergencia de norma manhattan variando el c
+

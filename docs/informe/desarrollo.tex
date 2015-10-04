@@ -1,48 +1,27 @@
 \section{Desarrollo}
 
 Implementamos PageRank de la siguiente manera
+\\ 		
 
-bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxIter, pair<double, vector<double>>& res)
-{
-	int k = 1;
-	double NormX = normaUnoVec(x);
 
-	for (int i = 0; i < x.size(); i++) {
-		x[i] /= NormX;
-	}
+% \begin{algorithm}[H]
+% \caption{Método Potencia}
+% \begin{algorithmic}[1]
+% \Procedure{Método Potencia}%{$G=(V,E)$}
+% 	\State $x = x/\lVert \mathbf{p} \rVert _{1}$
+% 	\State vector ms con c/n en todas sus posiciones
+% 	\While{ no se alcance la iteracion máxima }
+% 		\State resuelvo sistema y = A.(1-c)*x + ms
+% 		\State obtengo norma de y
+% 		\State 	defino error como la resta de la norma uno entre x e y
+% 		\If{ difieren en menos del error tolerado}
+% 			\State devuelvo vector y con su norma 	
+% 		\Else 
+% 			\State x = y
+% 	\EndWhile
+% \EndProcedure
+% \end{algorithmic}
+% \end{algorithm}
 
-//double ms = c/(double)nodes;
-	vector<double> ms(A.rows());
-	for (int i = 0; i < ms.size(); i++)
-		ms[i] = c/(double)nodes;
 
-	while (k <= maxIter) {		; 
-	
 
-		vector<double> y = vec_sum((A*(1.0-c))*x, ms);
-
-		double normY = normaUnoVec(y);			
-		
-		if (normY == 0) {
-			cout << "Vector inicial incorrecto" << endl;
-			exit(1);
-		}
-
-		for (int i = 0; i < y.size(); i++) {
-			y[i] /= normY;
-		}
-		
-		double error = normaUnoVec(vec_sub(x, y));
-
-		if (error < tolerance) {
-			res = make_pair(normY, y);
-			return true;
-		}
-
-		x = y;
-
-		k++;
-	}
-
-	return false;
-}

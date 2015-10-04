@@ -118,8 +118,7 @@ Matrix& loadWebGraph(string graph_file)
     }
     Matrix& A = *A_tmp;
 
-
-
+    cout << edges << endl;
 	for (int i = 0; i < edges; i++) {
 		int from;
 		int to;
@@ -137,12 +136,11 @@ Matrix& loadWebGraph(string graph_file)
 
 	for (int from = 0; from < A.rows(); from++) {
 		for (int to = 0; to < A.cols(); to++) {
-
-			if(linksEntrantes[from]!=0)A(to, from) = A(to, from)/(double)linksEntrantes[from];
+			if(linksEntrantes[from] != 0)
+				A(to, from) = A(to, from)/(double)linksEntrantes[from];
 		}
+		cout << from << endl;
 	}
-
-
 	return A;
 }
 
@@ -204,7 +202,7 @@ Matrix& loadSportGraph(string graph_file){
 			A(equipo1, equipo2) += (double)(goles_equipo1-goles_equipo2);
 
 	}
-	A.Show();
+	//A.Show();
 
 	cout<<endl<<endl;
 	///normalizar matriz..
@@ -231,10 +229,11 @@ Matrix& load_test_in(string test_in_file){
 	graph_file = s;
 	f >> s;
 	tolerance = stod(s);
-
+	
 	///load matrix;
 	if(instance_type == WEB_RANK){
 		Matrix& A = loadWebGraph(graph_file);
+		cout << "termino de cargar" << endl;
 		return A;
 
 	}else if(instance_type == SPORT_RANK) {
@@ -312,6 +311,7 @@ bool MetodoPotencia(Matrix& A, vector<double> x,double c, float tolerance, int m
 		// Matrix es clase abstracta y no deja devolver por copia
 		// entonces hacemos new y tenemos que hacer delete
 		Matrix* A_prima = A*(1.0-c);
+
 		vector<double> y = vec_sum((*A_prima)*x, ms);
 
 		delete(A_prima);

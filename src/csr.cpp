@@ -205,6 +205,6 @@ vector<double> CompressedSparseRow::operator*(const vector<double>& x)
 	        res[j] += value_[i] * x[col_ind_[i]];
 		}
 	} 
-	cout << "estoy multiplicando" << endl;
+
 	return res;  
 }

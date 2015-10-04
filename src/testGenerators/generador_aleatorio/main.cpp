@@ -33,8 +33,100 @@ void show_pair_vector(vector<pair<int,int> > v){
 	}
 }
 
+
+
+void getNodesAndEdges(string input_file, int& nodes, int& edges)
+{
+	ifstream inputStream(input_file);	
+	string s;
+
+	while (inputStream >> s) {
+		nodes++;
+
+		do {
+			inputStream >> s;
+			if (s == "-1")
+				continue;
+			edges++;
+		} while (s != "-1");
+	}
+
+	inputStream.close();
+}
+
+
+void modifyInputGraph(string input_file, string output_file){
+		int nodes = 0;
+		int edges = 0;
+
+		getNodesAndEdges(input_file, nodes, edges);
+
+		ifstream inputStream(input_file);
+		ofstream outputStream(output_file);
+		string s;
+
+		outputStream << nodes << " " << edges << endl;
+
+		while (inputStream >> s) {
+			s.pop_back(); //saco los :
+			int n = stoi(s);
+			n++;
+
+			do {
+				inputStream >> s;
+				if (s == "-1")
+					continue;
+				outputStream << n << " " << stoi(s)+1 << endl;
+			} while (s != "-1");
+		}
+}
+
+bool nombreOrdenar(pair<int,int> p1,pair<int,int> p2){
+
+	return p1.first <= p2.first;
+}
+
+void sortEdgesOfGraph(string input_file, string output_file){
+
+		ifstream inputStream(input_file);
+		ofstream outputStream(output_file);
+		string s;
+
+		int nodes, edges;
+
+		inputStream >> nodes >> edges;
+
+		int from, to;
+		vector<pair<int,int> > alledges;
+//leer
+		while (inputStream >> from) {
+			inputStream >> to;
+			alledges.push_back(make_pair(from,to));
+
+		}
+
+		sort(alledges.begin(),alledges.end(),nombreOrdenar);
+
+//escribir
+		outputStream << nodes << " " << edges << endl;
+
+		for(int i=0;i<alledges.size();i++) {
+			outputStream<<alledges[i].first << " "<< alledges[i].second << endl;
+		}
+
+}
+
+
+
 int main(int argc, char* argv[])
 {	
+	string input_file = argv[1];
+	string output_file = argv[2];
+
+	//modifyInputGraph(input_file, output_file);
+
+	sortEdgesOfGraph(input_file, output_file);
+
 	///generar muchos c uniformemente..
 
 
@@ -49,7 +141,7 @@ int main(int argc, char* argv[])
 		cout<<c<<endl;
 	}
 
-*/
+
 
 
 if(argc<3){
@@ -87,7 +179,7 @@ if(argc<3){
 		outputFile << alledges[i].first << " " << alledges[i].second << endl; 
 	}
 
-
+*/
 
 	return 0;
 }

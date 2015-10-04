@@ -17,7 +17,7 @@ double tolerance;
 ///from test.txt
 int nodes; /* 	 pages / teams	 	*/
 int edges; /*	 links / marches 	*/
-int matrix_type = DOK_MATRIX;
+int matrix_type = CSR_MATRIX;
 
 bool medir_tiempo = false;
 
@@ -66,13 +66,14 @@ int main(int argc, char* argv[])
 	}
 
 	long int promedio = 0; 
-	for (int i = 0; i < times.size(); ++i)
-	{	
-		promedio += times[i];
-	}
+	sort(times.begin(), times.end());
+	// for (int i = 0; i < times.size(); ++i)
+	// {	
+	// 	promedio += times[i];
+	// }
 
-	cout << promedio/times.size() << endl; // en ms
-
+	//cout << promedio/times.size() << endl; // en ms
+	cout << times[times.size()/2] << endl;
 	return 0;
 }
 

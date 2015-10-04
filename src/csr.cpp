@@ -191,18 +191,20 @@ void CompressedSparseRow::show_vectors(){
 
 vector<double> CompressedSparseRow::operator*(const vector<double>& x)
 {
-	vector<double> res;
-	CompressedSparseRow& thisMatrix = *this;
+	vector<double> res(rows(), 0);
 
-	assert(x.size() == thisMatrix.cols() && "Error al multiplicar matriz y vector de diferentes dimensiones");
-
-	for (int i = 0; i < thisMatrix.rows(); i++) {
-		double mult = 0;
-		for(int j = 0; j < thisMatrix.cols(); j++) {
-			mult += thisMatrix(i,j) * x[j];
+	for(int j = 0; j< rows(); j++){
+		//si soy el ultimo la puta condicion se indefine
+		int condicion;
+		if(j == rows() -1){
+			condicion = value_.size() -1;
+		}else{
+			condicion = row_ptr_[j+1]-1;
 		}
-		res.push_back(mult);
-	}
-
-	return res;
+	    for(int i = row_ptr_[j]; i <= condicion; i++){
+	        res[j] += value_[i] * x[col_ind_[i]];
+		}
+	} 
+	cout << "estoy multiplicando" << endl;
+	return res;  
 }

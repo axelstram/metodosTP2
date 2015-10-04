@@ -1,5 +1,7 @@
 
 #include "aux.h"
+#include <chrono>
+
 
 using namespace std;
 
@@ -17,50 +19,61 @@ int nodes; /* 	 pages / teams	 	*/
 int edges; /*	 links / marches 	*/
 int matrix_type = DOK_MATRIX;
 
+bool medir_tiempo = false;
 
 int main(int argc, char* argv[])
 {	
- 	Matrix& A = load_test_in(argv[1]);
+	if(argc > 3)
+		medir_tiempo = true;
 
-//-----------test-------------
-/*
 
-	///generar c aleatorios
-	UniformDist udist(0,1);
+	vector<long int> times;
+	for (int t = 0; t < 10; ++t)
+	{
+	 	Matrix& A = load_test_in(argv[1]);
 
-	vector<double> cs;
-	for(int i=0;i<100;i++){
-		double c =udist.Generate();
+		vector<double> x(A.cols());
+		for (int i = 0; i < x.size(); i++)
+			x[i] = 1;
 
-		//truncar a 2 decimales
-		c *= 100.;
-		int ci = c;
-		c = (double)ci/100.;
+		int maxIter = 200000;
+		pair<double, vector<double>> res;
+		pair<double, vector<double>> res2;
 
-		cs.push_back(c);
-		cout<<c<<endl;
+		long int total_time = 0;
+		auto begin = std::chrono::high_resolution_clock::now();
+
+		bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
+
+		auto end = std::chrono::high_resolution_clock::now();
+
+		auto power_method_time = chrono::duration_cast<std::chrono::milliseconds>(end-begin).count();
+		total_time += power_method_time ; 
+		times.push_back(total_time);
+	
+		if (encontroResultado) {
+			//show_vector(res.second);
+			escribir_resultado(res.second, argv[2]);
+		} else {
+	 		cout << "no encontro resultado" << endl;
+	    }
+	
+  		
+  		delete &A;
+
+  		if (!medir_tiempo)
+  			return 0;
 	}
-*/
-//-----------------------
 
-	vector<double> x(A.cols());
-	for (int i = 0; i < x.size(); i++)
-		x[i] = 1;
+	long int promedio = 0; 
+	for (int i = 0; i < times.size(); ++i)
+	{	
+		promedio += times[i];
+	}
 
-	int maxIter = 200000;
-	pair<double, vector<double>> res;
-	pair<double, vector<double>> res2;
+	cout << promedio/times.size() << endl; // en ms
 
-	bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
-
-	if (encontroResultado) {
-		show_vector(res.second);
-		escribir_resultado(res.second, argv[2]);
-	} else {
- 		cout << "no encontro resultado" << endl;
-    }
-
-    delete &A;
+	return 0;
 }
 
 

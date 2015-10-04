@@ -44,20 +44,16 @@ DictionaryOfKeys* DictionaryOfKeys::operator*(double scalar)
 	return res;
 }
 
+// multiplicacion de DOK aprovechando los ceros 
 vector<double> DictionaryOfKeys::operator*(const vector<double>& x)
 {
-	vector<double> res;
 	DictionaryOfKeys& thisMatrix = *this;
+	vector<double> res (thisMatrix.rows(),0);
 
 	assert(x.size() == thisMatrix.cols() && "Error al multiplicar matriz y vector de diferentes dimensiones");
-
-	for (int i = 0; i < thisMatrix.rows(); i++) {
-		double mult = 0;
-		for(int j = 0; j < thisMatrix.cols(); j++) {
-			mult += thisMatrix(i,j) * x[j];
-		}
-		res.push_back(mult);
-	}
+	
+  	for (map<pair<int,int>,double>::iterator it = data_.begin(); it != data_.end(); ++it)
+  		res[it->first.first] += it->second*x[it->first.second];
 
 	return res;
 }

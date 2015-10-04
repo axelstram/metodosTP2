@@ -2,7 +2,7 @@
 #include <cassert>
 #include <iostream>
 
-
+/*
 vector<double> Matrix::operator*(const vector<double>& x)
 {
 	vector<double> res;
@@ -20,7 +20,7 @@ vector<double> Matrix::operator*(const vector<double>& x)
 
 	return res;
 }
-
+*/
 
 void Matrix::ShowOctave()
 {

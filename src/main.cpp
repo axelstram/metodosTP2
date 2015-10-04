@@ -7,12 +7,20 @@
 #include <stdlib.h>
 #include <math.h>
 #include "Mat.h"
+#include "dok.h"
+#include "csr.h"
+#include "rand.h"
 
 #define PAGE_RANK_METHOD 0
 #define ALT_METHOD 1
 
 #define WEB_RANK 0
 #define SPORT_RANK 1
+
+
+#define VECTOR_MATRIX 0
+#define DOK_MATRIX 1
+#define CSR_MATRIX 2
 
 using namespace std;
 
@@ -28,6 +36,7 @@ double tolerance;
 ///from test.txt
 int nodes; /* 	 pages / teams	 	*/
 int edges; /*	 links / marches 	*/
+int matrix_type = VECTOR_MATRIX;
 
 void show_vector(vector<double> v){
 	for(int i = 0; i < v.size(); i++){
@@ -58,10 +67,10 @@ vector<double> vec_mult_scalar(const vector<double>& x, const double scalar)
 	return res;	
 }
 
-
-Mat LinkMatrixModification(Mat A, double m)
+/*
+Matrix LinkMatrixModification(Matrix A, double m)
 {
-	Mat S(A.cols(), A.rows());
+	Matrix S(A.cols(), A.rows());
 
 	for (int i = 0; i < S.rows(); i++) {
 		for (int j = 0; j < S.cols(); j++) {
@@ -69,17 +78,17 @@ Mat LinkMatrixModification(Mat A, double m)
 		}
 	}
 
-	Mat M(A.cols(), A.rows());
+	Matrix M(A.cols(), A.rows());
 
 	M = A*(1.0-m) + S*m;
 
 	return M;
 }
+*/
 
 
 
-
-Mat loadWebGraph(string graph_file)
+Matrix& loadWebGraph(string graph_file)
 {
 	ifstream f(graph_file);
 	string s;
@@ -102,7 +111,23 @@ Mat loadWebGraph(string graph_file)
 		f >> s;
 
 	vector<int> linksEntrantes(nodes);
-	Mat A(nodes, nodes);
+
+	Matrix* A_tmp;
+	switch ( matrix_type )
+    {
+        case VECTOR_MATRIX :
+            A_tmp = new Mat(nodes, nodes);
+            break;
+        case DOK_MATRIX :
+            A_tmp = new DictionaryOfKeys(nodes, nodes);
+            break;
+        case CSR_MATRIX :
+         	A_tmp = new CompressedSparseRow(nodes,nodes);
+         	break;
+    }
+    Matrix& A = *A_tmp;
+
+
 
 	for (int i = 0; i < edges; i++) {
 		int from;
@@ -121,7 +146,8 @@ Mat loadWebGraph(string graph_file)
 
 	for (int from = 0; from < A.rows(); from++) {
 		for (int to = 0; to < A.cols(); to++) {
-			A(to, from) = A(to, from)/(double)linksEntrantes[from];
+
+			if(linksEntrantes[from]!=0)A(to, from) = A(to, from)/(double)linksEntrantes[from];
 		}
 	}
 
@@ -130,7 +156,7 @@ Mat loadWebGraph(string graph_file)
 }
 
 
-void normalizarMatrizEquipos( Mat& A){
+void normalizarMatrizEquipos( Matrix& A){
 
 	//para cada elemento i j....
 	for (int i = 0; i < A.cols(); ++i){
@@ -151,7 +177,7 @@ void normalizarMatrizEquipos( Mat& A){
 }
 
 
-Mat loadSportGraph(string graph_file){
+Matrix& loadSportGraph(string graph_file){
 
 
 	ifstream f(graph_file);
@@ -164,8 +190,22 @@ Mat loadSportGraph(string graph_file){
 	edges = stoi(s);
 
 
-	Mat A(nodes,nodes);
+//	Matrix A(nodes,nodes);
+	Matrix* A_tmp;
 
+	switch ( matrix_type )
+    {
+        case VECTOR_MATRIX :
+            A_tmp = new Mat(nodes, nodes);
+            break;
+        case DOK_MATRIX :
+            A_tmp = new DictionaryOfKeys(nodes, nodes);
+            break;
+        case CSR_MATRIX :
+         	A_tmp = new CompressedSparseRow(nodes,nodes);
+         	break;
+    }
+    Matrix& A = *A_tmp;
 
 	for (int i = 0; i < edges; i++) {
 		int fecha;
@@ -193,6 +233,7 @@ Mat loadSportGraph(string graph_file){
 
 	}
 	A.Show();
+
 	cout<<endl<<endl;
 	///normalizar matriz..
 	normalizarMatrizEquipos(A);
@@ -201,7 +242,7 @@ Mat loadSportGraph(string graph_file){
 }
 
 
-Mat load_test_in(string test_in_file){
+Matrix& load_test_in(string test_in_file){
 
 	ifstream f(test_in_file);
 	string s;
@@ -221,11 +262,11 @@ Mat load_test_in(string test_in_file){
 
 	///load matrix;
 	if(instance_type == WEB_RANK){
-		Mat A = loadWebGraph(graph_file);
+		Matrix& A = loadWebGraph(graph_file);
 		return A;
 
 	}else if(instance_type == SPORT_RANK) {
-		Mat A = loadSportGraph(graph_file);
+		Matrix& A = loadSportGraph(graph_file);
 		return A;
 	}
 
@@ -233,7 +274,7 @@ Mat load_test_in(string test_in_file){
 
 
 // Nuestro load
-Mat LoadMatrixFromFile(string file_path)
+Matrix& LoadMatrixFromFile(string file_path)
 {
 	ifstream f(file_path);
 	string s;
@@ -241,7 +282,22 @@ Mat LoadMatrixFromFile(string file_path)
 	f >> s;
 	int dim = stoi(s);
 	
-	Mat A(dim, dim);
+	//Matrix A(dim, dim);
+	Matrix* A_tmp;
+
+	switch ( matrix_type )
+    {
+        case VECTOR_MATRIX :
+            A_tmp = new Mat(nodes, nodes);
+            break;
+        case DOK_MATRIX :
+            A_tmp = new DictionaryOfKeys(nodes, nodes);
+            break;
+        case CSR_MATRIX :
+         	A_tmp = new CompressedSparseRow(nodes,nodes);
+         	break;
+    }
+    Matrix& A = *A_tmp;
 
 	if (dim != A.rows()) {
 		cout << "Dimensiones incorrectas al cargar " << endl << "dim " << dim << endl << "rows(A) " << A.rows() << endl;
@@ -299,7 +355,7 @@ vector<double> vec_sub(vector<double>& x, vector<double>& y)
 
 
 
-bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxIter, pair<double, vector<double>>& res)
+bool MetodoPotencia(Matrix& A, vector<double> x,double c, float tolerance, int maxIter, pair<double, vector<double>>& res)
 {
 	int k = 1;
 	double NormX = normaUnoVec(x);
@@ -316,15 +372,17 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 	while (k <= maxIter) {		
 		//M = A*(1.0-m) + m*S; 
 		/*
-		Mat A2 = A*(1.0-c);
+		Matrix A2 = A*(1.0-c);
 		//sumo a todas las posiciones de A2 el escalar ms.
 		//es mas eficiente en cuanto a espacio que crear la matriz m*S explicitamente y sumarsela a A2.
-		Mat A2_mas_ms = A2 + ms;
+		Matrix A2_mas_ms = A2 + ms;
 
 		vector<double> y = A2_mas_ms*x;		
 		*/
+		Matrix* A_prima = A*(1.0-c);
 
-		vector<double> y = vec_sum((A*(1.0-c))*x, ms);
+		vector<double> y = vec_sum((*A_prima)*x, ms);
+		delete(A_prima);
 
 		double normY = normaUnoVec(y);			
 		
@@ -338,6 +396,10 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 		}
 		
 		double error = normaUnoVec(vec_sub(x, y));
+
+double errorent=error*10000.;
+cout<< (int) errorent<<endl;
+
 
 		if (error < tolerance) {
 			res = make_pair(normY, y);
@@ -353,7 +415,7 @@ bool MetodoPotencia(Mat& A, vector<double> x,double c, float tolerance, int maxI
 }
 
 
-
+/*
 
 void ChequearAutovector(Mat& A, double autoval, vector<double>& x)
 {
@@ -385,7 +447,7 @@ void ChequearAutovector(Mat& A, double autoval, vector<double>& x)
 	cout << "Ax y lambda*x iguales" << endl;
 }
 
-
+*/
 
 bool comparePair(pair<int,int> p1,pair<int,int> p2)
 {
@@ -394,7 +456,7 @@ bool comparePair(pair<int,int> p1,pair<int,int> p2)
 
 
 
-vector<pair<int,int> > IN_DEG(Mat A)
+vector<pair<int,int> > IN_DEG(Matrix& A)
 {
 
 	vector<pair<int,int> > rank;
@@ -428,17 +490,49 @@ void escribir_resultado(vector<double>& x, string output_path)
 }
 
 
-bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pair<double, vector<double>>& res);
-vector<double> power_method_d(Mat A,vector<double> v);
-void power_method_short(Mat A,vector<double> x);
+//bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pair<double, vector<double>>& res);
+//vector<double> power_method_d(Matrix A,vector<double> v);
+//void power_method_short(Matrix A,vector<double> x);
 
 int main(int argc, char* argv[])
 {	
-	//Mat A = LoadMatrixFromFile("/home/vivi/metodosTP2/src/matrizpiolaM.txt");	
- 	Mat A = load_test_in(argv[1]);
- 	Mat M = LinkMatrixModification(A, c);
-
+	//Matrix A = LoadMatrixFromFile("/home/vivi/metodosTP2/src/matrizpiolaM.txt");	
+ 	Matrix& A = load_test_in(argv[1]);
+ 	//Matrix M = LinkMatrixModification(A, c);
 	//IN_DEG(A);
+
+	//A.Show();
+
+
+//-----------test-------------
+
+
+/*
+
+	///generar c aleatorios
+	UniformDist udist(0,1);
+
+	vector<double> cs;
+	for(int i=0;i<100;i++){
+		double c =udist.Generate();
+
+		//truncar a 2 decimales
+		c *= 100.;
+		int ci = c;
+		c = (double)ci/100.;
+
+		cs.push_back(c);
+		cout<<c<<endl;
+	}
+
+*/
+
+
+//-----------------------
+
+
+
+
 
 	vector<double> x(A.cols());
 	for (int i = 0; i < x.size(); i++)
@@ -458,12 +552,14 @@ int main(int argc, char* argv[])
 	} else {
  		cout << "no encontro resultado" << endl;
     }
+
+    delete &A;
 }
 
 
 
 
-
+/*
 
 
 bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pair<double, vector<double>>& res)
@@ -507,107 +603,4 @@ bool MetodoPotencia2(Mat& A, vector<double> x, float tolerance, int maxIter, pai
 
 
 
-
-
-
-
-
-///////////////////////////////////////////
-
-///////////////////////////////////////////
-
-vector<double> restaVectores(vector<double>& y,vector<double>& x){
-	vector<double> res;
-	for(unsigned int i = 0; i < y.size(); i++){
-		res.push_back(y[i] - x[i]);
-	}
-	return res;
-}
-
-
-vector<double> vectorXescalar(vector<double>& v , double w){
-	vector<double> res;
-	for(unsigned int i = 0; i < v.size(); i++){
-		res.push_back(v[i] * w);
-	}
-	return res;	
-}
-
-
-double norm_uno(vector<double> y){
-	double res = 0;
-	for(unsigned int i = 0; i < y.size(); i++){
-		res = res + fabs(y[i]);
-	}
-	return res;
-}
-
-vector<double> power_method_d(Mat A,vector<double> v){
-	double delta;
-	vector<double> x = v;
-	vector<double> y;
-	double w;
-
-	int i = 0;
-	do{
-		y = A*x;
-		w = norm_uno(x) - norm_uno(y);//norma inf
-		y = vec_sum(y,vec_mult_scalar(v,w)); 
-		
-		delta = norm_uno(restaVectores(y,x));
-		x = y;
-		i++;
-	}while(!(delta < tolerance));
-	//~ cout << i << endl;
-	return x;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-void power_method_short(Mat A,vector<double> x)
-{
-double temp;
-int n = nodes;
-int d=0;
-vector<double> cv;
-do
-    {
-        cv = A*x;
-        for(int i=0;i<n;i++)
-            x[i]=cv[i];
-            
-        temp=d;
-        d=0;
-        
-        for(int i=0;i<n;i++)
-        {
-            if(fabs(x[i])>fabs(d))
-                d=x[i];
-        }
-
-        for(int i=0;i<n;i++)
-            x[i]/=d;
-            
-    }while(fabs(d-temp)>0.00001);
-
-
-cout << "autovalor "<<d<<endl;
-
-cout << "autovector "<<endl;
-  for(int i=0;i<n;i++)
-        cout<<" "<<x[i];
-
-    cout<<endl;
-
-    ChequearAutovector(A, d, x);
-}
+*/

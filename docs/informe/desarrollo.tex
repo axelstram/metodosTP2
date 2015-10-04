@@ -1,27 +1,35 @@
 \section{Desarrollo}
 
+\subsection{PageRank}
+
+Para resolver que página es la más importante es definido el puntaje de cada página como la siguiente sumatoria:
+	$$ sum bla$$
+donde $x_{j}$ es la importancia de la página j, n_{j} es la cantidad de links salientes de la página j.\\
+
+Vemos que el algoritmo PageRank se resume a encontrar el autovector x con autovalor 1 para la matriz cuadrada A, es decir, resolver el sistema Ax = λx. A es la matriz de links.
+
 Implementamos PageRank de la siguiente manera
-\\ 		
 
+%El pseudocodigo todavia me tira errores con el endwhile, lo descomento cuando deje de tirarlos
 
-% \begin{algorithm}[H]
-% \caption{Método Potencia}
+% \begin{algorithm}
+% \caption{Método de la Potencia}\label{metpot}
 % \begin{algorithmic}[1]
-% \Procedure{Método Potencia}%{$G=(V,E)$}
-% 	\State $x = x/\lVert \mathbf{p} \rVert _{1}$
-% 	\State vector ms con c/n en todas sus posiciones
-% 	\While{ no se alcance la iteracion máxima }
-% 		\State resuelvo sistema y = A.(1-c)*x + ms
-% 		\State obtengo norma de y
-% 		\State 	defino error como la resta de la norma uno entre x e y
-% 		\If{ difieren en menos del error tolerado}
-% 			\State devuelvo vector y con su norma 	
-% 		\Else 
-% 			\State x = y
-% 	\EndWhile
-% \EndProcedure
+
+%   \Function{MetodoPotencia}{Matriz A, vector x, double c, tolerance, maxIter}%\Comment{con $A \in R^{(nxm)*(nxm)}$, $b \in R^{nxm}$}
+
+%     \State $x = x/\lVert \mathbf{p} \rVert _{1}$
+%     \While{ no se alcance la iteracion máxima}
+% 	  \State resuelvo sistema y = A.(1-c)*x + ms
+%  	  \State obtengo norma de y
+%  	  \State 	defino error como la norma uno de la resta entre x e y
+%       \If {difieren en menos del error tolerado}
+%       	\State devuelvo vector y con su norma como autovalor
+%       \Else
+%         \State x = y
+%     \EndWhile
+%     \Return false
+%   \EndFunction
+
 % \end{algorithmic}
 % \end{algorithm}
-
-
-

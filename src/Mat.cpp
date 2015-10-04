@@ -20,7 +20,7 @@ double Mat::operator()(size_t i, size_t j) const
 } 
 
 
-
+/*
 Mat Mat::operator+(const Mat& anotherMat)
 {
 	Mat& thisMat = *this;
@@ -35,7 +35,7 @@ Mat Mat::operator+(const Mat& anotherMat)
 
 	return res;
 }
-
+*/
 
 
 Mat::Mat(const Mat& anotherMat)
@@ -46,7 +46,7 @@ Mat::Mat(const Mat& anotherMat)
 }
 
 
-
+/*
 Mat& Mat::operator=(const Mat& anotherMat)
 {
 	this->rows_ = anotherMat.rows_;
@@ -55,24 +55,24 @@ Mat& Mat::operator=(const Mat& anotherMat)
 
 	return *this;
 }
+*/
 
-
-
+/*
 Mat Mat::operator*(const Mat& anotherMat)
 {
 	//assert(this->cols_ == anotherMat.rows_ && "Cols and Rows don't match");
 }
+*/
 
 
-
-Mat Mat::operator*(double scalar)
+Mat* Mat::operator*(double scalar)
 {
 	Mat& thisMat = *this;
-	Mat res(cols_, rows_);
+	Mat* res = new Mat(thisMat.cols(), thisMat.rows());
 
-	for (int i = 0; i < rows_; i++) {
-		for (int j = 0; j < cols_; j++) {
-			res(i, j) = thisMat(i, j) * scalar;
+	for (int i = 0; i < thisMat.rows(); i++) {
+		for (int j = 0; j < thisMat.cols(); j++) {
+			res->operator()(i, j) = thisMat(i, j) * scalar;
 		}
 	}
 
@@ -111,7 +111,7 @@ size_t Mat::cols() const
 	return cols_;
 }
 
-
+/*
 
 Mat Mat::clone() const
 {
@@ -126,7 +126,7 @@ Mat Mat::clone() const
 
 	return res;
 }
-
+*/
 
 
 void Mat::ShowOctave()

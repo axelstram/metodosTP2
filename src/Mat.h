@@ -1,34 +1,34 @@
 /***** A 2-D Matrix *****/
-#ifndef MATRIX_H_
-#define MATRIX_H_
+#ifndef MAT_H_
+#define MAT_H_
 
 
 #include <iostream>
 #include <vector>
 #include <cassert>
 #include <fstream>
-
+#include "matrix.h"
 
 using namespace std;
 
 
-class Mat {
+class Mat : public Matrix{
 	public:
 	    Mat(size_t rows_, size_t cols_);
+	    Mat(const Mat& anotherMat);
 	    double& operator()(size_t i, size_t j);
 	    double operator()(size_t i, size_t j) const;
-	    Mat operator+(const Mat& anotherMat);
-	    Mat operator*(const Mat& anotherMat);
-	    Mat operator*(double scalar);
 	    vector<double> operator*(const vector<double>& x);
-	    Mat& operator=(const Mat& anotherMat);
-	    Mat(const Mat& anotherMat);
+	    Mat* operator*(double scalar);
 	    size_t rows() const;
 	    size_t cols() const;
-	    Mat clone() const;
 		void Show();
 		void ShowOctave();
-		void checkBandMat();
+	    //Mat operator+(const Mat& anotherMat);
+	    //Mat operator*(const Mat& anotherMat);
+	    //Mat& operator=(const Mat& anotherMat);
+	    //Mat clone() const;
+		//void checkBandMat();
 
 	private:
 

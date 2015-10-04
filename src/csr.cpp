@@ -1,9 +1,20 @@
 #include "csr.h"
-
+#include <vector>
+#include <cassert>
 
 CompressedSparseRow::CompressedSparseRow(size_t n, size_t m) : rows_(n), cols_(m) {
 
 	for(int i = 0; i<n; i++) row_ptr_.push_back(-1);
+}
+
+CompressedSparseRow::CompressedSparseRow(size_t n, size_t m, vector<double> value, vector<int> row_ptr, vector<int> col_ind)
+{
+	rows_ = n;
+	cols_ = m;
+
+	value_ = value; 
+	row_ptr_ = row_ptr; 
+	col_ind_ = col_ind; 
 }
 
 //usado para leer un elemento
@@ -124,6 +135,41 @@ size_t CompressedSparseRow::cols() const
 	return cols_;
 }
 
+vector<double> CompressedSparseRow::values() const
+{
+	return value_;
+}
+
+vector<int> CompressedSparseRow::row_ptr() const
+{
+	return row_ptr_;
+}
+
+vector<int> CompressedSparseRow::col_ind() const
+{
+	return col_ind_;
+}
+
+
+
+CompressedSparseRow* CompressedSparseRow::operator*(double scalar)
+{
+	CompressedSparseRow& thisMat = *this;
+	vector<double> newValues = thisMat.values();
+
+	if (scalar != 0){
+		for (int i = 0; i < newValues.size(); ++i){
+			newValues[i] *= scalar;
+		}
+		CompressedSparseRow* res = new CompressedSparseRow(thisMat.cols(), thisMat.rows(), newValues, thisMat.row_ptr(), thisMat.col_ind());
+		return res;
+
+	}else{
+		CompressedSparseRow* res = new CompressedSparseRow(thisMat.cols(), thisMat.rows());
+		return res;
+	}
+
+}
 
 void CompressedSparseRow::show_vectors(){
 	cout << "value:" << endl;
@@ -141,4 +187,22 @@ void CompressedSparseRow::show_vectors(){
 		cout << col_ind_[i] << " " ;
 	}
 	cout << endl;
+}
+
+vector<double> CompressedSparseRow::operator*(const vector<double>& x)
+{
+	vector<double> res;
+	CompressedSparseRow& thisMatrix = *this;
+
+	assert(x.size() == thisMatrix.cols() && "Error al multiplicar matriz y vector de diferentes dimensiones");
+
+	for (int i = 0; i < thisMatrix.rows(); i++) {
+		double mult = 0;
+		for(int j = 0; j < thisMatrix.cols(); j++) {
+			mult += thisMatrix(i,j) * x[j];
+		}
+		res.push_back(mult);
+	}
+
+	return res;
 }

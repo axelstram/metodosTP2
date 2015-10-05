@@ -120,66 +120,51 @@ void sortEdgesOfGraph(string input_file, string output_file){
 
 int main(int argc, char* argv[])
 {	
-	string input_file = argv[1];
-	string output_file = argv[2];
+	//string input_file = argv[1];
+	//string output_file = argv[2];
 
 	//modifyInputGraph(input_file, output_file);
 
-	sortEdgesOfGraph(input_file, output_file);
+	//sortEdgesOfGraph(input_file, output_file);
 
 	///generar muchos c uniformemente..
 
 
-/*
+
 
 	UniformDist udist(0,1);
 
-	vector<double> cs;
-	for(int i=0;i<100;i++){
-		double c =udist.Generate();
-		cs.push_back(c);
-		cout<<c<<endl;
+	if (argc < 3) {
+
+		cout << "Invalid arguments. use ./generateGraph <nodes> <edges> <outfile>" << endl;
+		return 0;
+
+	} else {
+
+		int nodes = stoi(argv[1]);
+		int edges = stoi(argv[2]);
+		string out_file = argv[3];
+
+		UniformDist udist(1,nodes);
+
+		vector<pair<int,int>> alledges;
+
+		while (alledges.size() < edges) {
+			int from = udist.Generate();
+			int to = udist.Generate();
+
+			pair<int,int> edge = make_pair(from,to);
+
+			if (from != to && !isPair(edge,alledges))
+				alledges.push_back(edge);
+		}
+
+		ofstream outputFile(out_file);
+		outputFile << nodes << " " << edges << endl; 
+
+		for (int i = 0; i < alledges.size(); i++)
+			outputFile << alledges[i].first << " " << alledges[i].second << endl; 
 	}
-
-
-
-
-if(argc<3){
-
-	cout<<"Invalid arguments. use ./generateGraph <nodes> <edges> <outfile>"<<endl;
-	return 0;
-
-}else{
-
-	int nodes= stoi(argv[1]);
-	int edges= stoi(argv[2]);
-	string out_file = argv[3];
-
-	UniformDist udist(1,nodes);
-
-	vector<pair<int,int> > alledges;
-
-	while(alledges.size()<edges){
-
-		int from = udist.Generate();
-		int to = udist.Generate();
-
-		pair<int,int> edge = make_pair(from,to);
-
-		if(from != to && !isPair(edge,alledges))
-			alledges.push_back(edge);
-
-	}
-
-
-	ofstream outputFile(out_file);
-	outputFile << nodes << " " << edges << endl; 
-
-	for (int i = 0; i < alledges.size(); i++)
-		outputFile << alledges[i].first << " " << alledges[i].second << endl; 
-	}
-
-*/
 
 	return 0;
 }

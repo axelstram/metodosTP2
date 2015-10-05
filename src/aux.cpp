@@ -118,7 +118,6 @@ Matrix& loadWebGraph(string graph_file)
     }
     Matrix& A = *A_tmp;
 
-    cout << edges << endl;
 	for (int i = 0; i < edges; i++) {
 		int from;
 		int to;
@@ -139,7 +138,6 @@ Matrix& loadWebGraph(string graph_file)
 			if(linksEntrantes[from] != 0)
 				A(to, from) = A(to, from)/(double)linksEntrantes[from];
 		}
-		cout << from << endl;
 	}
 	return A;
 }
@@ -213,8 +211,8 @@ Matrix& loadSportGraph(string graph_file){
 
 
 // Carga la matriz llamando al cargador de paginas web o al de deportes
-Matrix& load_test_in(string test_in_file){
-
+Matrix& load_test_in(string test_in_file)
+{
 	ifstream f(test_in_file);
 	string s;	
 
@@ -229,19 +227,33 @@ Matrix& load_test_in(string test_in_file){
 	graph_file = s;
 	f >> s;
 	tolerance = stod(s);
-	
-	///load matrix;
-	if(instance_type == WEB_RANK){
-		Matrix& A = loadWebGraph(graph_file);
-		cout << "termino de cargar" << endl;
-		return A;
 
-	}else if(instance_type == SPORT_RANK) {
+	///load matrix;
+	if (instance_type == WEB_RANK) {
+		Matrix& A = loadWebGraph(graph_file);
+		return A;
+	} else if (instance_type == SPORT_RANK) {
 		Matrix& A = loadSportGraph(graph_file);
 		return A;
 	}
 
 }
+
+
+Matrix& load_test_in_batch(string batch_instance_file)
+{
+	///load matrix;
+	if (instance_type == WEB_RANK) {
+		Matrix& A = loadWebGraph(batch_instance_file);
+		return A;
+	} else if (instance_type == SPORT_RANK) {
+		Matrix& A = loadSportGraph(batch_instance_file);
+		return A;
+	}
+
+}
+
+
 
 /*
 Matrix& LoadMatrixFromFile(string file_path)

@@ -1,0 +1,11 @@
+# Directed graph (each unordered pair of nodes is saved once):
+# Example shown in the Bryan and Leise.
+# Nodes: 38 Edges: 7
+# FromNodeId	ToNodeId
+19 17
+35 25
+27 32
+32 16
+21 31
+4 5
+24 7

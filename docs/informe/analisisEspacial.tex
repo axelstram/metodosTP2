@@ -25,7 +25,7 @@ Para todos los casos, se midió la cantidad de memoria reservada utilizando \tex
 
 Fue útil tener en cuenta la cantidad de memoria real, principalmente para constatar que tanto Vector como CSR usaran la cantidad teórica estimada, además de saber que DOK utiliza una cantidad mayor a la pensada. Esto se debe a que DOK está implementado sobre el tipo $map$ de C++, que es un Black-Red Tree. Cada elemento cuesta 48 bytes, más que un double ($value$) y dos enteros ($key$), que serían 16 bytes.  \\
 
-Existen casos para los cuales, cada una de las alternativas anteriores es mejor que el resto. Para ejemplificarlo, supongamos que se tiene una matriz con tamaño $n=100$. Graficamos la cantidad de memoria requerida por cada estructura, variando la cantidad de valores distintos de cero: \\
+Existen casos para los cuales, cada una de las alternativas anteriores es mejor que el resto. Para ejemplificarlo, supongamos que se tiene una matriz con tamaño $n=100$. Graficamos la cantidad de memoria requerida por cada estructura, variando la cantidad de valores distintos de cero: \\ \\
 
 \begin{wrapfigure}{r}{0.6\textwidth}
   \vspace{-20pt}
@@ -38,4 +38,24 @@ Existen casos para los cuales, cada una de las alternativas anteriores es mejor 
   \label{fig:img1}
 \end{wrapfigure}
 
-Cabe destacar que, a pesar de no notarse en el gráfico, el Dictionary Of Keys utiliza menos memoria que Compressed Sparse Row para cuando hay menos de 12 valores distintos de cero. A partir de $12 \leq nnz$, Dictionary Of Keys utiliza más memoria.
+Cabe destacar que, a pesar de no notarse en el gráfico, el Dictionary Of Keys utiliza menos memoria que Compressed Sparse Row para cuando hay menos de 12 valores distintos de cero. A partir de $12 \leq nnz$, Dictionary Of Keys utiliza más memoria. \\ \\ \\ \\  \\
+Como conclusión, obtuvimos que Dictionary Of Keys no es una buena implementación en comparación a Compressed Sparse Row en general, a menos que la matriz fuese sumamente esparsa. La relación de la misma se detalla en la siguiente tabla.
+
+\begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+    $n$ & $nnz$ & $nnz/n^2$  \\ \hline
+    10	& 1	& \%1 \\ \hline
+	100	& 11	& \%0.0011 \\ \hline
+	1000 & 111	& \%0.0001 \\ \hline
+	5000 & 555 & \%0.00002 \\ \hline
+	10000 & 1111 & \%0.000001 \\ \hline
+	120000 & 13333 & \%0.00000009 \\ \hline
+    \end{tabular}
+\end{center}
+
+Los valores $nnz$ son la cantidad de valores no nulos que haría que Dictionary Of Keys utilice menos memoria que Compressed Sparse Row. La relación $nnz/n^2$ muestra el porcentaje de valores no nulos con respecto a la matriz total. Como se observa, la relación debe ser muy baja.\\
+
+Vector es la mejor implemetación para cuando la matriz no es esparsa, en particular cuando se cumple la siguiente desigualdad: $$3 nnz > 2n^2 - n + 1$$
+
+De este modo, para nuestro problema, Compressed Sparse Row presenta la mejor opción en términos espaciales para nuestro problema, con excepción de los casos anteriormente vistos cuando la matriz es sumamente esparsa y cuando muy poco esparsa.

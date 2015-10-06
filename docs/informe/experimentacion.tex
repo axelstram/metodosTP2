@@ -1,5 +1,6 @@
 \section{Experimentación}
 
+\subsection{Análisis de convergencia de PageRank}
 %Imagen 1
 \begin{wrapfigure}{r}{0.6\textwidth}
   \vspace{-20pt}
@@ -58,4 +59,30 @@ Para ver como se comporta el algoritmo de $PageRank$ y comparar los resultados c
 
 %% ACA EL ANALISIS DE LOS RESULTADOS %%
 
+
+\subsection{Análisis temporal de PageRank}
+
+Para evaluar los tiempos del algoritmo PageRank con la estructura de matriz Vector que implementamos, generamos archivos de entradas de diferentes grafos. Son grafos generados aleatoriamente con cantidad de nodos desde 10 a 1000 y distintas cantidades de ejes de 10 a 1000. 
+Ejecutamos el algoritmo para cada estructura y para cada uno de estos archivos de entrada. El siguiente gráfico muestra el tiempo obtenido en milisegundos dividido por la función $n^{2}$.\\
+
+
+\begin{figure}[h]
+  \includegraphics[scale= 0.4]{imagenes/complejidad-temporal-pagerank.png}
+   \caption{Gráfico que representa el tiempo de corrida de PageRank con la estructura de datos Vector.}
+  \label{fig:img1}
+\end{figure}
+
+El gráfico resultante es el de una función constante, lo que nos lleva a concluir que el algoritmo tiene una complejidad similar a O($n^{2}$).
+
+\subsection{Comparación de performance del algoritmo sobre las distintas estructuras de datos}
+
+El siguiente grafo detalla los resultados temporales de haber corrido instancias para PageRank con las estructuras de datos DOK, CSR y Vector.
+
+\begin{figure}[h]
+  \includegraphics[scale=0.4]{imagenes/comparacion-tiempo-ejecucion-csr-dok-vector.png}
+   \caption{Gráfico que representa el tiempo de corrida de PageRank con distintas estructuras de datos.}
+  \label{fig:img1}
+\end{figure}
+
+Pudimos observar que CSR y DOK, a pesar de ser más eficientes en cuanto a ahorro de espacio se refiere, resultaron tener un desempeño más lento en comparación a Vector.
 

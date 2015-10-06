@@ -1,4 +1,4 @@
-\section{Resultados}
+\section{Resultados y discusión}
 A continuación, mostramos los resultados obtenidos de la comparación entre los algoritmos PageRank e IN-DEG para instancias particulares. Dichos resultados son la importancia de cada página j, es decir el $x_{j}$. \\
 
 \begin{figure}[H]
@@ -25,7 +25,7 @@ El segundo ejemplo, un grafo completo de cinco nodos, lo hicimos para encontrar 
 \centering     %%% not \center
 \subfigure[Figure A]{\label{fig:a}\includegraphics[width=0.3\linewidth]{imagenes/resultadosBinario.png}}
 \subfigure[Figure B]{\label{fig:b}\includegraphics[width=0.5\linewidth]{imagenes/binario.png}}
-\caption{my caption}
+\caption{Web con estructura de árbol binario.}
 \end{figure}
 
 
@@ -33,5 +33,29 @@ El segundo ejemplo, un grafo completo de cinco nodos, lo hicimos para encontrar 
 \centering     %%% not \center
 \subfigure[Figure A]{\label{fig:a}\includegraphics[width=0.4\linewidth]{imagenes/resultadosCamino.png}}
 \subfigure[Figure B]{\label{fig:b}\includegraphics[width=0.2\linewidth]{imagenes/camino.png}}
-\caption{my caption}
+\caption{Web con estructura de camino.}
+\end{figure}
+
+En los dos últimos graficos, se puede apreciar un comportamiento similar a los primeros dos, ya que la estructura subyacente a ambos es similar a las de estos 2 gráficos, generándose rankings similares.	 
+
+
+
+\begin{figure}[H]
+\centering     %%% not \center
+\subfigure[Figure A]{\label{fig:a}\includegraphics[width=0.4\linewidth]{imagenes/resultadosArbolRecursivo.png}}
+\subfigure[Figure B]{\label{fig:b}\includegraphics[width=0.4\linewidth]{imagenes/arbolRecursivo.png}}
+\caption{Web con estructura de árbol recursivo.}
+\end{figure}
+
+
+
+\newpage
+
+Posteriormente, ejecutamos los algoritmos de $PageRank$ e $IN-DEG$ para una misma instancia de 500 páginas y 80000 links generada al azar. Queremos ver cuánto cambian los rankings de cada web para cada algoritmo. En el eje X está el puesto de las páginas según $PageRank$, y en el eje Y el valor del ranking de $IN-DEG$ para esa misma página (que está entre 0 y 1) multiplicado por una constante por cuestiones de claridad a la hora de visualizar el gráfico.\\
+
+Podemos ver que en este caso particular, con una matriz bastante esparsa (30\% de los links aproximadamente), ambos algoritmos devuelven un resultado muy similar. Lo que varía es el puesto en PageRank de las webs que tienen pocos links entrantes de diferencia (varía mas en intervalos pequeños). En los casos particulares en donde hay muchas páginas apuntando a una, debería andar peor $IN-DEG$, lo cual no se aprecia en este gráfico ya que es un grafo muy esparso y es aleatorio, pero si en los ejemplos pequeños que vimos anteriormente.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{imagenes/pagerankVSindeg.png}
 \end{figure}

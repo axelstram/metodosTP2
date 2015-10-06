@@ -1,0 +1,12 @@
+
+Para una primera idea de los tiempos de los algoritmos con las diferentes estructuras para matriz que implementamos, generamos archivos de entradas de diferentes grafos. Son 5 grafos generados aleatoriamente con igual cantidad de nodos y distintas cantidades de ejes. 
+Ejecutamos el algoritmo para cada estructura y para cada uno de estos archivos de entrada. El siguiente gráfico muestra las diferencias de los tiempos obtenidos en milisegundos.
+
+grafos de 1000 nodos con cantidad de aristas variable de 30 a 300.000. El tiempo se mide en milisegundos y es la mediana de 10 ejecuciones para cada grafo.
+
+30 - 300 - 3.000 - 30.000 - 300.000
+csr  - 25 -
+dok - 556 -
+vector - 494 - 
+
+

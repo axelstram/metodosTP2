@@ -2,34 +2,65 @@
 
 \subsection{PageRank}
 
-Para resolver que página es la más importante es definido el puntaje de cada página como la siguiente sumatoria:
-	$$ sum bla$$
-donde $x_{j}$ es la importancia de la página j, n_{j} es la cantidad de links salientes de la página j.\\
+El algoritmo PageRank genera un ranking de páginas web de acuerdo a la importancia de cada página, esto es utilizado por los buscadores Web para devolver el resultado más relacionado a la búsqueda realizada por el usuario.\\
 
-Vemos que el algoritmo PageRank se resume a encontrar el autovector x con autovalor 1 para la matriz cuadrada A, es decir, resolver el sistema Ax = λx. A es la matriz de links.
+Para determinar que página es la más importante, el algoritmo define el puntaje de cada página como la siguiente sumatoria:
+
+\begin{eqnarray}
+x_k = \sum_{j \in L_k} \frac{x_j}{n_j},~~~~k = 1,\dots,n.\label{eq:ecuacion1}
+\end{eqnarray}
+
+donde $x_{j}$ es la importancia de la página j, $n_{j}$ es la cantidad de links salientes de la página j y $L_{k}$ el conjunto de páginas web con links salientes a j. Dichos puntajes siempre son mayores o iguales a cero, con lo que el puntaje cero corresponde a la página menos importante.\\
+
+
+Estas ecuaciones pueden ser escritas como un sistema $Ax = x$, con x el vector de los puntajes que buscamos, ya que cada puntaje se obtiene con los de sus páginas vecinas (o sea las del conjunto $L_{k}$).\\
+
+Además, A es una matriz estocástica por columnas, veamos por qué vale esto. Por definición del sistema de ecuaciónes en \ref{eq:ecuacion1} vale que
+
+\begin{equation*}
+A_{ij} = \left\{
+	\begin{array}{cl}
+	\frac{1}{n_{j}} & \text{si hay un link de } j \text{ a } i,\\
+	0 & \text{en caso contrario.}\\
+	\end{array} \right.
+\end{equation*}
+
+Con lo cual, la j-ésima columna tiene $n_{j}$ elementos de valor $\frac{1}{n_{j}}$, cuya suma es uno. Con la siguiente proposición, obtenemos que una matriz estocástica por columnas tiene autovalor 1.\\
+
+Proposición: Toda matriz estocástica por columna tiene a uno como autovalor.
+Demostración: Sea $A \in R^{nxn}$ una matriz estocástica por columna y sea e $\in R^{n}$ un vector columna con todos sus elementos unos. Sabemos que A y $A^{T}$ tienen los mismos autovalores.
+Como A es estocástica por columnas, vale que $A^{T} x e = e$ pues las columnas de A (y filas de $A^{T}$) suman uno. Luego como $\lambda = 1$ es autovalor de $A^{T}$ también lo es de A. \\
+
+Luego el problema original equivale a encontrar el autovector x con autovalor 1 para la matriz cuadrada A, es decir, resolver el sistema $Ax = \lambda x$.
+
+Sin embargo, se presentan dos problemas: no sabemos si el autovalor uno tiene multiplicidad uno (o sea, no sabemos si hay una única solución o multiples) y  hay problemas con aquellos nodos que no tengan salida (o sea, páginas web que no apuntan a ninguna otra, no tienen salida).\\
+
+
+
+Para encontrar el autovalor de la matriz correspondiente al autovalor $\lambda$, aplicamos el algorítmo iterativo de la potencia.\\
 
 Implementamos PageRank de la siguiente manera
 
-%El pseudocodigo todavia me tira errores con el endwhile, lo descomento cuando deje de tirarlos
 
-% \begin{algorithm}
-% \caption{Método de la Potencia}\label{metpot}
-% \begin{algorithmic}[1]
+\begin{algorithm}
+\caption{Método de la Potencia}\label{metpot}
+\begin{algorithmic}[1]
 
-%   \Function{MetodoPotencia}{Matriz A, vector x, double c, tolerance, maxIter}%\Comment{con $A \in R^{(nxm)*(nxm)}$, $b \in R^{nxm}$}
+  \Function{MetodoPotencia}{Matriz A, vector x, double c, tolerance, maxIter}%\Comment{con $A \in R^{(nxm)*(nxm)}$, $b \in R^{nxm}$}
 
-%     \State $x = x/\lVert \mathbf{p} \rVert _{1}$
-%     \While{ no se alcance la iteracion máxima}
-% 	  \State resuelvo sistema y = A.(1-c)*x + ms
-%  	  \State obtengo norma de y
-%  	  \State 	defino error como la norma uno de la resta entre x e y
-%       \If {difieren en menos del error tolerado}
-%       	\State devuelvo vector y con su norma como autovalor
-%       \Else
-%         \State x = y
-%     \EndWhile
-%     \Return false
-%   \EndFunction
+    \State $x = x/\lVert \mathbf{p} \rVert _{1}$
+    \While{ no se alcance la iteracion máxima}
+	    \State resuelvo sistema y = A.(1-c)*x + ms
+ 	    \State obtengo norma de y
+ 	    \State 	defino error como la norma uno de la resta entre x e y
+      \If {difieren en menos del error tolerado}
+      	\State devuelvo vector y con su norma como autovalor
+      \Else
+        \State x = y
+      \EndIf
+    \EndWhile
+    \Return false
+  \EndFunction
 
-% \end{algorithmic}
-% \end{algorithm}
+\end{algorithmic}
+\end{algorithm}

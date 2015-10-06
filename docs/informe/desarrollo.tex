@@ -15,7 +15,7 @@ donde $x_{j}$ es la importancia de la página j, $n_{j}$ es la cantidad de links
 
 Estas ecuaciones pueden ser escritas como un sistema $Ax = x$, con x el vector de los puntajes que buscamos, ya que cada puntaje se obtiene con los de sus páginas vecinas (o sea las del conjunto $L_{k}$).\\
 
-Además, A es una matriz estocástica por columnas, veamos por qué vale esto. Por definición del sistema de ecuaciónes en \ref{eq:ecuacion1} vale que
+Además, A es una matriz estocástica por columnas, veamos por qué vale esto. Por definición del sistema de ecuaciónes en la ecuación \ref{eq:ecuacion1} vale que
 
 \begin{equation*}
 A_{ij} = \left\{
@@ -27,19 +27,29 @@ A_{ij} = \left\{
 
 Con lo cual, la j-ésima columna tiene $n_{j}$ elementos de valor $\frac{1}{n_{j}}$, cuya suma es uno. Con la siguiente proposición, obtenemos que una matriz estocástica por columnas tiene autovalor 1.\\
 
-Proposición: Toda matriz estocástica por columna tiene a uno como autovalor.
+Proposición: Toda matriz estocástica por columna tiene a uno como autovalor.\\
 Demostración: Sea $A \in R^{nxn}$ una matriz estocástica por columna y sea e $\in R^{n}$ un vector columna con todos sus elementos unos. Sabemos que A y $A^{T}$ tienen los mismos autovalores.
 Como A es estocástica por columnas, vale que $A^{T} x e = e$ pues las columnas de A (y filas de $A^{T}$) suman uno. Luego como $\lambda = 1$ es autovalor de $A^{T}$ también lo es de A. \\
 
 Luego el problema original equivale a encontrar el autovector x con autovalor 1 para la matriz cuadrada A, es decir, resolver el sistema $Ax = \lambda x$.
 
-Sin embargo, se presentan dos problemas: no sabemos si el autovalor uno tiene multiplicidad uno (o sea, no sabemos si hay una única solución o multiples) y  hay problemas con aquellos nodos que no tengan salida (o sea, páginas web que no apuntan a ninguna otra, no tienen salida).\\
+Sin embargo, se presentan dos problemas: no sabemos si el autovalor uno tiene multiplicidad uno (o sea, no sabemos si hay una única solución o multiples) y hay problemas con aquellos nodos que no tengan salida (o sea, páginas web que no apuntan a ninguna otra, no tienen salida, con lo que hay columnas de ceros).\\
 
 
+Para poder conseguir el ranking en el caso de nodos (o sea páginas web) sin links salientes, se suma a aquellas columnas de A con ceros $\frac{1}{n}$ en cada posición de la columna, con lo que se consigue continuar por cualquier página web con la misma probabilidad.
+Por otro lado, para evitar los casos en que el autovalor uno tenga multiplicidad mayor a uno, definimos la matriz M de la siguiente manera:
 
-Para encontrar el autovector de la matriz correspondiente al autovalor $\lambda$, aplicamos el algorítmo iterativo de la potencia.\\
+  $$M = (1-m)* A + mS$$
 
-Implementamos PageRank de la siguiente manera \\
+con $m \in (0,1]$ y $S \in R^{nxn}$ una matriz con todos sus elementos iguales a $\frac{1}{n}$.\\
+Resolver el sistema $M * x = x$ equivale a 
+$$x = M x = (1-m)*A * x+ ms $$
+
+donde s es el vector columna con todas sus entradas $\frac{1}{n}$. Este nuevo sistema asegura que el autovalor uno tiene multiplicidad uno\footnote{Esto puede ser consultado en el paper Bryan, Leise - 2006 - The Linear Algebra behind Google, sección 3.2.}.
+
+
+Para encontrar el autovector de la matriz correspondiente al autovalor $\lambda$ , aplicamos el algorítmo iterativo de la potencia.\\
+
 
 
 \begin{algorithm}
@@ -66,7 +76,6 @@ Implementamos PageRank de la siguiente manera \\
 \end{algorithm}
 
 
-\newpage
 %Los problemas que se nos presentaron al realizar el algoritmo fueron:
 %\begin{itemize}
 %\item 
@@ -78,3 +87,21 @@ Experimentaciones fallidas y problemas en el transcurso:
 \begin{itemize}
 \item Al testear el funcionamiento del algoritmo PageRank con la estructura de matriz CSR, notamos que el tiempo de carga era demasiado lento. Esto era por la forma en que funciona esta estructura, al guardar los elementos en orden de filas, si se agregan los elementos en desorden o incluso en orden contrario al orden de filas el tiempo de carga de las matrices de prueba no era razonable.
 \end{itemize}
+
+
+\subsection{GeM}
+
+El algoritmo GeM es un método que está basado en PageRank, con lo cual calcula rankings para cualquier tipo de situación que se pueda representar con un grafo dirigido. Sin embargo, nosotros lo usamos para determinar el ranking para competencias deportivas.\\
+
+GeM representa la competencia deportiva con un grafo dirigido, de manera similar a PageRank. Cada nodo representa un equipo y las aristas representan los enfrentamietos entre los equipos i y j. Con esto se puede representar el grafo con la siguiente matriz:
+
+\begin{equation*}
+A_{ji}^t = \left\{
+  \begin{array}{cl}
+  w_{ji} & \text{si el equipo } i \text{ perdi\'o con el equipo } j,\\
+  0 & \text{en caso contrario, }\\
+  \end{array} \right.
+\end{equation*}
+
+La arista vaiene pesos en las aristas y
+

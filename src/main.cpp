@@ -17,9 +17,7 @@ double tolerance;
 ///from test.txt
 int nodes; /* 	 pages / teams	 	*/
 int edges; /*	 links / marches 	*/
-int matrix_type = CSR_MATRIX;
-
-
+int matrix_type = DOK_MATRIX;
 
 
 
@@ -171,7 +169,7 @@ int main(int argc, char* argv[])
 	
 	if (argc == 4)
 		MedirTiempos(argv[1], argv[2]);
-/*
+
 	if (argc >= 5)
 		ProcesarBatchYMedirTiempos(argv[1], argv[2]);
 	/*

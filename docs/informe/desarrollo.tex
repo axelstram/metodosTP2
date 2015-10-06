@@ -38,7 +38,7 @@ Sin embargo, se presentan dos problemas: no sabemos si el autovalor uno tiene mu
 
 
 
-Para encontrar el autovalor de la matriz correspondiente al autovalor $\lambda$, aplicamos el algorítmo iterativo de la potencia.\\
+Para encontrar el autovector de la matriz correspondiente al autovalor $\lambda$, aplicamos el algorítmo iterativo de la potencia.\\
 
 Implementamos PageRank de la siguiente manera
 
@@ -65,3 +65,16 @@ Implementamos PageRank de la siguiente manera
 
 \end{algorithmic}
 \end{algorithm}
+
+Los problemas que se nos presentaron al ralizar el algoritmo fueron:
+
+\begin{itemize}
+\item Dividiamos por la norma infinito, con lo cual el vector resultante no era necesariamente un vector de probabilidades y afectaba el resultado. Releyendo los papers y consultando a docentes lo corregimos por la norma uno.
+\item Ehh ayuda para completar esto TODO.
+\end{itemize}
+
+
+Experimentaciones fallidas y problemas en el transcurso:
+\begin{itemize}
+\item Al testear el funcionamiento del algoritmo PageRank con la estructura de matriz CSR, notamos que el tiempo de carga era demasiado lento. Esto era por la forma en que funciona esta estructura, al guardar los elementos en orden de filas, si se agregan los elementos en desorden o incluso en orden contrario al orden de filas el tiempo de carga de las matrices de prueba no era razonable.
+\end{itemize}

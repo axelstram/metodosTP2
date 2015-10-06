@@ -1,0 +1,242 @@
+1 Estudiantes 1 Arsenal 0 
+1 Vélez Sarsfield 0 Tigre 0
+1 Olimpo 2 San Lorenzo 0  
+1 Argentinos Juniors 2 Godoy Cruz 1 
+1 Atlético de Rafaela 1 All Boys 1 
+1 Racing Club 3 Colón 0  
+1 Quilmes 0 Rosario Central 1  
+1 Newell's Old Boys	0 Boca Juniors 0  
+1 River Plate 1 Gimnasia y Esgrima (LP) 0  
+1 Belgrano 2 Lanús 2 
+2 Godoy Cruz 2 Quilmes 0
+2 All Boys 0 Estudiantes 1
+2 Arsenal 1 Vélez Sarsfield 3
+2 Tigre 0 Olimpo 0
+2 San Lorenzo 1 Racing Club 0
+2 Colón 1 Argentinos Juniors 0
+2 Lanús 0 Atlético de Rafaela 3
+2 Gimnasia y Esgrima (LP) 3 Newell's Old Boys 0
+2 Rosario Central 1 River Plate 1
+2 Boca Juniors 2 Belgrano 3
+3 Olimpo 0 Arsenal 2
+3 Vélez Sarsfield 3 All Boys 0
+3 Racing Club 0 Tigre 1
+3 Quilmes 0 Colón 2
+3 Argentinos Juniors 0 San Lorenzo 2
+3 Estudiantes 2 Lanús 1
+3 River Plate 1 Godoy Cruz 2
+3 Belgrano 1 Newell's Old Boys 1
+3 Rosario Central 3 Gimnasia y Esgrima (LP) 1
+3 Atlético de Rafaela 1 Boca Juniors 0
+4 Lanús 3 Vélez Sarsfield 2
+4 All Boys 1 Olimpo 0
+4 Arsenal 3 Racing Club 1
+4 Newell's Old Boys 4 Atlético de Rafaela 1
+4 San Lorenzo 1 Quilmes 0
+4 Boca Juniors 1 Estudiantes 0
+4 Colón 3 River Plate 1
+4 Godoy Cruz 3 Rosario Central 0
+4 Tigre 0 Argentinos Juniors 0
+4 Gimnasia y Esgrima (LP) 2 Belgrano 2
+5 Godoy Cruz 0 Gimnasia y Esgrima (LP) 2
+5 Racing Club 1 All Boys 1
+5 Vélez Sarsfield 1 Boca Juniors 0
+5 Atlético de Rafaela 1 Belgrano 2
+5 Argentinos Juniors 2 Arsenal 0
+5 Rosario Central 0 Colón 1
+5 Quilmes 1 Tigre 0
+5 Olimpo 2 Lanús 0
+5 River Plate 1 San Lorenzo 0
+5 Estudiantes 0 Newell's Old Boys 0
+6 Colón 1 Godoy Cruz 1
+6 Gimnasia y Esgrima (LP) 1 Atlético de Rafaela 1
+6 All Boys 0 Argentinos Juniors 0
+6 Belgrano 1 Estudiantes 1
+6 Lanús 1 Racing Club 0
+6 Boca Juniors 2 Olimpo 0
+6 Newell's Old Boys 4 Vélez Sarsfield 1
+6 Arsenal 0 Quilmes 2
+6 San Lorenzo 2 Rosario Central 1
+6 Tigre 0 River Plate 0
+7 Colón 0 Gimnasia y Esgrima (LP) 0
+7 Argentinos Juniors 0 Lanús 2
+7 Estudiantes 0 Atlético de Rafaela 0
+7 Vélez Sarsfield 3 Belgrano 1
+7 Godoy Cruz 1 San Lorenzo 1
+7 Olimpo 1 Newell's Old Boys 0
+7 River Plate 1 Arsenal 0
+7 Racing Club 1 Boca Juniors 2
+7 Quilmes 1 All Boys 2
+7 Rosario Central 1 Tigre 1
+8 Atlético de Rafaela 3 Vélez Sarsfield 1
+8 Tigre 0 Godoy Cruz 0
+8 Belgrano 1 Olimpo 1
+8 San Lorenzo 0 Colón 0
+8 Gimnasia y Esgrima (LP) 0 Estudiantes 1
+8 Arsenal 1 Rosario Central 1
+8 Newell's Old Boys 2 Racing Club 0
+8 Boca Juniors 1 Argentinos Juniors 1
+8 All Boys 3 River Plate 2
+8 Lanús 1 Quilmes 0
+9 Olimpo 2 Atlético de Rafaela 1
+9 Colón 1 Tigre 0
+9 Racing Club 2 Belgrano 0
+9 Argentinos Juniors 0 Newell's Old Boys 0
+9 Rosario Central 2 All Boys 0
+9 Vélez Sarsfield 1 Estudiantes 1
+9 Godoy Cruz 2 Arsenal 1
+9 Gimnasia y Esgrima (LP) 2 San Lorenzo 1
+9 River Plate 2 Lanús 0
+9 Quilmes 0 Boca Juniors 0
+10 All Boys 0 Godoy Cruz 0
+10 Estudiantes 0 Olimpo 0
+10 Belgrano 0 Argentinos Juniors 0
+10 Vélez Sarsfield 5 Gimnasia y Esgrima (LP) 1
+10 Newell's Old Boys 1 Quilmes 1
+10 Atlético de Rafaela 2 Racing Club 2
+10 Lanús 2 Rosario Central 1
+10 Arsenal 1 Colón 0
+10 Boca Juniors 1 River Plate 2
+10 Tigre 2 San Lorenzo 2
+11 Quilmes 1 Belgrano 0
+11 Olimpo 1 Vélez Sarsfield 2
+11 Argentinos Juniors 0 Atlético de Rafaela 0
+11 Racing Club 3 Estudiantes 3
+11 Godoy Cruz 1 Lanús 0
+11 Colón 1 All Boys 0
+11 Rosario Central 2 Boca Juniors 1
+11 River Plate 1 Newell's Old Boys 0
+11 Gimnasia y Esgrima (LP) 3 Tigre 1
+11 San Lorenzo 2 Arsenal 0
+12 Lanús 1 Colón 0
+12 Vélez Sarsfield 0 Racing Club 1
+12 Newell's Old Boys 0 Rosario Central 1
+12 Atlético de Rafaela 2 Quilmes 2
+12 Arsenal 0 Tigre 1
+12 All Boys 1 San Lorenzo 2
+12 Boca Juniors 3 Godoy Cruz 0
+12 Belgrano 2 River Plate 1
+12 Estudiantes 1 Argentinos Juniors 0
+12 Olimpo 0 Gimnasia y Esgrima (LP) 2
+13 Tigre 2 All Boys 0
+13 Rosario Central 0 Belgrano 0
+13 Quilmes 1 Estudiantes 3
+13 Argentinos Juniors 2 Vélez Sarsfield 1
+13 Racing Club 1 Olimpo 1
+13 San Lorenzo 1 Lanús 4
+13 Godoy Cruz 0 Newell's Old Boys 1
+13 Gimnasia y Esgrima (LP) 2 Arsenal 0
+13 River Plate 2 Atlético de Rafaela 0
+13 Colón 0 Boca Juniors 0
+14 Olimpo 3 Argentinos Juniors 0
+14 Vélez Sarsfield 1 Quilmes 3
+14 Atlético de Rafaela 2 Rosario Central 3
+14 Estudiantes 0 River Plate 0
+14 Newell's Old Boys 0 Colón 1
+14 Boca Juniors 0 San Lorenzo 0
+14 All Boys 1 Arsenal 1
+14 Belgrano 1 Godoy Cruz 2
+14 Racing Club 0 Gimnasia y Esgrima (LP) 1
+14 Lanús 0 Tigre 0
+15 Rosario Central 0 Estudiantes 0
+15 Quilmes 0 Olimpo 1
+15 San Lorenzo 0 Newell's Old Boys 0
+15 Colón 0 Belgrano 0
+15 Argentinos Juniors 0 Racing Club 1
+15 Arsenal 3 Lanús 1
+15 River Plate 1 Vélez Sarsfield 0
+15 Tigre 0 Boca Juniors 1
+15 Godoy Cruz 3 Atlético de Rafaela 0
+15 Gimnasia y Esgrima (LP) 2 All Boys 1
+16 Newell's Old Boys 2 Tigre 1
+16 Belgrano 0 San Lorenzo 0
+16 Atlético de Rafaela 1 Colón 1 
+16 Argentinos Juniors 0 Gimnasia y Esgrima (LP) 2 
+16 Vélez Sarsfield 4 Rosario Central 1 
+16 Racing Club 0 Quilmes 1 
+16 Estudiantes 0 Godoy Cruz 1 
+16 Lanús 1 All Boys 0 
+16 Boca Juniors 4 Arsenal 2 
+16 Olimpo 1 River Plate 1 
+17 Quilmes 1 Argentinos Juniors 0 
+17 Colón 0 Estudiantes 2 
+17 Rosario Central 0 Olimpo 0 
+17 Godoy Cruz 1 Vélez Sarsfield 1 
+17 San Lorenzo 2 Atlético de Rafaela 0 
+17 Arsenal 3 Newell's Old Boys 2 
+17 Gimnasia y Esgrima (LP) 0 Lanús 0 
+17 River Plate 3 Racing Club 2 
+17 All Boys 1 Boca Juniors 3 
+17 Tigre 2 Belgrano 1 
+18 Olimpo 3 Godoy Cruz 1 
+18 Estudiantes 3 San Lorenzo 0 
+18 Newell's Old Boys 4 All Boys 2 
+18 Atlético de Rafaela 1 Tigre 1 
+18 Vélez Sarsfield 2 Colón 0 
+18 Racing Club 0 Rosario Central 0 
+18 Quilmes 2 Gimnasia y Esgrima (LP) 0 
+18 Belgrano 0 Arsenal 0 
+18 Boca Juniors 3 Lanús 1 
+18 Argentinos Juniors 0 River Plate 2 
+19 All Boys 0 Belgrano 0 
+19 Rosario Central 3 Argentinos Juniors 2 
+19 Arsenal 1 Atlético de Rafaela 2 
+19 Colón 2 Olimpo 1 
+19 Godoy Cruz 2 Racing Club 1 
+19 Gimnasia y Esgrima (LP) 0 Boca Juniors 1 
+19 Tigre 2 Estudiantes 1 
+19 River Plate 5 Quilmes 0 
+19 Lanús 1 Newell's Old Boys 1 
+19 San Lorenzo 2 Vélez Sarsfield 3 
+
+
+
+Pos 	Equipo 	Pts 	J 	G 	E 	P 	Gf 	Gc 	Dif
+01 	    River Plate   	37 	19 	11 	4 	4 	28 	15 	13
+02 	    Boca Juniors  	32 	19 	9 	5 	5 	25 	15 	10
+03 	    Estudiantes  	32 	19 	8 	8 	3 	20 	11 	9
+04 	    Godoy Cruz  	32 	19 	9 	5 	5 	23 	18 	5
+05 	    Gimnasia y Esgrima (LP)  	31 	19 	9 	4 	6 	24 	19 	5
+06 	    Vélez Sarsfield  	30 	19 	9 	3 	7 	34 	26 	8
+07 	    Colón  	30 	19 	8 	6 	5 	14 	13 	1
+08 	    Rosario Central  	28 	19 	7 	7 	5 	21 	21 	0
+09 	    Lanús  	28 	19 	8 	4 	7 	21 	23 	-2
+10 	    Olimpo  	27 	19 	7 	6 	6 	19 	16 	3
+11 	    San Lorenzo  	27 	19 	7 	6 	6 	19 	20 	-1
+12 	    Newell's Old Boys  	25 	19 	6 	7 	6 	22 	18 	4
+13 	    Tigre  	24 	19 	5 	9 	5 	14 	14 	0
+14 	    Quilmes  	24 	19 	7 	3 	9 	16 	22 	-6
+15 	    Belgrano  	20 	19 	3 	11 	5 	17 	21 	-4
+16 	    Atlético de Rafaela  	20 	19 	4 	8 	7 	22 	28 	-6
+17 	    Arsenal  	18 	19 	5 	3 	11 	19 	28 	-9
+18 	    Racing Club  	17 	19 	4 	5 	10 	19 	24 	-5
+19 	    Argentinos Juniors  	15 	19 	3 	6 	10 	9 	21 	-12
+20 	    All Boys  	15 	19 	3 	6 	10 	14 	27 	-13
+
+
+1 River Plate
+2 Boca Juniors
+3 Estudiantes
+4 Godoy Cruz
+5 Gimnasia y Esgrima (LP)
+6 Vélez Sarsfield
+7 Colón
+8 Rosario Central
+9 Lanús
+10 Olimpo
+11 San Lorenzo
+12 Newell's Old Boys
+13 Tigre
+14 Quilmes
+15 Belgrano
+16 Atlético de Rafaela
+17 Arsenal
+18 Racing Club
+19 Argentinos Juniors
+20 All Boys
+
+
+
+REGEX_SWAP GOL EQUIPO -> EQUIPO GOL:
+(?'gol'\d\s)(?'gold'\d)\s(?'eq'.+)\n
+replace: \1\3 \2 \n

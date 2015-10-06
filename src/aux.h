@@ -32,6 +32,7 @@ vector<double> vec_sub(vector<double>& x, vector<double>& y);
 Matrix& loadWebGraph(string graph_file);
 Matrix& loadSportGraph(string graph_file);
 Matrix& load_test_in(string test_in_file);
+Matrix& load_test_in_batch(string batch_instance_file);
 void normalizarMatrizEquipos( Matrix& A);
 bool MetodoPotencia(Matrix& A, vector<double> x,double c, float tolerance, int maxIter, pair<double, vector<double>>& res);
 bool comparePair(pair<int,int> p1,pair<int,int> p2);

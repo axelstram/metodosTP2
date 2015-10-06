@@ -193,9 +193,9 @@ void ProcesarBatchYMedirTiempos(string input_file, string output_file)
 //4to parametro: procesar un batch
 int main(int argc, char* argv[])
 {
-	if (argc == 3)
+	//if (argc == 3)
 		ProcesarNormalmente(argv[1], argv[2]);
-
+/*
 	if (argc == 4)
 		MedirTiempos(argv[1], argv[2]);
 /*

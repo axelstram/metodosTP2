@@ -83,7 +83,12 @@ void modifyInputGraph(string input_file, string output_file){
 
 bool nombreOrdenar(pair<int,int> p1,pair<int,int> p2){
 
-	return p1.first <= p2.first;
+	if(p1.first == p2.first)
+	{
+		return p1.second < p2.second; 
+	} else {
+		return p1.first < p2.first;
+	}
 }
 
 void sortEdgesOfGraph(string input_file, string output_file){
@@ -120,17 +125,16 @@ void sortEdgesOfGraph(string input_file, string output_file){
 
 int main(int argc, char* argv[])
 {	
-	//string input_file = argv[1];
-	//string output_file = argv[2];
+	string input_file = argv[1];
+	string output_file = argv[2];
 
 	//modifyInputGraph(input_file, output_file);
 
-	//sortEdgesOfGraph(input_file, output_file);
-
-	///generar muchos c uniformemente..
+	sortEdgesOfGraph(input_file, output_file);
 
 
 
+/*
 
 	UniformDist udist(0,1);
 
@@ -167,4 +171,6 @@ int main(int argc, char* argv[])
 	}
 
 	return 0;
+*/
+
 }

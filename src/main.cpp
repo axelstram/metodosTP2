@@ -17,7 +17,7 @@ double tolerance;
 ///from test.txt
 int nodes; /* 	 pages / teams	 	*/
 int edges; /*	 links / marches 	*/
-int matrix_type = DOK_MATRIX;
+int matrix_type = VECTOR_MATRIX;
 
 
 
@@ -25,19 +25,19 @@ void ProcesarNormalmente(string input_file, string output_file)
 {
 
 	Matrix& A = load_test_in(input_file);
-	
+
 	///
 	if(method == ALT_METHOD ){
-		
+
 		///ALT_METHOD WEB - IN_DEG
 		if(instance_type == WEB_RANK){
 			vector<pair<int,int> > rank = IN_DEG(A);
-			
+
 			int sum = 0;
 			for(int i=0;i<rank.size();i++){
 					sum += rank[i].second;
 			}
-			
+
 			vector<double> res;
 			if(sum != 0){
 				for(int i=0;i<rank.size();i++){
@@ -46,19 +46,19 @@ void ProcesarNormalmente(string input_file, string output_file)
 				}
 			}
 			escribir_resultado(res, output_file);
-			
+
 		}
-		
+
 
 	}else{
-		
+
 		///PAGE-RANK / GEM
 
 		vector<double> x(A.cols(), 1);
 
 		int maxIter = 200000;
 		pair<double, vector<double>> res;
-	
+
 		bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
 
 		if (encontroResultado) {
@@ -92,9 +92,9 @@ void MedirTiempos(string input_file, string output_file)
 		auto end = std::chrono::high_resolution_clock::now();
 
 		auto power_method_time = chrono::duration_cast<std::chrono::milliseconds>(end-begin).count();
-		total_time += power_method_time ; 
+		total_time += power_method_time ;
 		times.push_back(total_time);
-	
+
 		if (encontroResultado) {
 			escribir_resultado(res.second, output_file);
 		} else {
@@ -104,7 +104,7 @@ void MedirTiempos(string input_file, string output_file)
 
 	delete &A;
 
-	long int promedio = 0; 
+	long int promedio = 0;
 	sort(times.begin(), times.end());
 
 	cout << times[times.size()/2] << endl;
@@ -165,7 +165,7 @@ void ProcesarBatchYMedirTiempos(string input_file, string output_file)
 			auto end = std::chrono::high_resolution_clock::now();
 
 			auto power_method_time = chrono::duration_cast<std::chrono::milliseconds>(end-begin).count();
-			total_time += power_method_time ; 
+			total_time += power_method_time ;
 			times.push_back(total_time);
 
 			if (encontroResultado) {
@@ -177,7 +177,7 @@ void ProcesarBatchYMedirTiempos(string input_file, string output_file)
 
 		delete &A;
 
-		long int promedio = 0; 
+		long int promedio = 0;
 		sort(times.begin(), times.end());
 
 		cout << j+10 << " " << times[0] << endl;
@@ -192,13 +192,13 @@ void ProcesarBatchYMedirTiempos(string input_file, string output_file)
 //3er parametro: medir o no el tiempo
 //4to parametro: procesar un batch
 int main(int argc, char* argv[])
-{	
-	if (argc == 3)
+{
+	//if (argc == 3)
 		ProcesarNormalmente(argv[1], argv[2]);
-	
+/*
 	if (argc == 4)
 		MedirTiempos(argv[1], argv[2]);
-
+/*
 	if (argc >= 5)
 		ProcesarBatchYMedirTiempos(argv[1], argv[2]);
 	/*

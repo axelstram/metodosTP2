@@ -84,5 +84,4 @@ El siguiente grafo detalla los resultados temporales de haber corrido instancias
   \label{fig:img1}
 \end{figure}
 
-Pudimos observar que CSR y DOK, a pesar de ser más eficientes en cuanto a ahorro de espacio se refiere, resultaron tener un desempeño más lento en comparación a Vector.
-
+Pudimos observar que CSR fue el más rápido de los 3, ya que obtener los elementos y multiplicarlos es rápido, mientras que en DoK es lento ya que está implementado sobre una tabla de hash, y a la hora de multiplicar debemos conseguir todas las claves y obtener los elementos correspondientes, lo cual añade un overhead importante.

@@ -23,21 +23,50 @@ int matrix_type = DOK_MATRIX;
 
 void ProcesarNormalmente(string input_file, string output_file)
 {
- 	Matrix& A = load_test_in(input_file);
 
-	vector<double> x(A.cols(), 1);
-
-	int maxIter = 200000;
-	pair<double, vector<double>> res;
-
-	bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
-
-	if (encontroResultado) {
-		escribir_resultado(res.second, output_file);
-	} else {
- 		cout << "no encontro resultado" << endl;
-    }
+	Matrix& A = load_test_in(input_file);
+	
+	///
+	if(method == ALT_METHOD ){
 		
+		///ALT_METHOD WEB - IN_DEG
+		if(instance_type == WEB_RANK){
+			vector<pair<int,int> > rank = IN_DEG(A);
+			
+			int sum = 0;
+			for(int i=0;i<rank.size();i++){
+					sum += rank[i].second;
+			}
+			
+			vector<double> res;
+			if(sum != 0){
+				for(int i=0;i<rank.size();i++){
+					double to_push = (double)rank[i].second / (double)sum;
+					res.push_back(to_push);
+				}
+			}
+			escribir_resultado(res, output_file);
+			
+		}
+		
+
+	}else{
+		
+		///PAGE-RANK / GEM
+
+		vector<double> x(A.cols(), 1);
+
+		int maxIter = 200000;
+		pair<double, vector<double>> res;
+	
+		bool encontroResultado = MetodoPotencia(A, x, c , tolerance, maxIter, res);
+
+		if (encontroResultado) {
+			escribir_resultado(res.second, output_file);
+		} else {
+			cout << "no encontro resultado" << endl;
+		}
+	}
 	delete &A;
 }
 

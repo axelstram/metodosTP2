@@ -230,6 +230,7 @@ Matrix& load_test_in(string test_in_file)
 
 	///load matrix;
 	if (instance_type == WEB_RANK) {
+		cout<<graph_file<<endl;
 		Matrix& A = loadWebGraph(graph_file);
 		return A;
 	} else if (instance_type == SPORT_RANK) {
@@ -402,7 +403,7 @@ bool comparePair(pair<int,int> p1,pair<int,int> p2)
 // Algoritmo IN-DEG
 vector<pair<int,int> > IN_DEG(Matrix& A)
 {
-
+	///devuelve vector de pares (web,links_entrantes)
 	vector<pair<int,int> > rank;
 
 	for(int i = 0;i<A.rows();i++){
@@ -413,7 +414,7 @@ vector<pair<int,int> > IN_DEG(Matrix& A)
 		rank.push_back(make_pair(i,links_entrantes));
 	}
 
-	sort(rank.begin(), rank.end(), comparePair);
+	//sort(rank.begin(), rank.end(), comparePair);
 
 	for(int i=0;i<rank.size();i++)
 		cout<< "("<<rank[i].second<<","<<rank[i].first<<") ";

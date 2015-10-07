@@ -8,7 +8,7 @@
     \includegraphics[scale= 0.6]{imagenes/convergencia1.png}
   \end{center}
   \vspace{-20pt}
-   \caption{Con tantas páginas y tantos links.}
+   \caption{Con  1000 páginas y 3000 links.}
   \vspace{-10pt}
   \label{fig:img1}
 \end{wrapfigure}
@@ -24,7 +24,7 @@ Nos interesa ver qué hace que el algoritmo termine en una menor cantidad de pas
 %Imagen 2
 \begin{figure}[h]
   \includegraphics[scale= 0.6]{imagenes/convergencia2.png}
-   \caption{Con tantas páginas y tantos links.}
+   \caption{Con  1000 páginas y  10000 links.}
   \label{fig:img1}
 \end{figure}
 
@@ -38,7 +38,7 @@ Nos interesa ver qué hace que el algoritmo termine en una menor cantidad de pas
     \includegraphics[scale= 0.6]{imagenes/convergencia3.png}
   \end{center}
   \vspace{-20pt}
-   \caption{Con tantas páginas y tantos links.}
+   \caption{Con  500 páginas y  150000 links.}
   \vspace{-10pt}
   \label{fig:img1}
 \end{wrapfigure}
@@ -84,4 +84,24 @@ El siguiente grafo detalla los resultados temporales de haber corrido instancias
   \label{fig:img1}
 \end{figure}
 
-Pudimos observar que CSR fue el más rápido de los 3, ya que obtener los elementos y multiplicarlos es rápido, mientras que en DoK es lento ya que está implementado sobre una tabla de hash, y a la hora de multiplicar debemos conseguir todas las claves y obtener los elementos correspondientes, lo cual añade un overhead importante.
+Pudimos observar que CSR fue el más rápido de los 3, ya que obtener los elementos y multiplicarlos es rápido, mientras que en DoK es lento ya que está implementado sobre una tabla de hash, y a la hora de multiplicar debemos conseguir todas las claves y obtener los elementos correspondientes, lo cual añade un overhead importante.\\
+
+
+
+
+Este otro gráfico también mide le tiempo de las tres estructuras en función de la esparcidad de la matriz de los links. Se usaron matrices de tamaño $140x140$ y se fue variando la cantidad de links haciendola cada vez menos esparsa.\\
+
+
+\begin{wrapfigure}{r}{0.6\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[scale=0.4]{imagenes/MedicionTiempoEstructura.png}
+  \end{center}
+  \vspace{-20pt}
+  \vspace{-10pt}
+  \label{fig:img1}
+\end{wrapfigure}
+
+Vemos que para la estructura de CSR el tiempo es menor que el de la estructura vector para matrices muy esparsas, pero el tiempo para ambas estructuras es muy parecido cuando la matriz es poco esparsa. En cambio, cuando usamos la estructura de DOK, el tiempo dió mucho mayor para todas las instancias de matrices esparsas que generamos. Esto se debe, como dijimos anteriormente, a otros aspectos que no tienen que ver con la esparsidad de la matriz.\\
+
+

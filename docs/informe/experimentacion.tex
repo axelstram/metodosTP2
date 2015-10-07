@@ -84,13 +84,14 @@ El siguiente grafo detalla los resultados temporales de haber corrido instancias
   \label{fig:img1}
 \end{figure}
 
-Pudimos observar que CSR fue el más rápido de los 3, ya que obtener los elementos y multiplicarlos es rápido, mientras que en DoK es lento ya que está implementado sobre una tabla de hash, y a la hora de multiplicar debemos conseguir todas las claves y obtener los elementos correspondientes, lo cual añade un overhead importante.\\
+Pudimos observar que CSR fue el más rápido de los 3, ya que obtener los elementos y multiplicarlos es rápido, mientras que DOK es el más lento. A pesar de que tanto para CSR como DOK implementamos algoritmos más eficientes de multiplicación tanto para un escalar como para un vector, DOK resultó el más lento. \\
 
+Creemos que esto se debe a la implementación interna de $map$ que está implementado sobre un Black-Red-tree. Tanto para multiplicar por un escalar como por un vector, iteramos por la estructura del mismo, de forma tal de aprovechar la esparcidad de la matriz y multiplicar sólo los elementos no nulos. En principio no encontramos una razón por la cual una implementación fuera mejor que la otra en cuanto a la forma de multiplicar desde el punto de vista algoritmico. Creemos que la razón radica en que, al iterar sobre los elementos de map se está haciendo una búsqueda binaria del próximo elemento en cada paso, dando como resultado que la complejidad de la operación no fuese $\mathcal{O}(nnz)$ sino $\mathcal{O}(nnz\log{}nnz)$ \\
 
+Lo que nos resultó sorpresivo fue que incluso Vector tuvo una mejor performance que DOK, a pesar de que la complejidad de Vector para las operaciones anteriormente mencionadas es del orden cuadrático. Para este caso no pudimos obtener un resultado concluyente de por qué sucede esto. Una suposición a priori sugiere que se deba a optimizaciones realizadas por el compilador, explotando el hecho que Vector tenga todos sus elementos contiguos, disminuyendo así su tiempo de acceso. Sin embargo tal hipótesis excede nuestro análisis.\\
 
 
 Este otro gráfico también mide le tiempo de las tres estructuras en función de la esparcidad de la matriz de los links. Se usaron matrices de tamaño $140x140$ y se fue variando la cantidad de links haciendola cada vez menos esparsa.\\
-
 
 \begin{wrapfigure}{r}{0.6\textwidth}
   \vspace{-20pt}
@@ -103,5 +104,3 @@ Este otro gráfico también mide le tiempo de las tres estructuras en función d
 \end{wrapfigure}
 
 Vemos que para la estructura de CSR el tiempo es menor que el de la estructura vector para matrices muy esparsas, pero el tiempo para ambas estructuras es muy parecido cuando la matriz es poco esparsa. En cambio, cuando usamos la estructura de DOK, el tiempo dió mucho mayor para todas las instancias de matrices esparsas que generamos. Esto se debe, como dijimos anteriormente, a otros aspectos que no tienen que ver con la esparsidad de la matriz.\\
-
-

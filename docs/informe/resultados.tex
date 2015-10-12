@@ -51,14 +51,7 @@ En los dos últimos graficos, se puede apreciar un comportamiento similar a los 
 
 \newpage
 
-Posteriormente, ejecutamos los algoritmos de $PageRank$ e $IN-DEG$ para una misma instancia de 500 páginas y 80000 links generada al azar. Queremos ver cuánto cambian los rankings de cada web para cada algoritmo. En el eje X está el puesto de las páginas según $PageRank$, y en el eje Y el valor del ranking de $IN-DEG$ para esa misma página (que está entre 0 y 1) multiplicado por una constante por cuestiones de claridad a la hora de visualizar el gráfico.\\
 
-Podemos ver que en este caso particular, con una matriz bastante esparsa (30\% de los links aproximadamente), ambos algoritmos devuelven un resultado muy similar. Lo que varía es el puesto en PageRank de las webs que tienen pocos links entrantes de diferencia (varía mas en intervalos pequeños). En los casos particulares en donde hay muchas páginas apuntando a una, debería andar peor $IN-DEG$, lo cual no se aprecia en este gráfico ya que es un grafo muy esparso y es aleatorio, pero si en los ejemplos pequeños que vimos anteriormente.\\
-
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.6\linewidth]{imagenes/pagerankVSindeg.png}
-% \end{figure}
 
 \begin{wrapfigure}{r}{0.6\textwidth}
   \vspace{-20pt}
@@ -69,15 +62,29 @@ Podemos ver que en este caso particular, con una matriz bastante esparsa (30\% d
   \vspace{-10pt}
 \end{wrapfigure}
 
-Generamos una instancia que representa los partidos de un torneo de algún deporte, con 10 equipos y 54 partidos en el que no se produjeron empates. Ejecutamos el algoritmo de $GeM$ para conseguir la tabla de posiciones, variando el valor del parámetro $c$ desde 0.01 hasta 0,99. El siguiente gráfico muestra para cada equipo, el puesto que consiguió en el torneo según el algoritmo que se utilizó para generar la tabla.
+Posteriormente, ejecutamos los algoritmos de $PageRank$ e $IN-DEG$ para una misma instancia de 500 páginas y 80000 links generada al azar. Queremos ver cuánto cambian los rankings de cada web para cada algoritmo. En el eje X está el puesto de las páginas según $PageRank$, y en el eje Y el valor del ranking de $IN-DEG$ para esa misma página (que está entre 0 y 1) multiplicado por una constante por cuestiones de claridad a la hora de visualizar el gráfico.\\
+
+
+Podemos ver que en este caso particular, con una matriz bastante esparsa (30\% de los links aproximadamente), ambos algoritmos devuelven un resultado muy similar. Lo que varía es el puesto en PageRank de las webs que tienen pocos links entrantes de diferencia (varía mas en intervalos pequeños). En los casos particulares en donde hay muchas páginas apuntando a una, debería andar peor $IN-DEG$, lo cual no se aprecia en este gráfico ya que es un grafo muy esparso y es aleatorio, pero si en los ejemplos pequeños que vimos anteriormente.\\
+
+
+Generamos una instancia que representa los partidos de un torneo de algún deporte, con 10 equipos y 54 partidos en el que no se produjeron empates. Ejecutamos el algoritmo de $GeM$ para conseguir la tabla de posiciones, variando el valor del parámetro $c$ desde 0.01 hasta 0,99. El siguiente gráfico muestra para cada equipo, el puesto que consiguió en el torneo según el algoritmo que se utilizó para generar la tabla.\\
 
 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\linewidth]{imagenes/variacionDeTablaGEM.png}
+\includegraphics[width=0.7\linewidth]{imagenes/variacionDeTablaGEM.png}
 \end{figure}
 
+% \begin{wrapfigure}{l}{0.6\textwidth}
+%   \vspace{-20pt}
+%   \begin{center}
+%     \includegraphics[scale= 0.6]{imagenes/variacionDeTablaGEM.png}
+%   \end{center}
+%   \vspace{-10pt}
+%   \vspace{-10pt}
+% \end{wrapfigure}
 
 Vemos que un valor de $c$ distinto puede variar el puesto de los equipos que tengan un rank similar. Es decir, el primer equipo siempre es el 4, ya que ganó todos los partidos por mucha diferencia, y sea cual sea el $c$ su puesto no cambiará. Lo mismo pasa con el equipo7, que perdió todos sus partidos por mucha diferencia de goles. En casos extremos como esos los resultados no varían, pero si en otros casos como el equipo 2 y el equipo 10 que alternan sus puestos.
 

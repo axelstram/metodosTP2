@@ -101,7 +101,7 @@ Para ambos casos, la complejidad es $O(n + nnz)$, dado que se debe inicializar e
 \subsection{Cargado de la matriz:}
 Realizando mediciones temporales, nos dimos cuenta que para algunas instancias particulares, CSR resultaba especialmente lento. El problema radica en el orden de los ejes de la entrada. Cuando los ejes de la entrada no están ordenados de menor a mayor (primero con respecto al valor $i$ y luego al $j$), lo que sucede es que al insertar un valor nuevo en el vector de datos de CSR, deben moverse los subsiguientes valores de lugar. De este modo, cada vez que hay un valor que debería insertarse $d$ posiciones antes del ùltimo elemento, esos $d$ elementos deben de copiarse a una posicón posterior. Si en particular la entrada estaría ordenada de mayor a menor, se deberían moverse:
 \begin{eqnarray}
-\sum_{i = 0}^{nnz} i = \frac{nnz(nnz-1)}{2}\label{eq:ecuResize}
+\sum_{i = 0}^{nnz} i = \frac{nnz(nnz+1)}{2}\label{eq:ecuResize}
 \end{eqnarray}
 Además de la cantidad de veces que se hace un $resize$ del vector al quedarse sin espacio para agregar elementos. \\
 

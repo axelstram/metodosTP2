@@ -60,11 +60,11 @@ Para encontrar el autovector de la matriz correspondiente al autovalor $\lambda$
 
     \State $x = x/\lVert \mathbf{p} \rVert _{1}$
     \While{ no se alcance la iteracion máxima}
-	    \State resuelvo sistema y = A.(1-c)*x + ms
- 	    \State obtengo norma de y
- 	    \State 	defino error como la norma uno de la resta entre x e y
+	    \State resolvemos sistema y = A.(1-c)*x + ms
+ 	    \State obtenemos norma de y
+ 	    \State 	definimos error como la norma uno de la resta entre x e y
       \If {difieren en menos del error tolerado}
-      	\State devuelvo vector y con su norma como autovalor
+      	\State devolvemos vector y con su norma como autovalor
       \Else
         \State x = y
       \EndIf

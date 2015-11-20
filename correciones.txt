@@ -1,0 +1,15 @@
+Aca van las correciones.
+
+- Correcta la introduccion. Asume en parte que el lector entiende de que va el trabajo, pero esta bien.
+- Desarrollo, Seccion 2.2: Parece estar incompleta, ya que la explicacion se corta. Quizas sea un problema de Latex?
+- Falta explicar tambien por que pueden trabajar sobre la matriz "esparsa", y como implementan el Algoritmo 1.
+- No explican que estructura eligen para la implementacion de matriz esparsa.
+- Pareceria que implementaron las 3 estructuras y compararon (empiricamente) cuanta memoria requiere cada una.
+- Bien el analisis respecto al espacio requerido por cada estructura. PREGUNTA: dicen que DOK no es una buena implementacion comparada con CSR. En que contexto puede tener sentido utilizarla? Tiene una ventaja evidente respecto a CSR, que incluso ellos mecionan en el TP.
+-⁠ Hay una seccion "Experimentacion" y otra "Analisis y Discusion".
+- Experimentacion, Seccion 4.2: No queda clara cual es la relacion entre las instancias (a mayor n mayor numero de ejes? una instancia esta siempre contenida en la otra?).
+- Discutir primer grafico Seccion 4.3. DOK lo estan corriendo sobre el sistema esparso? En caso afirmativo, donde podria convenir DOK por sobre Vector?
+- Es interesante el estudio que hacen de las estructuras, pero falta relacionarlo con el contexto particular de aplicacion. No mencionan cual es la limitacion real de "Vector". Falta tambien experimentar con las redes de SNAP. Eso modificaria parte del analisis hecho.
+- Ultimo experimento Seccion 4.3, no se explica bien el experimento. Por que disminuye el tiempo cuando se incrementa la cantidad de link, si en teoria exige mas a las estructuras?
+- No experimentan con datos de ligas deportivas. Arman un grafo (posiblemente random) y solo ven que el $c$ puede modificar el ranking. No cumplen este objetivo del TP.
+-⁠ No hay conclusiones.

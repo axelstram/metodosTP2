@@ -7,6 +7,9 @@ extern string test_in_file;
 extern string graph_file;
 extern double tolerance;
 
+extern vector<tuple<int,int,int> > wins_and_points;
+
+
 ///from test.txt
 extern int nodes; /* 	 pages / teams	 	*/
 extern int edges; /*	 links / marches 	*/
@@ -157,6 +160,12 @@ Matrix& loadSportGraph(string graph_file){
 	f >> s;
 	edges = stoi(s);
 
+	tuple<int,int,int> cero_tuple(0,0,0);
+
+	for(int i=0;i<nodes;i++)
+		wins_and_points.push_back(cero_tuple);
+
+
 
 //	Matrix A(nodes,nodes);
 	Matrix* A_tmp;
@@ -193,11 +202,22 @@ Matrix& loadSportGraph(string graph_file){
 		equipo1--;
 		equipo2--;
 
-		if(goles_equipo2>goles_equipo1)
+		if(goles_equipo2>goles_equipo1){
 			A(equipo2, equipo1) += (double)(goles_equipo2-goles_equipo1);
+			get<1>(wins_and_points[equipo2])++;
+		}
 
-		if(goles_equipo1>goles_equipo2)
+		if(goles_equipo1>goles_equipo2){
 			A(equipo1, equipo2) += (double)(goles_equipo1-goles_equipo2);
+			get<1>(wins_and_points[equipo1])++;
+		}
+
+
+		get<0>(wins_and_points[equipo1])=equipo1;
+		get<0>(wins_and_points[equipo2])=equipo2;
+
+		get<2>(wins_and_points[equipo1])+=goles_equipo1;
+		get<2>(wins_and_points[equipo2])+=goles_equipo2;
 
 	}
 	//A.Show();
@@ -209,6 +229,16 @@ Matrix& loadSportGraph(string graph_file){
 	return A;
 }
 
+
+void show_wins_points(vector<tuple<int,int,int> > wins_and_points){
+
+	for(int i= 0;i<wins_and_points.size();i++){
+		cout << "[" <<get<0>(wins_and_points[i])<<","<<get<1>(wins_and_points[i])<<","<<get<2>(wins_and_points[i])<<"]";	
+	}
+	cout<<"\n"<<endl;
+
+
+}
 
 // Carga la matriz llamando al cargador de paginas web o al de deportes
 Matrix& load_test_in(string test_in_file)
@@ -399,6 +429,51 @@ bool comparePair(pair<int,int> p1,pair<int,int> p2)
 {
 	return p1.second > p2.second;
 }
+
+
+// Comparador de Pairs para el sort del IN-DEG
+bool compareTuple(tuple<int,int,int> t1,tuple<int,int,int> t2)
+{
+	if(get<1>(t1)==get<1>(t2)){
+		return get<2>(t1) > get<2>(t2);
+	}else{
+		return get<1>(t1) > get<1>(t2);
+	}
+}
+
+
+
+
+
+// Algoritmo IN-DEG
+vector<double> ALT_GEM()
+{
+
+	double rank[nodes];
+	vector<double> rank_v;
+
+	sort(wins_and_points.begin(),wins_and_points.end(),compareTuple);
+	int points = nodes;
+
+	for(int i=0;i<wins_and_points.size();i++){
+		rank[get<0>(wins_and_points[i])] = points;
+		points--;		
+	}
+
+	double divide_by =((nodes*(nodes+1)/2));
+
+	for(int i=0;i<nodes;i++){
+		rank_v.push_back(rank[i]/divide_by);
+	}
+
+	return rank_v;
+
+}
+
+
+
+
+
 
 // Algoritmo IN-DEG
 vector<pair<int,int> > IN_DEG(Matrix& A)

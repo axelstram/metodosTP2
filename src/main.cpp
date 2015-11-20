@@ -1,7 +1,7 @@
 
 #include "aux.h"
 #include <chrono>
-
+#include <tuple>
 
 using namespace std;
 
@@ -19,12 +19,16 @@ int nodes; /* 	 pages / teams	 	*/
 int edges; /*	 links / marches 	*/
 int matrix_type = VECTOR_MATRIX;
 
-
+/// para el metodo alternativo de competencias deportivas
+vector<tuple<int,int,int> > wins_and_points;
 
 void ProcesarNormalmente(string input_file, string output_file)
 {
 
 	Matrix& A = load_test_in(input_file);
+
+//	A.Show();
+
 
 	///
 	if(method == ALT_METHOD ){
@@ -46,6 +50,15 @@ void ProcesarNormalmente(string input_file, string output_file)
 				}
 			}
 			escribir_resultado(res, output_file);
+
+		}else{
+
+			//nuestro metodo alternativo para competencias deportivas
+
+			vector<double> rank = ALT_GEM();
+
+			escribir_resultado(rank, output_file);
+
 
 		}
 

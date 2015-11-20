@@ -91,15 +91,32 @@ Experimentaciones fallidas y problemas en el transcurso:
 
 \subsection{GeM}
 
-El algoritmo GeM es un método que está basado en PageRank, con lo cual calcula rankings para cualquier tipo de situación que se pueda representar con un grafo dirigido con pesos en las aristas. Sin embargo, nosotros lo usamos para determinar el ranking para competencias deportivas.\\
+El algoritmo GeM es un método que está basado en PageRank para determinar el ranking de equipos de una competencia en base a los resultados de un conjunto de partidos.
 
-GeM representa la competencia deportiva con un grafo dirigido, de manera similar a PageRank. Cada nodo representa un equipo y las aristas representan los enfrentamietos entre los equipos i y j. Con esto se puede representar el grafo con la siguiente matriz:
+Los datos de entrada son el conjunto de los resultados de cada partido de cada fecha. Por cada partido, tenemos los puntos obtenidos de cada equipo.
+
+La temporada se representa mediante un grafo donde cada equipo representa un nodo y existe un link de $i$ a $j$ si el equipo $i$ perdi\'o al
+menos una vez con el equipo $j$. Notar que si un partido termina en empate, no se va a ver reflejado de ninguna manera en este grafo.
+
+La matriz que representa este grafo es:
 
 \begin{equation*}
-A_{ji}^t = \left\{
+A_{ji} = \left\{
   \begin{array}{cl}
   w_{ji} & \text{si el equipo } i \text{ perdi\'o con el equipo } j,\\
   0 & \text{en caso contrario, }\\
   \end{array} \right.
 \end{equation*}
 
+\noindent donde $w_{ji}$ es la diferencia absoluta en el marcador. En caso de que $i$ pierda m\'as de una vez con $j$, $w_{ji}$ representa la suma
+acumulada de diferencias. 
+
+Para utilizar el método de la potencia como en el algoritmo de PageRank para conseguir los rankings, cada elemento de la matriz se divide por la la suma de todos los elementos de la misma columna, obteniendo una matriz H estocástica por columnas:
+
+\begin{equation*}
+H_{ji} = \left\{
+  \begin{array}{cl}
+  A_{ji}/\sum_{k = 1}^n A_{ki} & \text{si hay un link } i \text{ a } j,\\
+  0 & \text{en caso contrario.}\\
+  \end{array} \right.
+\end{equation*}

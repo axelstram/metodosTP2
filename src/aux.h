@@ -36,5 +36,6 @@ Matrix& load_test_in_batch(string batch_instance_file);
 void normalizarMatrizEquipos( Matrix& A);
 bool MetodoPotencia(Matrix& A, vector<double> x,double c, float tolerance, int maxIter, pair<double, vector<double>>& res);
 bool comparePair(pair<int,int> p1,pair<int,int> p2);
+vector<double> ALT_GEM();
 vector<pair<int,int> > IN_DEG(Matrix& A);
 void escribir_resultado(vector<double>& x, string output_path);

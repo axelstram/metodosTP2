@@ -85,7 +85,7 @@ El mayor problema que se nos presentó al realizar el algoritmo fue que en princ
 
 Experimentaciones fallidas y problemas en el transcurso:
 \begin{itemize}
-\item Al testear el funcionamiento del algoritmo PageRank con la estructura de matriz CSR, notamos que el tiempo de carga era demasiado lento. Esto era por la forma en que funciona esta estructura, al guardar los elementos en orden de filas, si se agregan los elementos en desorden o incluso en orden contrario al orden de filas el tiempo de carga de las matrices de prueba no era razonable.
+\item Al testear el funcionamiento del algoritmo PageRank con la estructura de matriz Column Sparse Row, notamos que el tiempo de carga era demasiado lento. En la sección de Análisis de Estructuras, detallamos más acerca de esta problemática.
 \end{itemize}
 
 
@@ -120,3 +120,10 @@ H_{ji} = \left\{
   0 & \text{en caso contrario.}\\
   \end{array} \right.
 \end{equation*}
+
+\subsection{Método Alternativo a GeM}
+Para el algoritmo para rankings deportivos, guardamos dos variables para cada equipo. Primero, a cada equipo se le suma la diferencia de puntos obtenida en cada encuentro a su total (siendo inicialmente cero). Por ejemplo, en el caso del fútbol, la diferencia de puntos es la diferencia de goles de cada partido. Esta diferencia será positiva para un equipo y negativa para el otro, excepto en caso de empate que será cero. Como segunda variable, mantenemos la cantidad de puntos totales obtenidos. Para el caso del fútbol, ésta será la suma de goles realizados. Esta suma siempre es mayor o igual a cero. \\
+
+El algoritmo consiste en ordenar los equipos primero por diferencia de goles y luego, en caso de tener la misma cantidad de diferencia de puntos, por la suma total de puntos. De esta forma, tenemos una primer alternativa ante un empate. En caso de tener la misma cantidad de diferencia de puntos y de puntos totales, se elige cualquiera al azar.\\
+
+

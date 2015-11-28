@@ -258,6 +258,12 @@ Matrix& load_test_in(string test_in_file)
 	f >> s;
 	tolerance = stod(s);
 
+	if(f >> s){
+		matrix_type = stoi(s);
+	}else{
+		matrix_type = CSR_MATRIX;
+	}
+
 	///load matrix;
 	if (instance_type == WEB_RANK) {
 		cout<<graph_file<<endl;

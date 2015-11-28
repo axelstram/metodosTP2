@@ -149,7 +149,7 @@ El gráfico resultante es el de una función constante, lo que nos lleva a concl
 
 \subsection{Comparación de performance del algoritmo sobre las distintas estructuras de datos}
 
-El siguiente grafo detalla los resultados temporales de haber corrido instancias para PageRank con las estructuras de datos DOK, CSR y Vector.
+El siguiente grafo detalla los resultados temporales de haber corrido instancias para PageRank con las estructuras de datos DOK, CSR y Vector. Son instancias con una cantidad determinada y ascendente de nodos, y un mismo nivel de esparcidad para todas las instancias.
 
 \begin{figure}[h]
   \includegraphics[scale=0.4]{imagenes/comparacion-tiempo-ejecucion-csr-dok-vector.png}
@@ -164,7 +164,7 @@ Creemos que esto se debe a la implementación interna de $map$ que está impleme
 Lo que nos resultó sorpresivo fue que incluso Vector tuvo una mejor performance que DOK, a pesar de que la complejidad de Vector para las operaciones anteriormente mencionadas es del orden cuadrático. Para este caso no pudimos obtener un resultado concluyente de por qué sucede esto. Una suposición a priori sugiere que se deba a optimizaciones realizadas por el compilador, explotando el hecho que Vector tenga todos sus elementos contiguos, disminuyendo así su tiempo de acceso. Sin embargo tal hipótesis excede nuestro análisis.\\
 \newpage
 
-Este otro gráfico también mide le tiempo de las tres estructuras en función de la esparcidad de la matriz de los links. Se usaron matrices de tamaño $140x140$ y se fue variando la cantidad de links haciendola cada vez menos esparsa.\\
+Este otro gráfico también mide le tiempo de las tres estructuras pero en función de la esparcidad de la matriz. Se usaron matrices de tamaño fijo $140x140$ y se fue incrementando la cantidad de links haciendola cada vez menos esparsa.\\
 
 \begin{wrapfigure}{r}{0.6\textwidth}
   \vspace{-20pt}
@@ -177,6 +177,8 @@ Este otro gráfico también mide le tiempo de las tres estructuras en función d
 \end{wrapfigure}
 
 Vemos que para la estructura de CSR el tiempo es menor que el de la estructura vector para matrices muy esparsas, pero el tiempo para ambas estructuras es muy parecido cuando la matriz es poco esparsa. En cambio, cuando usamos la estructura de DOK, el tiempo dió mucho mayor para todas las instancias de matrices esparsas que generamos. Esto se debe, como dijimos anteriormente, a otros aspectos que no tienen que ver con la esparsidad de la matriz.\\
+
+Por otro lado, en un punto vemos que el tiempo comienza a disminuir. Esto tiene que ver con la cantidad de iteraciones que realiza el algoritmo del método de la potencia.\\
 
 \newpage
 
@@ -216,7 +218,7 @@ Nos resultó muy dificultoso realizar un análisis detallado de por qué saldrí
 
 Por último, para el caso de Estudiantes, el cual se ubica en la tercera posición en el ranking oficial, sucede algo similar que en el caso de Vélez Sarsfield. Si ordenaramos los equipos por cantidad de goles, Estudiantes se ubicaría en la décima posición, siendo 11 la posición obtenida por GeM. A pesar de haber ganado 3 veces hasta la fecha 7, su ranking desciende constantemente. Esto se debe a que gana contra equipos que tienen ranking bajo, y empata o pierde contra equipos de mayor ranking. En la fecha 8, le gana a Gimnasia y Esgrima, que en ese momento es el equipo con mayor puntaje, favoreciendolo significativamente. Luego, no gana partidos contra equipos de mucho ranking, lo que no le permite crecer significativamente. La razón de la diferencia de posiciones radica en que, a pesar de ser el tercer equipo con mayor cantidad de victorias, estas victorias fueron contra equipos que no tienen tanto peso en el ranking, por lo tanto en el método GeM se ve perjudicado. \\
 \\
-Como conclusión, vemos que realizar un análisis de GeM no es sencillo dado que no sólo impacta los resultados de un equipo en particular en cada fecha, sino que todos los resultados impactan en el resultado de todos los demás, aún no habiendo jugado en contra. Dado un empate, un equipo puede ascender o descender en su posición. Sucede lo mismo aún habiendo ganado o perdido, por ejemplo en la fecha 12 donde Gimnasia y Esgrima le ganó a Olimpo y bajó su ranking, o en la fecha 8 donde Vélez Sarfield pierde contra Atlético de Rafaela e igualmente sube su posición. Sin embargo, se tiene un método donde ganar o perder contra uno u otro equipo no tiene el mismo peso que en el método oficial.
+Como conclusión, vemos que realizar un análisis de GeM no es sencillo dado que no sólo impacta los resultados de un equipo en particular en cada fecha, sino que todos los resultados impactan en el resultado de todos los demás, aún no habiendo jugado en contra. En el caso de los empates, el método de GeM no los considera pero igualmente un equipo puede ascender o descender en su posición por los resultados del resto de los partidos de la fecha. Sucede lo mismo aún habiendo ganado o perdido, por ejemplo en la fecha 12 donde Gimnasia y Esgrima le ganó a Olimpo y bajó su ranking, o en la fecha 8 donde Vélez Sarfield pierde contra Atlético de Rafaela e igualmente sube su posición. Sin embargo, se tiene un método donde ganar o perder contra uno u otro equipo no tiene el mismo peso que en el método oficial.
 
 
 \subsection{Análisis de resultados variando la probabilidad de teletransportación en $PageRank$}

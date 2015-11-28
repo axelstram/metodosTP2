@@ -1,5 +1,78 @@
 \section{Experimentación}
 
+\subsection{Análisis de resultados para casos particulares}
+
+A continuación, mostramos los resultados obtenidos de la comparación entre los algoritmos PageRank e IN-DEG para instancias particulares. Dichos resultados son la importancia de cada página j, es decir el $x_{j}$. \\
+
+\begin{figure}[H]
+\centering     %%% not \center
+\subfigure[Figure A]{\label{fig:a}\includegraphics[width=0.4\linewidth]{imagenes/resultadosEstrella.png}}
+\subfigure[Figure B]{\label{fig:b}\includegraphics[width=0.3\linewidth]{imagenes/estrella.png}}
+\caption{Web con estructura de estrella.}
+\end{figure}
+
+En el caso de una web con forma de estrella, cabe destacar las páginas 1 y 2. La página 1 es referenciada por todas las demás, salvo la 2 que es referenciada por la página 1. Dado que IN-DEG definie el ranking de una página j en base a la cantidad de ejes entrantes, es claro que la página uno obtenga la primer posición y la página 2 la segunda posición. Las páginas restantes tienen ranking cero por no ser referenciadas por ninguna otra.
+En cambio, para PageRank se hace visible la idea de qué tan importante es el que referencia, en vez de cuantos son los que referencian. Las páginas que no son linkeadas tienen una importancia baja en comparación a las primeras dos.
+
+
+\begin{figure}[H]
+\centering     %%% not \center
+\subfigure[Figure A]{\label{fig:a}\includegraphics[width=0.4\linewidth]{imagenes/resultadosCompleto.png}}
+\subfigure[Figure B]{\label{fig:b}\includegraphics[width=0.3\linewidth]{imagenes/completo.png}}
+\caption{Web con estructura de pentágono.}
+\end{figure}
+
+El segundo ejemplo, un grafo completo de cinco nodos, lo hicimos para encontrar los casos en que los criterios de importancia de ambos algoritmos coinciden. Era esperable que todas las páginas tengan la misma importancia en ambos dos, ya que todas las páginas web son referenciadas por páginas con la misma importancia.
+
+\begin{figure}[H]
+\centering     %%% not \center
+\subfigure[Figure A]{\label{fig:a}\includegraphics[width=0.3\linewidth]{imagenes/resultadosBinario.png}}
+\subfigure[Figure B]{\label{fig:b}\includegraphics[width=0.5\linewidth]{imagenes/binario.png}}
+\caption{Web con estructura de árbol binario.}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering     %%% not \center
+\subfigure[Figure A]{\label{fig:a}\includegraphics[width=0.4\linewidth]{imagenes/resultadosCamino.png}}
+\subfigure[Figure B]{\label{fig:b}\includegraphics[width=0.2\linewidth]{imagenes/camino.png}}
+\caption{Web con estructura de camino.}
+\end{figure}
+
+En los dos últimos graficos, se puede apreciar un comportamiento similar a los primeros dos, ya que la estructura subyacente a ambos es similar a las de estos 2 gráficos, generándose rankings similares.   
+
+
+
+\begin{figure}[H]
+\centering     %%% not \center
+\subfigure[Figure A]{\label{fig:a}\includegraphics[width=0.4\linewidth]{imagenes/resultadosArbolRecursivo.png}}
+\subfigure[Figure B]{\label{fig:b}\includegraphics[width=0.4\linewidth]{imagenes/arbolRecursivo.png}}
+\caption{Web con estructura de árbol recursivo.}
+\end{figure}
+
+
+
+\newpage
+
+
+
+\begin{wrapfigure}{r}{0.6\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[scale= 0.6]{imagenes/pagerankVSindeg.png}
+  \end{center}
+  \vspace{-10pt}
+  \vspace{-10pt}
+\end{wrapfigure}
+
+\subsection{Análisis de variación de resultados con distintos métodos}
+
+Posteriormente, ejecutamos los algoritmos de $PageRank$ e $IN-DEG$ para una misma instancia de 500 páginas y 80000 links generada al azar. Queremos ver cuánto cambian los rankings de cada web para cada algoritmo. En el eje X está el puesto de las páginas según $PageRank$, y en el eje Y el valor del ranking de $IN-DEG$ para esa misma página (que está entre 0 y 1) multiplicado por una constante por cuestiones de claridad a la hora de visualizar el gráfico.\\
+
+
+Podemos ver que en este caso particular, con una matriz bastante esparsa (30\% de los links aproximadamente), ambos algoritmos devuelven un resultado muy similar. Lo que varía es el puesto en PageRank de las webs que tienen pocos links entrantes de diferencia (varía mas en intervalos pequeños). En los casos particulares en donde hay muchas páginas apuntando a una, debería andar peor $IN-DEG$, lo cual no se aprecia en este gráfico ya que es un grafo muy esparso y es aleatorio, pero si en los ejemplos pequeños que vimos anteriormente.\\
+
+
 \subsection{Análisis de convergencia de PageRank}
 %Imagen 1
 \begin{wrapfigure}{r}{0.6\textwidth}
@@ -104,3 +177,68 @@ Este otro gráfico también mide le tiempo de las tres estructuras en función d
 \end{wrapfigure}
 
 Vemos que para la estructura de CSR el tiempo es menor que el de la estructura vector para matrices muy esparsas, pero el tiempo para ambas estructuras es muy parecido cuando la matriz es poco esparsa. En cambio, cuando usamos la estructura de DOK, el tiempo dió mucho mayor para todas las instancias de matrices esparsas que generamos. Esto se debe, como dijimos anteriormente, a otros aspectos que no tienen que ver con la esparsidad de la matriz.\\
+
+\newpage
+
+\subsection{Análisis de resultados de GeM y el método alternativo para ligas deportivas}
+
+Para analizar los resultados de GeM y nuestro método alternativo, utilizamos los resultados reales de un torneo de fútbol (Torneo Final 2014 Argentina). Son 20 equipos, y cada uno de ellos juega una única vez con cada uno de los otros, a lo largo de 19 fechas de enfrentamientos. Los demás parámetros para ejecutar esta instancia fueron: 0.65 de probabilidad de teletransportación, 0.00001 de tolerancia para el método de la potencia. Más adelante analizaremos que sucede con los rankings cuando se varía la probabilidad de teletransportación.
+
+En este caso, para cada equipo analizamos la posición en que quedaron en la última de las fechas con los dos algoritmos y las posiciones finales reales. En el siguiente gráfico vemos como variaron las posiciones. 
+
+
+\begin{figure}[H]
+  \includegraphics[scale=0.5]{imagenes/posicionesgem.png}
+   \caption{Gráfico que compara las posiciones reales y las obtenidas con GeM y nuestro método alternativo.}
+  \label{fig:img1}
+\end{figure}
+
+Las posiciones resultantes de nuestro método alternativo se asemejaron más a las posiciones reales, ya que ambos métodos de ranking utilizan la información de si se gana o no un partido y con cuántos goles. El método de GeM también tiene en cuenta el ranking del equipo contra el que se enfrentó. De manera que el impacto en el ranking de un equipo en una fecha depende del resultado de todos los partidos de esa fecha.
+
+%%%%%%%%%%%%%ANALIZAR lOS PICOS
+
+Ahora veamos como varían las posiciones obtenidas con GeM para algunos equipos a lo largo de ese mismo campeonato (fecha a fecha). Los resultados de cada fecha incluyen todos los partidos jugados hasta dicha fecha (incluidas todas las fechas anteriores).
+Elegimos analizar los rankings solamente de aquellos equipos que nos resultó interesante estudiar en detalle.
+
+\begin{figure}[H]
+  \includegraphics[scale=0.449]{imagenes/gemfechas2.png}
+   \caption{Gráfico que muestra los resultados de GeM fecha a fecha para algunos equipos.}
+  \label{fig:img1}
+\end{figure}
+
+Vemos que los rankings de estos equipos varían mucho en las primeras fechas, pero a medida que transcurre el campeonato tienden a estabilizarse. Esto es porque la información nueva obtenida impacta de forma menos considerable en el resultado acumulado.\\
+
+Los equipos que elegimos para analizar son: el ganador en el ranking real (River Plate), el ganador en el ranking de GeM (Vélez Sarsfield), el equipo con variación máxima entre el ranking real y el ranking de GeM (Estudiantes), y otro equipo en el que nos llevó a resultados interesantes el comportamiento de GeM (Gimnasia y Esgrima).\\
+
+Primero, analizaremos el caso de Gimnasia y Esgrima. Como se ve en el gráfico, tiene un gran crecimineto entre las fechas 3 y 6. En principio creíamos que era poque había ganado todos los partidos durante ese tiempo. Sin embargo esto no resulta ser así. En la fecha 4 empató, en la 5 ganó y en la 6 volvió a empatar. A pesar de esto, su ranking creció constantemente. Esto se debe a que en la fecha 2 le ganó a Newell's Old Boys 3 a 0. Además, Newell's Old Boys ganó dos partidos por una diferencia de 3 goles, y los otros dos partidos los empató. Por esta razón, creemos que Gimnasia y Esgrima crece en su ranking dado que le ganó a un equipo en fechas anteriores que en las subsiguientes fechas ganó por mucho. \\
+
+Nos resultó muy dificultoso realizar un análisis detallado de por qué saldría campeón Vélez Sarsfield utilizando el método GeM en lugar de River Plate como sucede en el ranking oficial. El dato más destacable de la fecha que puede impactar en este resultado, es que Vélez Sarsfield hizo 34 goles y fue el equipo que más goles hizo durante todo el campeonato, seguido de River Plate con 28. La baja en el puntaje de River Plate se ve principalmente en las fechas 2, 3 y 4, dónde empata la primera y pierde las dos siguientes, momento a partir del cual empieza a subir su puntaje, pero no lo suficiente como para superar a Vélez Sarsfield. Por otro lado, Vélez aumenta considerablemente su posición en la fecha 7 donde le gana 3 a 1 a Belgrano, y en al fecha 10 le gana 5 a 1 a Gimnasia y Esgrima, momento a partir del cual su puntaje se estabiliza.\\
+
+Por último, para el caso de Estudiantes, el cual se ubica en la tercera posición en el ranking oficial, sucede algo similar que en el caso de Vélez Sarsfield. Si ordenaramos los equipos por cantidad de goles, Estudiantes se ubicaría en la décima posición, siendo 11 la posición obtenida por GeM. A pesar de haber ganado 3 veces hasta la fecha 7, su ranking desciende constantemente. Esto se debe a que gana contra equipos que tienen ranking bajo, y empata o pierde contra equipos de mayor ranking. En la fecha 8, le gana a Gimnasia y Esgrima, que en ese momento es el equipo con mayor puntaje, favoreciendolo significativamente. Luego, no gana partidos contra equipos de mucho ranking, lo que no le permite crecer significativamente. La razón de la diferencia de posiciones radica en que, a pesar de ser el tercer equipo con mayor cantidad de victorias, estas victorias fueron contra equipos que no tienen tanto peso en el ranking, por lo tanto en el método GeM se ve perjudicado. \\
+\\
+Como conclusión, vemos que realizar un análisis de GeM no es sencillo dado que no sólo impacta los resultados de un equipo en particular en cada fecha, sino que todos los resultados impactan en el resultado de todos los demás, aún no habiendo jugado en contra. Dado un empate, un equipo puede ascender o descender en su posición. Sucede lo mismo aún habiendo ganado o perdido, por ejemplo en la fecha 12 donde Gimnasia y Esgrima le ganó a Olimpo y bajó su ranking, o en la fecha 8 donde Vélez Sarfield pierde contra Atlético de Rafaela e igualmente sube su posición. Sin embargo, se tiene un método donde ganar o perder contra uno u otro equipo no tiene el mismo peso que en el método oficial.
+
+
+\subsection{Análisis de resultados variando la probabilidad de teletransportación en $PageRank$}
+
+Generamos una instancia que representa los partidos de un torneo de algún deporte, con 10 equipos y 54 partidos en el que no se produjeron empates. Ejecutamos el algoritmo de $GeM$ para conseguir la tabla de posiciones, variando el valor del parámetro $c$ desde 0.01 hasta 0,99. El siguiente gráfico muestra para cada equipo, el puesto que consiguió en el torneo según el algoritmo que se utilizó para generar la tabla.\\
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{imagenes/variacionDeTablaGEM.png}
+\end{figure}
+
+% \begin{wrapfigure}{l}{0.6\textwidth}
+%   \vspace{-20pt}
+%   \begin{center}
+%     \includegraphics[scale= 0.6]{imagenes/variacionDeTablaGEM.png}
+%   \end{center}
+%   \vspace{-10pt}
+%   \vspace{-10pt}
+% \end{wrapfigure}
+
+Vemos que un valor de $c$ distinto puede variar el puesto de los equipos que tengan un rank similar. Es decir, el primer equipo siempre es el 4, ya que ganó todos los partidos por mucha diferencia, y sea cual sea el $c$ su puesto no cambiará. Lo mismo pasa con el equipo7, que perdió todos sus partidos por mucha diferencia de goles. En casos extremos como esos los resultados no varían, pero si en otros casos como el equipo 2 y el equipo 10 que alternan sus puestos.
+
+Este es un ejemplo pequeño, pero si llevamos estos resultados a una escala mayor, el valor de $c$ resulta ser muy importante, porque esta elección puede variar considerablemente el resultado de un torneo.\\

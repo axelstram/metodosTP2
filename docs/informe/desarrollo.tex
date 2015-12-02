@@ -1,51 +1,50 @@
 \section{Desarrollo}
 
-\subsection{PageRank}
+\subsection{$PageRank$}
 
 El algoritmo PageRank genera un ranking de páginas web de acuerdo a la importancia de cada página, esto es utilizado por los buscadores Web para devolver el resultado más relacionado a la búsqueda realizada por el usuario.\\
 
 Para determinar que página es la más importante, el algoritmo define el puntaje de cada página como la siguiente sumatoria:
-
 \begin{eqnarray}
 x_k = \sum_{j \in L_k} \frac{x_j}{n_j},~~~~k = 1,\dots,n.\label{eq:ecuacion1}
 \end{eqnarray}
 
-donde $x_{j}$ es la importancia de la página j, $n_{j}$ es la cantidad de links salientes de la página j y $L_{k}$ el conjunto de páginas web con links salientes a j. Dichos puntajes siempre son mayores o iguales a cero, con lo que el puntaje cero corresponde a la página menos importante.\\
+\noindent donde $x_{j}$ es la importancia de la página $j$, $n_{j}$ es la cantidad de links salientes de la página $j$ y $L_{k}$ el conjunto de páginas web con links salientes a $j$. Dichos puntajes siempre son mayores o iguales a cero, con lo que el puntaje cero corresponde a la página menos importante.\\
 
 
-Estas ecuaciones pueden ser escritas como un sistema $Ax = x$, con x el vector de los puntajes que buscamos, ya que cada puntaje se obtiene con los de sus páginas vecinas (o sea las del conjunto $L_{k}$).\\
+Estas ecuaciones pueden ser escritas como un sistema $Ax = x$, con $x$ el vector de los puntajes que buscamos, ya que cada puntaje se obtiene con los de sus páginas vecinas (o sea las del conjunto $L_{k}$).\\
 
-Además, A es una matriz estocástica por columnas, veamos por qué vale esto. Por definición del sistema de ecuaciónes en la ecuación \ref{eq:ecuacion1} vale que
+Además, $A$ es una matriz estocástica por columnas, veamos por qué vale esto. Por definición del sistema de ecuaciónes en la ecuación \ref{eq:ecuacion1} vale que
 
 \begin{equation*}
 A_{ij} = \left\{
-	\begin{array}{cl}
+	\begin{array}{cl}s
 	\frac{1}{n_{j}} & \text{si hay un link de } j \text{ a } i,\\
 	0 & \text{en caso contrario.}\\
 	\end{array} \right.
 \end{equation*}
 
-Con lo cual, la j-ésima columna tiene $n_{j}$ elementos de valor $\frac{1}{n_{j}}$, cuya suma es uno. Con la siguiente proposición, obtenemos que una matriz estocástica por columnas tiene autovalor 1.\\
+Con lo cual, la $j$-ésima columna tiene $n_{j}$ elementos de valor $\frac{1}{n_{j}}$, cuya suma es uno. Sabemos que una matriz estocástica por columnas tiene a 1 como autovalor, vamos a demostrarlo:\\
 
-Proposición: Toda matriz estocástica por columna tiene a uno como autovalor.\\
-Demostración: Sea $A \in R^{nxn}$ una matriz estocástica por columna y sea e $\in R^{n}$ un vector columna con todos sus elementos unos. Sabemos que A y $A^{T}$ tienen los mismos autovalores.
-Como A es estocástica por columnas, vale que $A^{T} x e = e$ pues las columnas de A (y filas de $A^{T}$) suman uno. Luego como $\lambda = 1$ es autovalor de $A^{T}$ también lo es de A. \\
+Sea $A \in R^{nxn}$ una matriz estocástica por columna y sea $e$ $\in R^{n}$ un vector columna con todos sus elementos unos. Sabemos que $A$ y $A^{T}$ tienen los mismos autovalores.
+Como $A$ es estocástica por columnas, vale que $A^{T} x e = e$ pues las columnas de $A$ (y filas de $A^{T}$) suman uno. Luego como $\lambda = 1$ es autovalor de $A^{T}$ también lo es de $A$. \\
 
-Luego el problema original equivale a encontrar el autovector x con autovalor 1 para la matriz cuadrada A, es decir, resolver el sistema $Ax = \lambda x$.
+
+Luego el problema original equivale a encontrar el autovector $x$ con autovalor 1 para la matriz cuadrada $A$, es decir, resolver el sistema $Ax = \lambda x$.
 
 Sin embargo, se presentan dos problemas: no sabemos si el autovalor uno tiene multiplicidad uno (o sea, no sabemos si hay una única solución o multiples) y hay problemas con aquellos nodos que no tengan salida (o sea, páginas web que no apuntan a ninguna otra, no tienen salida, con lo que hay columnas de ceros).\\
 
 
-Para poder conseguir el ranking en el caso de nodos (o sea páginas web) sin links salientes, se suma a aquellas columnas de A con ceros $\frac{1}{n}$ en cada posición de la columna, con lo que se consigue continuar por cualquier página web con la misma probabilidad.
-Por otro lado, para evitar los casos en que el autovalor uno tenga multiplicidad mayor a uno, definimos la matriz M de la siguiente manera:
+Para poder conseguir el ranking en el caso de nodos (o sea páginas web) sin links salientes, se suma a aquellas columnas de $A$ con ceros $\frac{1}{n}$ en cada posición de la columna, con lo que se consigue continuar por cualquier página web con la misma probabilidad.
+Por otro lado, para evitar los casos en que el autovalor uno tenga multiplicidad mayor a uno, definimos la matriz $M$ de la siguiente manera:
 
   $$M = (1-m)* A + mS$$
 
-con $m \in (0,1]$ y $S \in R^{nxn}$ una matriz con todos sus elementos iguales a $\frac{1}{n}$.\\
+\noindent con $m \in (0,1]$ y $S \in R^{nxn}$ una matriz con todos sus elementos iguales a $\frac{1}{n}$.\\
 Resolver el sistema $M * x = x$ equivale a 
 $$x = M x = (1-m)*A * x+ ms $$
 
-donde s es el vector columna con todas sus entradas $\frac{1}{n}$. Este nuevo sistema asegura que el autovalor uno tiene multiplicidad uno\footnote{Esto puede ser consultado en el paper Bryan, Leise - 2006 - The Linear Algebra behind Google, sección 3.2.}.
+\noindent donde $s$ es el vector columna con todas sus entradas $\frac{1}{n}$. Este nuevo sistema asegura que el autovalor uno tiene multiplicidad uno. \footnote{Esto puede ser consultado en el paper Bryan, Leise - 2006 - The Linear Algebra behind Google, sección 3.2.}
 
 
 Para encontrar el autovector de la matriz correspondiente al autovalor $\lambda$ , aplicamos el algorítmo iterativo de la potencia.\\
@@ -79,21 +78,14 @@ Para encontrar el autovector de la matriz correspondiente al autovalor $\lambda$
 %Los problemas que se nos presentaron al realizar el algoritmo fueron:
 %\begin{itemize}
 %\item 
-El mayor problema que se nos presentó al realizar el algoritmo fue que en principio dividiamos por la norma infinito, con lo cual el vector resultante no era necesariamente un vector de probabilidades y afectaba el resultado. Releyendo los papers y consultando a docentes lo corregimos por la norma uno.\\
+El mayor problema que se nos presentó al realizar el algoritmo fue que en principio dividiamos por la norma infinito, con lo cuál el vector resultante no era necesariamente un vector de probabilidades y afectaba el resultado. Releyendo los papers y consultando a docentes lo corregimos por la norma uno.\\
 % \end{itemize}
 
+\subsection{$GeM$}
 
-Experimentaciones fallidas y problemas en el transcurso:
-\begin{itemize}
-\item Al testear el funcionamiento del algoritmo PageRank con la estructura de matriz Column Sparse Row, notamos que el tiempo de carga era demasiado lento. En la sección de Análisis de Estructuras, detallamos más acerca de esta problemática.
-\end{itemize}
+El algoritmo $GeM$ es un método que está basado en $PageRank$ para determinar el ranking de equipos de una competencia en base a los resultados de un conjunto de partidos.\\
 
-
-\subsection{GeM}
-
-El algoritmo GeM es un método que está basado en PageRank para determinar el ranking de equipos de una competencia en base a los resultados de un conjunto de partidos.
-
-Los datos de entrada son el conjunto de los resultados de cada partido de cada fecha. Por cada partido, tenemos los puntos obtenidos de cada equipo.
+Los datos de entrada son el conjunto de los resultados de cada partido de cada fecha. Por cada partido, tenemos los puntos obtenidos de cada equipo.\\
 
 La temporada se representa mediante un grafo donde cada equipo representa un nodo y existe un link de $i$ a $j$ si el equipo $i$ perdi\'o al
 menos una vez con el equipo $j$. Notar que si un partido termina en empate, no se va a ver reflejado de ninguna manera en este grafo.
@@ -109,9 +101,9 @@ A_{ji} = \left\{
 \end{equation*}
 
 \noindent donde $w_{ji}$ es la diferencia absoluta en el marcador. En caso de que $i$ pierda m\'as de una vez con $j$, $w_{ji}$ representa la suma
-acumulada de diferencias. 
+acumulada de diferencias. \\
 
-Para utilizar el método de la potencia como en el algoritmo de PageRank para conseguir los rankings, cada elemento de la matriz se divide por la la suma de todos los elementos de la misma columna, obteniendo una matriz H estocástica por columnas:
+Para utilizar el método de la potencia como en el algoritmo de $PageRank$ para conseguir los rankings, cada elemento de la matriz se divide por la la suma de todos los elementos de la misma columna, obteniendo una matriz $H$ estocástica por columnas:
 
 \begin{equation*}
 H_{ji} = \left\{
@@ -121,7 +113,10 @@ H_{ji} = \left\{
   \end{array} \right.
 \end{equation*}
 
-\subsection{Método Alternativo a GeM}
+El resultado del método le asigna un valor de 0 a 1 a cada equipo, determinando así un orden en el ranking de la competencia.
+
+\subsection{Método alternativo a $GeM$}
+
 Para el algoritmo para rankings deportivos, guardamos dos variables para cada equipo. Primero, a cada equipo se le suma la diferencia de puntos obtenida en cada encuentro a su total (siendo inicialmente cero). Por ejemplo, en el caso del fútbol, la diferencia de puntos es la diferencia de goles de cada partido. Esta diferencia será positiva para un equipo y negativa para el otro, excepto en caso de empate que será cero. Como segunda variable, mantenemos la cantidad de puntos totales obtenidos. Para el caso del fútbol, ésta será la suma de goles realizados. Esta suma siempre es mayor o igual a cero. \\
 
 El algoritmo consiste en ordenar los equipos primero por diferencia de goles y luego, en caso de tener la misma cantidad de diferencia de puntos, por la suma total de puntos. De esta forma, tenemos una primer alternativa ante un empate. En caso de tener la misma cantidad de diferencia de puntos y de puntos totales, se elige cualquiera al azar.\\

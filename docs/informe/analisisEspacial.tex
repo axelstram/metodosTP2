@@ -47,7 +47,7 @@ Existen casos para los cuales, cada una de las alternativas anteriores es mejor 
   \vspace{-20pt}
    \caption[Caption espacio n 100]{Memoria utilizada en una matriz de tamaño 100x100, variando la cantidad de valores no nulos}
   \vspace{-10pt}
-  \label{fig:img1}
+  \label{fig:img11}
 \end{wrapfigure}
 
 Cabe destacar que, a pesar de no notarse en el gráfico, el Dictionary Of Keys utiliza menos memoria que Compressed Sparse Row para cuando hay menos de 12 valores distintos de cero. A partir de $12 \leq nnz$, Dictionary Of Keys utiliza más memoria. \\ \\ \\ \\  \\
@@ -110,5 +110,5 @@ Tanto Vector como DOK no sufren de esta problemática.
 \subsection{Conclusiones de Estructuras de Datos:}
 
 Concluimos que, dentro del contexto dado, la mejor opción es CSR dado que presenta la mejor opción en términos de eficiencia espacial para el problema planteado (matrices con cierta esparcidad), pudiendo aprovecharse mejoras temporales para el método de la potencia.\\
-Sin embargo, dado el problema del cargado de la matriz, es posible que esta estructura no sea viable. Como soluciones alternativas proponemos, de ser posible, realizar un pre-procesaminento para reordenar la entrada. Si esto no es posible, podemos utilizar DOK para este fin, de manera de insertar todos los elementos de la entrada en el DOK, y luego iterarlos en orden para armar la matriz sobre CSR.\\
+Sin embargo, dado el problema del cargado de la matriz, es posible que esta estructura no sea viable. Una opción es realizar un pre-procesaminento para reordenar los datos de entrada del programa. Sino, se puede utilizar DOK para este fin, de manera de insertar todos los elementos de la entrada en el DOK, y luego iterarlos en orden para armar la matriz sobre CSR.\\
 Por último, en términos de complejidad temporal, Vector resulta la peor alternativa ya que en todos los casos debe multiplicar por todos los elementos, mientras que DOK y CSR proveen soluciones similares que permiten una mayor eficiencia.

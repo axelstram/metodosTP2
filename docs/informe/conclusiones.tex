@@ -1,0 +1,28 @@
+
+
+Para este trabajo implementamos algoritmos para rankings tanto de páginas web como de ligas deportivas, dos contextos de aplicación muy distintos para un mismo algoritmo. La implementación de $PageRank$ y de $GeM$ utilizan ambas la misma teoría base y ambas el método de la potencia, por lo que no tuvimos mayor dificultad para implementarlos. Lo que llevó más tiempo fue la implementación de estructuras para matrices que aprovecharan la esparsidad de las mismas y mejoraran el tiempo de ejecución del programa. Esto es importante porque para instancias muy grandes el algoritmo tarda mucho en terminar. Cuando ejecutamos una instancia muy grande con y sin la mejora notamos que es realmente necesario adaptar los programas para que funcionen mejor con los tipos de instancia más comunes que aparecen.
+
+Con respecto a los resultados obtenidos, hicimos comparaciones de rankings generados con los algoritmos de $PageRank$ y $GeM$ y con otros algoritmos más sencillos que usan otros criterios para decidir la importancia de una página (o ranking de un equipo). Notamos muchas diferencias en los resultados con unos u otros algoritmos, pero es difícil decidir cuándo uno es mas justo que otro y podrían tomarse muchisimos criterios distintos para armar un ranking, sobre todo para las páginas web. Para las páginas web podrían entrar muchos otros factores a la hora de ordenar el resultado de la búsqueda. Podría depender, por ejemplo, de quién realiza la búsqueda. Hoy en día es mucho más complejo, pero la base es el método que estudiamos en este trabajo. 
+
+Para los rankings de deportes, estudiamos los resultados generados por $GeM$ en un campeonato real y vimos cómo puede llegar a variar el ranking comparandolo con el método real y otro propuesto por nosotros. Además vimos cómo puede variar cuando modificamos un parámetro del algoritmo de $PageRank$, la probabilidad de teletransportación. En el contexto de una competencia deportiva se puede ver mejor esta variación, no tanto en el contexto de rankings de páginas web.
+
+
+
+
+%la estructura que elegimos
+
+
+
+
+
+% performance
+
+
+
+
+% la relacion entre la convergencia y el tiempo 
+
+
+
+
+% que nos parecio el trabajo

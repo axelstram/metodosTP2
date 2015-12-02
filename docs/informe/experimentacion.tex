@@ -239,24 +239,12 @@ Como conclusión, vemos que realizar un análisis de GeM no es sencillo dado que
 
 \subsection{Análisis de resultados variando la probabilidad de teletransportación en $PageRank$}
 
-Generamos una instancia que representa los partidos de un torneo de algún deporte, con 10 equipos y 54 partidos en el que no se produjeron empates. Ejecutamos el algoritmo de $GeM$ para conseguir la tabla de posiciones, variando el valor del parámetro $c$ desde 0.01 hasta 0,99. El siguiente gráfico muestra para cada equipo, el puesto que consiguió en el torneo según el algoritmo que se utilizó para generar la tabla.\\
-
-
+Utilizamos los resultados del Torneo Final 2014 Argentina de la sección anterior. Ejecutamos el algoritmo de $GeM$ para conseguir la tabla de posiciones, variando el valor del parámetro $c$ desde 0.1 hasta 0,99. El siguiente gráfico muestra para cada equipo, el ranking obtenido.\\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\linewidth]{imagenes/variacionDeTablaGEM.png}
+\includegraphics[width=0.7\linewidth]{imagenes/varicionCfutbol2014Ordenado.png}
 \end{figure}
 
-% \begin{wrapfigure}{l}{0.6\textwidth}
-%   \vspace{-20pt}
-%   \begin{center}
-%     \includegraphics[scale= 0.6]{imagenes/variacionDeTablaGEM.png}
-%   \end{center}
-%   \vspace{-10pt}
-%   \vspace{-10pt}
-% \end{wrapfigure}
-
-Vemos que un valor de $c$ distinto puede variar el puesto de los equipos que tengan un rank similar. Es decir, el primer equipo siempre es el 4, ya que ganó todos los partidos por mucha diferencia, y sea cual sea el $c$ su puesto no cambiará. Lo mismo pasa con el equipo7, que perdió todos sus partidos por mucha diferencia de goles. En casos extremos como esos los resultados no varían, pero si en otros casos como el equipo 2 y el equipo 10 que alternan sus puestos.
-
-Este es un ejemplo pequeño, pero si llevamos estos resultados a una escala mayor, el valor de $c$ resulta ser muy importante, porque esta elección puede variar considerablemente el resultado de un torneo.\\
+Los equipos están ordenados de mayor a menor (de derecha a izquierda) de a cuerdo al resultado obtenido con el $c$ de mayor valor. Vemos que al disminuir el $c$, lo que sucede es que las posiciones tienden a variar menos, achatandose el gráfico de los resultados obtenidos.
+Por este motivo, un valor de $c$ distinto puede variar el puesto de los equipos que tengan un ranking cercano. Por ejemplo, para $c=0.1$, River Plate saldría quinto, mientras que con $c=0.99$, saldría tercero. Sin embargo, en general, se mantiene una tendencia del orden de los equipos. 
